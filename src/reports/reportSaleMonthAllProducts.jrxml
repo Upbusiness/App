@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="286" columnSpacing="2" leftMargin="10" rightMargin="10" topMargin="25" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2015"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SUM(t.`total_coupon`) AS sum_sales, DATE_FORMAT(t.`date_hour_coupon`,'%m/%Y') AS month_sum, COUNT(*) AS quantity_sales FROM tbl_coupon t WHERE DATE_FORMAT(t.`date_hour_coupon`,'%Y') = $P{PAR_YEAR} GROUP BY DATE_FORMAT(t.`date_hour_coupon`,'%M/%Y') ORDER BY t.`date_hour_coupon`;]]>
+	</queryString>
+	<field name="sum_sales" class="java.lang.Double"/>
+	<field name="month_sum" class="java.lang.String"/>
+	<field name="quantity_sales" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Receita Mensal]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="4" width="95" height="30" uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba"/>
+				<imageExpression><![CDATA[this.getClass().getResourceAsStream("Logo UPmarket_Header2.png")]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="353" y="1" width="121" height="20" forecolor="#666666" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="1" width="100" height="20" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PAR_YEAR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="0" width="82" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Mês/Ano da Vendas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="81" y="0" width="120" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="1ea982bf-b528-43bd-816d-65b77388799f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade de Vendas(Cupons)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="201" y="0" width="84" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="e07f35b0-6fb3-4e9a-b12f-3f93f1c68b0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Valor da Vendas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="81" height="15" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month_sum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="81" y="0" width="120" height="15" uuid="06896822-620e-4757-a4ba-e017ecd06258"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity_sales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="201" y="0" width="84" height="15" uuid="08351468-b5b4-4f49-93f0-267336ec3da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum_sales}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="555">
+			<bar3DChart>
+				<chart>
+					<reportElement x="32" y="28" width="499" height="248" uuid="ceafcd00-f9a0-463d-99cf-6c87782062da"/>
+					<chartTitle color="#333333">
+						<titleExpression><![CDATA["Valor(R$) da Soma das Vendas por Mês"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Mês/Ano"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{month_sum}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{sum_sales}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot labelRotation="50.0"/>
+					<itemLabel/>
+					<categoryAxisLabelExpression><![CDATA["Meses"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat labelRotation="50.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Valor das Vendas(R$)"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<bar3DChart>
+				<chart>
+					<reportElement x="32" y="301" width="499" height="248" uuid="6ed8b5db-26af-455a-9c34-4759ebcbb8d9"/>
+					<chartTitle color="#333333">
+						<titleExpression><![CDATA["Quantidade de Vendas por Mês"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Mês/Ano"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{month_sum}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantity_sales}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot labelRotation="50.0">
+						<seriesColor seriesOrder="0" color="#56B1F2"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisLabelExpression><![CDATA["Meses"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat labelRotation="50.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Quantidade de Vendas"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</summary>
+</jasperReport>

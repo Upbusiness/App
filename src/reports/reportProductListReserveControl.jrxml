@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="25" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="545"/>
+	<property name="ireport.y" value="179"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ARG" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" p.`prod_bar_code_product`  IN (7894900261905, 7894900011715, 7894900019155, 7894900035131) ORDER BY  p.`prod_description_product`;"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.`prod_bar_code_product` AS bar_code,
+       p.`prod_description_product` AS description,
+       p.`idtbl_unity_measure` AS unity_measure,
+       c.`description_category` AS category,
+       p.`prod_price_purchase_product` AS cost,
+      (p.`prod_price_purchase_product` * p.`prod_reserve_actual_product`) AS cost_total,
+      (p.`prod_price_sale_actual_product` * p.`prod_reserve_actual_product`) AS price_total,
+       p.`prod_reserve_actual_product` AS reserve_actual,
+       p.`prod_reserve_maximum_product` AS reserve_max ,
+       p.`prod_reserve_minimum_product` AS reserve_min,
+       p.`prod_price_sale_actual_product` AS price,
+      (p.`prod_reserve_maximum_product` - p.`prod_reserve_actual_product`)AS saldo
+       FROM tbl_product p INNER JOIN tbl_category_product c ON p.`idtbl_category_product` = c.`idtbl_category_product` WHERE $P!{PAR_ARG};]]>
+	</queryString>
+	<field name="bar_code" class="java.lang.Long"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="unity_measure" class="java.lang.String"/>
+	<field name="category" class="java.lang.String"/>
+	<field name="cost" class="java.lang.Double"/>
+	<field name="cost_total" class="java.lang.Double"/>
+	<field name="price_total" class="java.lang.Double"/>
+	<field name="reserve_actual" class="java.lang.Double"/>
+	<field name="reserve_max" class="java.lang.Double"/>
+	<field name="reserve_min" class="java.lang.Double"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="saldo" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Produtos Lista de Gerenciamento]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="4" width="95" height="30" uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba"/>
+				<imageExpression><![CDATA[getClass().getResourceAsStream("Logo UPmarket_Header2.png")]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="353" y="1" width="121" height="20" forecolor="#666666" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="1" width="100" height="20" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="0" width="85" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Código Barra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="81" y="0" width="139" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="1ea982bf-b528-43bd-816d-65b77388799f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="219" y="0" width="65" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="e07f35b0-6fb3-4e9a-b12f-3f93f1c68b0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Valor Custo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="284" y="0" width="19" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="95e07dd0-d6d3-46b0-8654-394b5bbf4a22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[UN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="301" y="0" width="52" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="cd3fc667-c08b-412a-9887-3a4786118b78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Atual ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="353" y="0" width="45" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="9b0aa2b6-7fa2-4b81-88d9-b28fb1a3dc1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Min.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="397" y="0" width="57" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="68d72889-c0a0-4307-92bc-b91fb344b166"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Máx. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="454" y="0" width="48" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="cb57586f-fc41-4a61-8a7d-510a62c44b4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Abaixo Min. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="502" y="0" width="36" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="42061cf5-9fe2-489d-a5ff-a9a2daa8337f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Repor  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="538" y="0" width="37" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="4f669919-8de1-4fcf-8021-577bb8677575"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Real ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="85" height="15" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bar_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="82" y="0" width="139" height="15" uuid="06896822-620e-4757-a4ba-e017ecd06258"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$###0.00;-R$###0.00" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="220" y="0" width="64" height="15" uuid="08351468-b5b4-4f49-93f0-267336ec3da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="284" y="0" width="19" height="15" uuid="13ce6584-53ca-4daf-8370-07325fb173a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unity_measure}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="302" y="0" width="51" height="15" uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_actual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="353" y="0" width="46" height="15" uuid="2f110130-3860-47ea-a98d-8c932bfee241"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_min}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="399" y="0" width="55" height="15" uuid="988d3b66-8ce1-40cc-b1e5-9c59e39fca79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_max}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="454" y="0" width="48" height="15" uuid="86206bdd-04b3-4f4a-a2d6-53bc34c21c96"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{reserve_actual} <= $F{reserve_min} ? "SIM" : "NÃO" )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="502" y="0" width="36" height="15" uuid="7f76e2ec-a55d-46d2-8f0b-da4d4a786d40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="538" y="0" width="37" height="15" uuid="3dca865d-34ab-4b00-9e70-ae226148cd4c"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

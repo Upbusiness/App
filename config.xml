@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><config xmlns:od="urn:schemas-microsoft-com:officedata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" generated="2015-05-31T21:59:55" xsi:noNamespaceSchemaLocation="CATEGORIA.xsd">
+    <configValues id="1">
+        <ip>jdbc:mysql://localhost:3306/upmarket_new</ip>
+        <path>C:\Users\Rafael Recalcatti\Documents\NetBeansProjects\UPMarket 1.1.3.2</path>
+        <logo>C:\Users\Rafael Recalcatti\Pictures\Buda.png</logo>
+        <isPrintService>false</isPrintService>
+        <isCoolRate>false</isCoolRate>
+		<valueCoolRate>0.20</valueCoolRate>
+        <isAddCigarreteRate>true</isAddCigarreteRate>
+		<headerCoupon>SUCESSO;BEBIDAS E CONVENIENCIAS 24HS;Email:sucesso.bebidas24h@gmail.com;Av. Alexandrino de Alencar - 623;Morada do Vale I - CEP:94085-120;GRAVATAI - RS F:(51)3127-1002</headerCoupon>
+		<footerCoupon>SEJA BEM VINDO;OBRIGADO PELA PREFERENCIA;VOLTE SEMPRE</footerCoupon>		
+    </configValues>
+</config>

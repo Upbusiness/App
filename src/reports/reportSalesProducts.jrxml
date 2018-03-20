@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="15" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ARG" class="java.lang.String">
+		<defaultValueExpression><![CDATA["p.`prod_bar_code_product`  IN (7891350031638, 7897510300439) GROUP BY  p.`prod_description_product`"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["09/2015"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.`prod_bar_code_product` AS bar_code,
+       p.`prod_description_product` AS description,
+       p.`prod_price_purchase_product` AS cost_mean,
+       COUNT(p.`prod_bar_code_product`) AS quantity_sale,
+       SUM(pc.`product_price`) AS value_total_sale,
+       SUM(p.`prod_price_mean_purchase_product`) AS value_total_coast
+       FROM tbl_product p INNER JOIN tbl_product_coupon pc ON p.`prod_bar_code_product` = pc.`prod_bar_code_product` JOIN tbl_coupon c ON c.`idtbl_coupon` = pc.`idtbl_coupon` WHERE DATE_FORMAT(c.`date_hour_coupon`,'%m/%Y') = $P{PAR_DATE} AND  $P!{PAR_ARG};]]>
+	</queryString>
+	<field name="bar_code" class="java.lang.Long"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="cost_mean" class="java.lang.Double"/>
+	<field name="quantity_sale" class="java.lang.Long"/>
+	<field name="value_total_sale" class="java.lang.Double"/>
+	<field name="value_total_coast" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9" x="0" y="0" width="575" height="39" forecolor="#999999"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="aca3cd31-3054-4f48-b182-80bf77626c2d" x="0" y="0" width="575" height="39" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Produtos Vendas Gerais Mensal]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba" x="460" y="4" width="95" height="30"/>
+				<imageExpression><![CDATA["reports/Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="f6966d06-617a-420d-92ac-ce06f8203860" x="353" y="1" width="121" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="MM/yyyy">
+				<reportElement uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec" x="474" y="1" width="100" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ec24f57c-791e-4869-ae01-754dae551720" mode="Opaque" x="-1" y="0" width="85" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Código Barra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ea982bf-b528-43bd-816d-65b77388799f" mode="Opaque" x="81" y="0" width="139" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e07f35b0-6fb3-4e9a-b12f-3f93f1c68b0f" mode="Opaque" x="219" y="0" width="70" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Valor Custo Médio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b0aa2b6-7fa2-4b81-88d9-b28fb1a3dc1e" mode="Opaque" x="289" y="0" width="69" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Vendas no Mês]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68d72889-c0a0-4307-92bc-b91fb344b166" mode="Opaque" x="358" y="0" width="74" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Custo das Vendas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cb57586f-fc41-4a61-8a7d-510a62c44b4c" mode="Opaque" x="432" y="0" width="67" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Valor da Vendas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d3b04fcc-4d55-4cf4-884c-d09956b519d4" mode="Opaque" x="499" y="0" width="75" height="15" forecolor="#333333" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Lucro Presumido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="85" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bar_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="06896822-620e-4757-a4ba-e017ecd06258" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="82" y="0" width="139" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$###0.00;-R$###0.00" isBlankWhenNull="true">
+				<reportElement uuid="08351468-b5b4-4f49-93f0-267336ec3da4" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="220" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost_mean}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="289" y="0" width="69" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity_sale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="2f110130-3860-47ea-a98d-8c932bfee241" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="358" y="0" width="74" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_total_coast}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="988d3b66-8ce1-40cc-b1e5-9c59e39fca79" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="432" y="0" width="67" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_total_sale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="f86dfd12-388f-497f-98e1-19737b981bd0" style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="499" y="0" width="75" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_total_sale} - $F{value_total_coast}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="48" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement uuid="2565b101-b34d-49fd-a581-141541d3ab25" x="474" y="0" width="101" height="14"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe" x="60" y="0" width="40" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857" x="0" y="0" width="60" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

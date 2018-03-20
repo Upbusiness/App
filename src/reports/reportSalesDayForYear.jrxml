@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f047e79-4f62-45d8-a40d-18c3103ec288">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["03/2017"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT cp.`idtbl_coupon`, DATE_FORMAT(cp.`date_hour_coupon`,'%d/%m') AS date_hour_coupon,
+cp.`date_hour_coupon` AS date_report,
+ SUM(cp.`total_coupon`) AS total_sale_day FROM tbl_coupon cp WHERE DATE_FORMAT(cp.`date_hour_coupon`,'%m/%Y') = $P{PAR_YEAR} GROUP BY DATE_FORMAT(cp.`date_hour_coupon`,'%m'),DATE_FORMAT(cp.`date_hour_coupon`,'%d');]]>
+	</queryString>
+	<field name="idtbl_coupon" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_hour_coupon" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_report" class="java.sql.Timestamp"/>
+	<field name="total_sale_day" class="java.lang.Double"/>
+	<variable name="total_sale_day_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_sale_day}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="31">
+			<textField evaluationTime="Report" pattern="¤ #,##0.00">
+				<reportElement x="250" y="0" width="140" height="31" uuid="3591d465-fb2c-4f4a-8e18-39d9f1f80e2b"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_sale_day_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="MMMMM-yyyy">
+				<reportElement x="116" y="0" width="134" height="31" uuid="3033614e-b50c-443c-8fa7-9c9846f64052"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_report}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="0" width="83" height="31" uuid="84acfe96-e409-4cc0-b5a6-baaab85f2521"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL EM :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="342" splitType="Stretch">
+			<lineChart>
+				<chart>
+					<reportElement x="0" y="24" width="802" height="318" uuid="fa765bb7-b4ba-4786-aab7-5eb9b84210de"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Soma Valor Vendas Diarias R$"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date_hour_coupon}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_sale_day}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot labelRotation="90.0"/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat verticalTickLabels="false"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

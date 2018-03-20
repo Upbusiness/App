@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="15" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="235"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_INI_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2017/08/11 20:45"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_IS_CANC" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_END_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2017/10/11 20:58"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_FILTER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+                              p.`prod_description_product` AS Descricao,
+                              pc.`prod_bar_code_product` AS Codigo,
+                              SUM(pc.`product_quantity`) AS Quantidade,
+                              SUM(pc.`product_quantity` * pc.`product_price`) AS ValorTotal
+                              FROM tbl_coupon t INNER JOIN tbl_product_coupon pc ON t.`idtbl_coupon` = pc.`idtbl_coupon` 
+                              INNER JOIN tbl_product p ON pc.`prod_bar_code_product` = p.`prod_bar_code_product` 
+                              WHERE DATE_FORMAT(t.`date_hour_coupon`,'%Y/%m/%d %H:%i') BETWEEN $P{PAR_INI_DATE} AND $P{PAR_END_DATE}  AND pc.`isToCancel` = $P{PAR_IS_CANC}
+                              GROUP BY pc.`prod_bar_code_product` ORDER BY p.`prod_description_product`]]>
+	</queryString>
+	<field name="Descricao" class="java.lang.String"/>
+	<field name="Codigo" class="java.lang.String"/>
+	<field name="Quantidade" class="java.math.BigDecimal"/>
+	<field name="ValorTotal" class="java.lang.Double"/>
+	<variable name="ValorTotal_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{ValorTotal}]]></variableExpression>
+	</variable>
+	<variable name="Quantidade_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Quantidade}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ Agrupamento de Produtos Vendidos]]></text>
+			</staticText>
+			<image>
+				<reportElement x="474" y="5" width="95" height="30" uuid="79c185c4-60bc-4177-b564-c89c1571a3c0"/>
+				<imageExpression><![CDATA["reports/Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="152" height="20" forecolor="#666666" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Produtos vendidos entre: ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="152" y="1" width="423" height="20" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PAR_FILTER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="165" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="353" y="0" width="111" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="cd3fc667-c08b-412a-9887-3a4786118b78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE VENDAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="462" y="0" width="113" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="8f4406bb-dc36-4c9a-8d5b-c29187897cfc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL DAS VENDAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="164" y="0" width="190" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="d351a33b-32de-4d2b-8cfe-ab4a08452f1e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="165" height="15" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="353" y="0" width="111" height="15" uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="462" y="0" width="113" height="15" uuid="bfcf2ecf-600e-41f2-8bbc-976f06a1428d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ValorTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="164" y="0" width="190" height="15" uuid="9b1e5c01-9545-4109-90c3-1548cb8083b0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17">
+			<printWhenExpression><![CDATA[$V{Quantidade_1} == $V{REPORT_COUNT}]]></printWhenExpression>
+			<textField pattern="¤ #,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="462" y="0" width="113" height="17" uuid="0fe802f2-cd0c-45d4-9b98-a047c36506a6"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ValorTotal_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="354" y="0" width="110" height="17" uuid="2cb34ac2-a827-4642-b027-c622069e2fc8"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Quantidade_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" isPrintWhenDetailOverflows="true" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

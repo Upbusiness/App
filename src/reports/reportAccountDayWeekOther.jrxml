@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="575" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ID_CLIENT" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[11]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2017"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_WEEK_" class="java.lang.String">
+		<defaultValueExpression><![CDATA["IN(52,53)"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_STATUS" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT ac.`idtbl_account` AS id_account, ac.`value_account` AS value_account, tp.`description_type_payment_coupon` AS type_account, ac.`date_account` AS date_account, CASE  WHEN ac.`status_acount` = '0' THEN "ABERTA" ELSE "FECHADA" END AS status_acount  FROM tbl_account ac INNER JOIN tbl_type_payment_coupon tp ON tp.`idtbl_coupon` = ac.`idtbl_coupon` INNER JOIN tbl_client ct ON ac.`idtbl_client` = ct.`idtbl_client`  WHERE ct.`idtbl_client` = $P{PAR_ID_CLIENT} AND DATE_FORMAT(ac.`date_account`, '%Y') = $P{PAR_YEAR} AND tp.`description_type_payment_coupon` LIKE '%OUTROS' AND WEEK(ac.`date_account`) $P!{PAR_WEEK_} AND ac.`status_acount` = $P{PAR_STATUS} GROUP BY ac.`idtbl_account`;]]>
+	</queryString>
+	<field name="id_account" class="java.lang.Integer"/>
+	<field name="value_account" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="type_account" class="java.lang.String"/>
+	<field name="date_account" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_acount" class="java.lang.String">
+		<fieldDescription><![CDATA[' 0 = Aberta, 1 = Paga, 2 = Vencida']]></fieldDescription>
+	</field>
+	<variable name="TOTAL_ACCOUNT" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{value_account}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="406" y="0" width="169" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="1ea982bf-b528-43bd-816d-65b77388799f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SOMA DAS CONTAS R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="196" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="7c0bd157-2b65-4b15-9f3f-8344e1a09c56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[TIPO CONTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="286" y="0" width="122" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="d71b57e0-0025-4130-9d9b-db21a48320dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[DATA DA CONTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="194" y="0" width="93" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="32aecda1-7733-4f91-a054-13b6081d3580"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[STATUS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="407" y="0" width="169" height="15" uuid="06896822-620e-4757-a4ba-e017ecd06258"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_account}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="196" height="15" uuid="30cf9f1e-0efe-46d9-9ecf-55f43deaaf4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_account}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="286" y="0" width="122" height="15" uuid="32851fcb-f686-4be2-8a7e-8f09f560b5e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_account}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="194" y="0" width="93" height="15" uuid="e7785e3e-ffcf-448c-a0e9-dcc56f09aecb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_acount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<textField pattern="TOTAL ¤ #,##0.00">
+				<reportElement x="408" y="0" width="168" height="20" uuid="5474d4af-39aa-4527-a844-47827eefcbe6"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_ACCOUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

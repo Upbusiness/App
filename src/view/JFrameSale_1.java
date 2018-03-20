@@ -1,0 +1,3662 @@
+ /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package view;
+
+import action.BeanCodeSale;
+import action.BeanConfig;
+import action.BeanLogin;
+import action.PaymentCoupon;
+import action.Sale;
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollBar;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.ClassCashier;
+import model.ClassCodRandon;
+import model.ClassInventory;
+import static model.ClassProduct.viewProductsRapidCode;
+import model.ClassSale;
+import model.ClassUser;
+import testes.PrintCoupon;
+import util.ClassValidTerminal;
+import util.DimensionFrame;
+import util.JTextFieldTools;
+import util.PreencheTabela;
+import util.Refresh;
+import util.Sons;
+import static view.ClassPrintCoupon.printLineCoupon;
+import xml.NewXML;
+import xml.XML_Config;
+
+/**
+ *
+ * @author root
+ */
+public class JFrameSale_1 extends javax.swing.JFrame {
+
+    private static final DecimalFormat v = new DecimalFormat("0.00");
+    private final Color whiteColor = Color.white;                 // new Color(254, 254, 254);
+    private final Color alternateColor = new Color(227, 227, 227);    // Color.lightGray;//new Color(204, 204, 204);
+    private final Color selectedColor = Color.yellow;
+    private static final Dimension dimension = new Dimension(DimensionFrame.getDimension());
+    public DefaultListModel listModel1 = new DefaultListModel();
+    public DefaultListModel listModel2 = new DefaultListModel();
+    public DefaultListModel listModel3 = new DefaultListModel();
+    public static String codeCoupon;
+    public static String oldCodeCoupon;
+    public static String lastCodeCoupon;
+    public static String codeProductCoupon;
+    public static int numberItenCancel;
+    public static double valueItenCanceled;
+    public static int number_item = 1;
+    public static boolean isNewCoupon = true;
+    public static volatile boolean isCancelProduct = false;
+    private final java.awt.Dimension tamanhoFrame = getSize();
+    private PreencheTabela tabela;
+    private final DecimalFormat cd_3 = new DecimalFormat("0.000");
+    //private static final int control_qtd = 1;
+    private static double quantityItem = 1.000;
+    private boolean isCoolingRate = false;
+    private static double valueCoolingRate;
+    public static boolean isPrintService = true;
+    private boolean isCodeRapid = false;
+    public static boolean isGenerateCodeCoupon = true;
+    private static final Refresh refresh = new Refresh();
+    public static String idCashier = null;
+    private static final NewXML newXML = new NewXML();
+    public static List<String> headerCoupon = new ArrayList<>();
+    public static List<String> footerCoupon = new ArrayList<>();
+    public DefaultListModel listModelHeaderCoupon = new DefaultListModel();
+    public DefaultListModel listModelFooterCoupon = new DefaultListModel();
+    private boolean flag;
+    private static int positionList;
+    private static boolean isHeader = true;
+    private boolean isFractional;
+    private MyModelJtableSale myModelJtableSale;
+    private static int width_size;
+    private boolean visibleMenuBar = true;
+    public static boolean isOpened;
+
+    /**
+     * Creates new form JFrameSale
+     */
+    public JFrameSale_1() {
+        initComponents();
+        this.setSize(dimension);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension dialogSize = getSize();
+        //setSize(screenSize);        
+        setLocation((screenSize.width - dialogSize.width) / 2, (screenSize.height - dialogSize.height) / 2);
+        //width_size = (int) (dialogSize.getWidth() / 2);
+        // jPanel_right.setPreferredSize(new Dimension(width_size - 15, 576));
+        // jPanel_left.setPreferredSize(new Dimension(width_size - 15, 576));
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroupTABPrice = new javax.swing.ButtonGroup();
+        jDialogSearchProduct = new javax.swing.JDialog();
+        jTextFieldBarCodeSearch = new javax.swing.JTextField();
+        jTextFieldDescriptionSearch = new javax.swing.JTextField();
+        jTextFieldValueProductSearch = new javax.swing.JTextField();
+        jDialogListProductsCodeRapid = new javax.swing.JDialog();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList(listModel1);
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList(listModel2);
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList(listModel3);
+        jDialogConfigHeaderCoupon = new javax.swing.JDialog();
+        jTextFieldLineTextCoupon = new javax.swing.JTextField();
+        jRadioButtonFooter = new javax.swing.JRadioButton();
+        jRadioButtonHeader = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButtonPrintHeaderCoupon = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jListHeaderCoupon = new javax.swing.JList(listModelHeaderCoupon);
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jListFooterCoupon = new javax.swing.JList(listModelFooterCoupon);
+        buttonGroupTextCoupon = new javax.swing.ButtonGroup();
+        panelBackground = new javax.swing.JPanel();
+        jPanelFooter = new javax.swing.JPanel();
+        jLabelFooterMessage = new javax.swing.JLabel();
+        panelFooter = new javax.swing.JPanel();
+        jLabelTerminalNumber = new javax.swing.JLabel();
+        jLabelIconUser = new javax.swing.JLabel();
+        jLabelUser = new javax.swing.JLabel();
+        jLabelTerminal = new javax.swing.JLabel();
+        jLabelUserNameFooter = new javax.swing.JLabel();
+        jLabelTurn = new javax.swing.JLabel();
+        jLabelTurnNumber = new javax.swing.JLabel();
+        jLabelCoolingRate = new javax.swing.JLabel();
+        jLabeCoolingRatelStatusService = new javax.swing.JLabel();
+        jLabelPrintService = new javax.swing.JLabel();
+        jLabelStatusPrintService = new javax.swing.JLabel();
+        jLabelCodeRapid = new javax.swing.JLabel();
+        jLabeCodeStatusCodeRapid = new javax.swing.JLabel();
+        jLabelCodeRapid1 = new javax.swing.JLabel();
+        jLabeCodeFractional = new javax.swing.JLabel();
+        jLabelDateandHour = new javax.swing.JLabel();
+        jPanel_right = new javax.swing.JPanel();
+        jPanelTabela = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableItens = new javax.swing.JTable();
+        jTextQuantidade = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jTextValorUnitario = new javax.swing.JTextField();
+        jTextProductCode = new javax.swing.JTextField();
+        jLabelDescricaoItem = new javax.swing.JLabel();
+        jTextItens = new javax.swing.JTextField();
+        jTextTotalItens = new javax.swing.JTextField();
+        jTextValorTotalOperacao = new javax.swing.JTextField();
+        jPanel_left = new javax.swing.JPanel();
+        jPanelLogio = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelFuncoes = new javax.swing.JPanel();
+        jButtonRegisterProduct = new javax.swing.JButton();
+        jButtonConsultarProduto = new javax.swing.JButton();
+        jButtonCloseSale = new javax.swing.JButton();
+        jButtonControlReserve = new javax.swing.JButton();
+        jButtonCancelOptions = new javax.swing.JButton();
+        jButtonLogoffLogon = new javax.swing.JButton();
+        jButtonRegisterUser = new javax.swing.JButton();
+        jButtonCloseSale4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuArquivo = new javax.swing.JMenu();
+        jMenuItemClient = new javax.swing.JMenuItem();
+        jMenuItemCadastrarProdutos = new javax.swing.JMenuItem();
+        jMenuItemRegisterCard = new javax.swing.JMenuItem();
+        jMenuControl = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemAllSales = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuAction = new javax.swing.JMenu();
+        jMenuItemCodeRapid = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemFecharVenda = new javax.swing.JMenuItem();
+        jMenuItemConsultarProduto = new javax.swing.JMenuItem();
+        jMenuItemCancelamentoItem = new javax.swing.JMenuItem();
+        jMenuItemListProductCodeRapid = new javax.swing.JMenuItem();
+        jMenuItemQuantidadeItens = new javax.swing.JMenuItem();
+        jMenuItemAumentarQuantidade = new javax.swing.JMenuItem();
+        jMenuItemDiminuirQuantidade = new javax.swing.JMenuItem();
+        jMenuItemSair = new javax.swing.JMenuItem();
+        jMenuCashier = new javax.swing.JMenu();
+        jMenuItemOpenCashier = new javax.swing.JMenuItem();
+        jMenuItemInsertValueCashier = new javax.swing.JMenuItem();
+        jMenuItemRemoveValueCashier = new javax.swing.JMenuItem();
+        jMenuItemCloseCashier = new javax.swing.JMenuItem();
+        jMenuItemHistoryClosures = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jCheckBoxMenuItemNormalPrice = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemPriceTAB1 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemPriceTAB2 = new javax.swing.JCheckBoxMenuItem();
+        jRadioButtonMenuItemPrintService = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemCoolingRate = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemRateCigarretePayCard = new javax.swing.JRadioButtonMenuItem();
+        jMenuItemConfigureHeaderFooterCoupon = new javax.swing.JMenuItem();
+        jMenuItemLoadImageLogo = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItemReports = new javax.swing.JMenuItem();
+        jMenuItemCostOperate = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItemHideMenuBar = new javax.swing.JMenuItem();
+        jMenuItemAbout = new javax.swing.JMenuItem();
+
+        jDialogSearchProduct.setTitle("Consulta de produto");
+        jDialogSearchProduct.setResizable(false);
+        jDialogSearchProduct.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                jDialogSearchProductWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                jDialogSearchProductWindowClosed(evt);
+            }
+        });
+
+        jTextFieldBarCodeSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldBarCodeSearch.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true), "Código de barra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextFieldBarCodeSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldBarCodeSearchMouseClicked(evt);
+            }
+        });
+        jTextFieldBarCodeSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBarCodeSearchActionPerformed(evt);
+            }
+        });
+        jTextFieldBarCodeSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldBarCodeSearchKeyPressed(evt);
+            }
+        });
+
+        jTextFieldDescriptionSearch.setEditable(false);
+        jTextFieldDescriptionSearch.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldDescriptionSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldDescriptionSearch.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true), "Descrição do Produto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextFieldDescriptionSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDescriptionSearchActionPerformed(evt);
+            }
+        });
+
+        jTextFieldValueProductSearch.setEditable(false);
+        jTextFieldValueProductSearch.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldValueProductSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldValueProductSearch.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true), "Valor R$", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextFieldValueProductSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldValueProductSearchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialogSearchProductLayout = new javax.swing.GroupLayout(jDialogSearchProduct.getContentPane());
+        jDialogSearchProduct.getContentPane().setLayout(jDialogSearchProductLayout);
+        jDialogSearchProductLayout.setHorizontalGroup(
+            jDialogSearchProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogSearchProductLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogSearchProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDescriptionSearch)
+                    .addGroup(jDialogSearchProductLayout.createSequentialGroup()
+                        .addComponent(jTextFieldBarCodeSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldValueProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jDialogSearchProductLayout.setVerticalGroup(
+            jDialogSearchProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogSearchProductLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextFieldDescriptionSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jDialogSearchProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldValueProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldBarCodeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jDialogListProductsCodeRapid.setTitle("Produtos sem Código de Barra");
+        jDialogListProductsCodeRapid.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                jDialogListProductsCodeRapidWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                jDialogListProductsCodeRapidWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jDialogListProductsCodeRapidWindowOpened(evt);
+            }
+        });
+
+        jTextField1.setBackground(new java.awt.Color(255, 255, 0));
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Código:");
+
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jList1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.setAutoscrolls(false);
+        jList1.setCellRenderer(new MyCellRendererList());
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
+        jList1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jList1FocusLost(evt);
+            }
+        });
+        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jList1KeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        jPanel1.add(jScrollPane1);
+
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jList2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList2.setAutoscrolls(false);
+        jList2.setCellRenderer(new MyCellRendererList());
+        jList2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList2MouseClicked(evt);
+            }
+        });
+        jList2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jList2FocusLost(evt);
+            }
+        });
+        jList2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jList2KeyPressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jList2);
+
+        jPanel1.add(jScrollPane3);
+
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jList3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jList3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList3.setAutoscrolls(false);
+        jList3.setCellRenderer(new MyCellRendererList());
+        jList3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList3MouseClicked(evt);
+            }
+        });
+        jList3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jList3FocusLost(evt);
+            }
+        });
+        jList3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jList3KeyPressed(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jList3);
+
+        jPanel1.add(jScrollPane4);
+
+        javax.swing.GroupLayout jDialogListProductsCodeRapidLayout = new javax.swing.GroupLayout(jDialogListProductsCodeRapid.getContentPane());
+        jDialogListProductsCodeRapid.getContentPane().setLayout(jDialogListProductsCodeRapidLayout);
+        jDialogListProductsCodeRapidLayout.setHorizontalGroup(
+            jDialogListProductsCodeRapidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogListProductsCodeRapidLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogListProductsCodeRapidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 997, Short.MAX_VALUE)
+                    .addGroup(jDialogListProductsCodeRapidLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDialogListProductsCodeRapidLayout.setVerticalGroup(
+            jDialogListProductsCodeRapidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogListProductsCodeRapidLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialogListProductsCodeRapidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jDialogConfigHeaderCoupon.setTitle("Configuração Cupom");
+        jDialogConfigHeaderCoupon.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                jDialogConfigHeaderCouponWindowActivated(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                jDialogConfigHeaderCouponWindowDeactivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jDialogConfigHeaderCouponWindowOpened(evt);
+            }
+        });
+
+        jTextFieldLineTextCoupon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextFieldLineTextCoupon.setBorder(javax.swing.BorderFactory.createTitledBorder("Caracteres restantes:48"));
+        jTextFieldLineTextCoupon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldLineTextCouponActionPerformed(evt);
+            }
+        });
+        jTextFieldLineTextCoupon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldLineTextCouponKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldLineTextCouponKeyReleased(evt);
+            }
+        });
+
+        buttonGroupTextCoupon.add(jRadioButtonFooter);
+        jRadioButtonFooter.setText("Rodapé");
+        jRadioButtonFooter.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonFooterItemStateChanged(evt);
+            }
+        });
+
+        buttonGroupTextCoupon.add(jRadioButtonHeader);
+        jRadioButtonHeader.setSelected(true);
+        jRadioButtonHeader.setText("Cabeçalho");
+        jRadioButtonHeader.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonHeaderItemStateChanged(evt);
+            }
+        });
+
+        jButton1.setText("Limpar Última Linha");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Limpar Tudo");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Salvar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Sair");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButtonPrintHeaderCoupon.setText("Imprimir Teste");
+        jButtonPrintHeaderCoupon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrintHeaderCouponActionPerformed(evt);
+            }
+        });
+
+        jListHeaderCoupon.setBackground(new java.awt.Color(255, 255, 202));
+        jListHeaderCoupon.setBorder(javax.swing.BorderFactory.createTitledBorder("Cabeçalho Cupom"));
+        jListHeaderCoupon.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListHeaderCoupon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListHeaderCouponMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(jListHeaderCoupon);
+
+        jListFooterCoupon.setBackground(new java.awt.Color(255, 255, 202));
+        jListFooterCoupon.setBorder(javax.swing.BorderFactory.createTitledBorder("Rodapé Cupom"));
+        jListFooterCoupon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListFooterCouponMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(jListFooterCoupon);
+
+        javax.swing.GroupLayout jDialogConfigHeaderCouponLayout = new javax.swing.GroupLayout(jDialogConfigHeaderCoupon.getContentPane());
+        jDialogConfigHeaderCoupon.getContentPane().setLayout(jDialogConfigHeaderCouponLayout);
+        jDialogConfigHeaderCouponLayout.setHorizontalGroup(
+            jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                        .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButtonFooter)
+                            .addComponent(jRadioButtonHeader))
+                        .addGap(7, 7, 7)
+                        .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                                .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(10, 10, 10))
+                            .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                                .addComponent(jButtonPrintHeaderCoupon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
+                    .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                        .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldLineTextCoupon))
+                        .addGap(10, 10, 10))))
+        );
+        jDialogConfigHeaderCouponLayout.setVerticalGroup(
+            jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextFieldLineTextCoupon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                        .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButtonHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialogConfigHeaderCouponLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButtonFooter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jDialogConfigHeaderCouponLayout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPrintHeaderCoupon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        panelBackground.setBackground(new java.awt.Color(227, 227, 227));
+        panelBackground.setToolTipText("");
+
+        jPanelFooter.setBackground(new java.awt.Color(51, 51, 51));
+        jPanelFooter.setForeground(new java.awt.Color(51, 51, 51));
+        jPanelFooter.setPreferredSize(new java.awt.Dimension(800, 114));
+
+        jLabelFooterMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/footer_disponivel.png"))); // NOI18N
+        jLabelFooterMessage.setAutoscrolls(true);
+        jLabelFooterMessage.setPreferredSize(new java.awt.Dimension(1220, 76));
+
+        panelFooter.setBackground(new java.awt.Color(51, 51, 51));
+        panelFooter.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelFooter.setForeground(new java.awt.Color(227, 227, 227));
+
+        jLabelTerminalNumber.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelTerminalNumber.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelTerminalNumber.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTerminalNumber.setText("2");
+
+        jLabelIconUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[009697].png"))); // NOI18N
+
+        jLabelUser.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelUser.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelUser.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelUser.setText("User:");
+
+        jLabelTerminal.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelTerminal.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelTerminal.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTerminal.setText("Terminal:");
+
+        jLabelUserNameFooter.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelUserNameFooter.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelUserNameFooter.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelUserNameFooter.setText("Rafael");
+
+        jLabelTurn.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelTurn.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelTurn.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTurn.setText("Turno:");
+
+        jLabelTurnNumber.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelTurnNumber.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelTurnNumber.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTurnNumber.setText("1");
+
+        jLabelCoolingRate.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelCoolingRate.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelCoolingRate.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCoolingRate.setText("Serv. Ref.:");
+
+        jLabeCoolingRatelStatusService.setBackground(new java.awt.Color(227, 227, 227));
+        jLabeCoolingRatelStatusService.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabeCoolingRatelStatusService.setForeground(new java.awt.Color(255, 255, 255));
+        jLabeCoolingRatelStatusService.setText("OFF");
+
+        jLabelPrintService.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelPrintService.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelPrintService.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPrintService.setText("Serv. Print.:");
+
+        jLabelStatusPrintService.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelStatusPrintService.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelStatusPrintService.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelStatusPrintService.setText("ON");
+
+        jLabelCodeRapid.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelCodeRapid.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelCodeRapid.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCodeRapid.setText("Mod. Dig.:");
+
+        jLabeCodeStatusCodeRapid.setBackground(new java.awt.Color(227, 227, 227));
+        jLabeCodeStatusCodeRapid.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabeCodeStatusCodeRapid.setForeground(new java.awt.Color(255, 255, 255));
+        jLabeCodeStatusCodeRapid.setText("OFF");
+
+        jLabelCodeRapid1.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelCodeRapid1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabelCodeRapid1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCodeRapid1.setText("Mod. Frac.:");
+
+        jLabeCodeFractional.setBackground(new java.awt.Color(227, 227, 227));
+        jLabeCodeFractional.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabeCodeFractional.setForeground(new java.awt.Color(255, 255, 255));
+        jLabeCodeFractional.setText("OFF");
+
+        jLabelDateandHour.setBackground(new java.awt.Color(227, 227, 227));
+        jLabelDateandHour.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDateandHour.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDateandHour.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDateandHour.setText("EEE  d/MM/yyyy HH:mm:ss");
+
+        javax.swing.GroupLayout panelFooterLayout = new javax.swing.GroupLayout(panelFooter);
+        panelFooter.setLayout(panelFooterLayout);
+        panelFooterLayout.setHorizontalGroup(
+            panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFooterLayout.createSequentialGroup()
+                .addComponent(jLabelIconUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUserNameFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
+                .addComponent(jLabelTerminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTerminalNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelTurnNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelCodeRapid1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabeCodeFractional, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCodeRapid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabeCodeStatusCodeRapid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCoolingRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabeCoolingRatelStatusService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelPrintService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelStatusPrintService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelDateandHour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelFooterLayout.setVerticalGroup(
+            panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFooterLayout.createSequentialGroup()
+                .addGroup(panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelTerminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTerminalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelIconUser, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelUserNameFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTurnNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCoolingRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabeCoolingRatelStatusService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelPrintService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelStatusPrintService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCodeRapid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabeCodeStatusCodeRapid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCodeRapid1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabeCodeFractional, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelDateandHour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
+        );
+
+        javax.swing.GroupLayout jPanelFooterLayout = new javax.swing.GroupLayout(jPanelFooter);
+        jPanelFooter.setLayout(jPanelFooterLayout);
+        jPanelFooterLayout.setHorizontalGroup(
+            jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFooterLayout.createSequentialGroup()
+                .addGroup(jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelFooter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelFooterMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+        jPanelFooterLayout.setVerticalGroup(
+            jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFooterLayout.createSequentialGroup()
+                .addComponent(jLabelFooterMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+
+        jPanel_right.setBackground(new java.awt.Color(227, 227, 227));
+        jPanel_right.setMaximumSize(new java.awt.Dimension(600, 900));
+        jPanel_right.setRequestFocusEnabled(false);
+
+        jPanelTabela.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelTabela.setLayout(new java.awt.BorderLayout());
+
+        jTableItens.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTableItens.setDefaultRenderer(Object.class, new MyCellRenderer());
+        jTableItens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableItens.setMaximumSize(new java.awt.Dimension(6, 6));
+        jTableItens.setRowHeight(25);
+        jTableItens.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableItensMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableItens);
+
+        jPanelTabela.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jTextQuantidade.setFont(new java.awt.Font("Arial Black", 0, 27)); // NOI18N
+        jTextQuantidade.setForeground(new java.awt.Color(102, 102, 102));
+        jTextQuantidade.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextQuantidade.setText("1,000");
+        jTextQuantidade.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Quantidade", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextQuantidade.setMaximumSize(new java.awt.Dimension(65, 45));
+        jTextQuantidade.setPreferredSize(new java.awt.Dimension(30, 62));
+        jTextQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextQuantidadeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextQuantidadeFocusLost(evt);
+            }
+        });
+        jTextQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextQuantidadeActionPerformed(evt);
+            }
+        });
+        jTextQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextQuantidadeKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("X");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jTextValorUnitario.setEditable(false);
+        jTextValorUnitario.setBackground(new java.awt.Color(255, 255, 255));
+        jTextValorUnitario.setFont(new java.awt.Font("Arial Black", 0, 27)); // NOI18N
+        jTextValorUnitario.setForeground(new java.awt.Color(102, 102, 102));
+        jTextValorUnitario.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextValorUnitario.setText("0,00");
+        jTextValorUnitario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Valor unitário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextValorUnitario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextValorUnitarioActionPerformed(evt);
+            }
+        });
+
+        jTextProductCode.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        jTextProductCode.setForeground(new java.awt.Color(102, 102, 102));
+        jTextProductCode.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextProductCode.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Produto (Precione F4 para consultar produto)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextProductCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextProductCodeActionPerformed(evt);
+            }
+        });
+        jTextProductCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextProductCodeKeyReleased(evt);
+            }
+        });
+
+        jLabelDescricaoItem.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabelDescricaoItem.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelDescricaoItem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDescricaoItem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelDescricaoItem.setMaximumSize(new java.awt.Dimension(469, 45));
+        jLabelDescricaoItem.setMinimumSize(new java.awt.Dimension(25, 25));
+
+        jTextItens.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTextItens.setForeground(new java.awt.Color(102, 102, 102));
+        jTextItens.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextItens.setText("0");
+        jTextItens.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Itens", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+
+        jTextTotalItens.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTextTotalItens.setForeground(new java.awt.Color(102, 102, 102));
+        jTextTotalItens.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextTotalItens.setText("0");
+        jTextTotalItens.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Quantidade total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+
+        jTextValorTotalOperacao.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTextValorTotalOperacao.setForeground(new java.awt.Color(102, 102, 102));
+        jTextValorTotalOperacao.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextValorTotalOperacao.setText("0");
+        jTextValorTotalOperacao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Total Compra R$:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+
+        javax.swing.GroupLayout jPanel_rightLayout = new javax.swing.GroupLayout(jPanel_right);
+        jPanel_right.setLayout(jPanel_rightLayout);
+        jPanel_rightLayout.setHorizontalGroup(
+            jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_rightLayout.createSequentialGroup()
+                .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_rightLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel_rightLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jTextProductCode))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_rightLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_rightLayout.createSequentialGroup()
+                                .addComponent(jTextQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
+                                .addComponent(jTextValorUnitario))
+                            .addGroup(jPanel_rightLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jTextItens, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextTotalItens, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextValorTotalOperacao))))
+                    .addGroup(jPanel_rightLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabelDescricaoItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
+                .addGap(0, 0, 0))
+        );
+        jPanel_rightLayout.setVerticalGroup(
+            jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_rightLayout.createSequentialGroup()
+                .addComponent(jTextProductCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addComponent(jPanelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDescricaoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextItens, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextTotalItens, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextValorTotalOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1))
+        );
+
+        jPanel_left.setBackground(new java.awt.Color(227, 227, 227));
+        jPanel_left.setMaximumSize(new java.awt.Dimension(500, 800));
+        jPanel_left.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelLogio.setBackground(new java.awt.Color(227, 227, 227));
+        jPanelLogio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        System.out.println(BeanConfig.getLogo());
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo_sucesso.jpg"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelLogioLayout = new javax.swing.GroupLayout(jPanelLogio);
+        jPanelLogio.setLayout(jPanelLogioLayout);
+        jPanelLogioLayout.setHorizontalGroup(
+            jPanelLogioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLogioLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2))
+        );
+        jPanelLogioLayout.setVerticalGroup(
+            jPanelLogioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLogioLayout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel_left.add(jPanelLogio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanelFuncoes.setBackground(new java.awt.Color(227, 227, 227));
+
+        jButtonRegisterProduct.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonRegisterProduct.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonRegisterProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010996].png"))); // NOI18N
+        jButtonRegisterProduct.setText("Produtos (F6)");
+        jButtonRegisterProduct.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonRegisterProduct.setDefaultCapable(false);
+        jButtonRegisterProduct.setDisabledIcon(null);
+        jButtonRegisterProduct.setDisabledSelectedIcon(null);
+        jButtonRegisterProduct.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonRegisterProduct.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonRegisterProduct.setIconTextGap(10);
+        jButtonRegisterProduct.setPreferredSize(new java.awt.Dimension(165, 43));
+        jButtonRegisterProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterProductActionPerformed(evt);
+            }
+        });
+
+        jButtonConsultarProduto.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonConsultarProduto.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonConsultarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/11379_32x32.png"))); // NOI18N
+        jButtonConsultarProduto.setText("Consultar Produto (F4)");
+        jButtonConsultarProduto.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonConsultarProduto.setDefaultCapable(false);
+        jButtonConsultarProduto.setDisabledIcon(null);
+        jButtonConsultarProduto.setDisabledSelectedIcon(null);
+        jButtonConsultarProduto.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonConsultarProduto.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonConsultarProduto.setIconTextGap(10);
+        jButtonConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultarProdutoActionPerformed(evt);
+            }
+        });
+
+        jButtonCloseSale.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonCloseSale.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonCloseSale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[011001].png"))); // NOI18N
+        jButtonCloseSale.setText("Fechar Venda (F3)    ");
+        jButtonCloseSale.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonCloseSale.setDefaultCapable(false);
+        jButtonCloseSale.setDisabledIcon(null);
+        jButtonCloseSale.setDisabledSelectedIcon(null);
+        jButtonCloseSale.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonCloseSale.setIconTextGap(2);
+        jButtonCloseSale.setInheritsPopupMenu(true);
+        jButtonCloseSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseSaleActionPerformed(evt);
+            }
+        });
+
+        jButtonControlReserve.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonControlReserve.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonControlReserve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/multifile_small.png"))); // NOI18N
+        jButtonControlReserve.setText("Imprimir Último Cupom");
+        jButtonControlReserve.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonControlReserve.setDefaultCapable(false);
+        jButtonControlReserve.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonControlReserve.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonControlReserve.setIconTextGap(10);
+        jButtonControlReserve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonControlReserveActionPerformed(evt);
+            }
+        });
+
+        jButtonCancelOptions.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonCancelOptions.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonCancelOptions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/8443_32x32.png"))); // NOI18N
+        jButtonCancelOptions.setText("Cancelar Item (F5)");
+        jButtonCancelOptions.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonCancelOptions.setDefaultCapable(false);
+        jButtonCancelOptions.setDisabledIcon(null);
+        jButtonCancelOptions.setDisabledSelectedIcon(null);
+        jButtonCancelOptions.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonCancelOptions.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonCancelOptions.setIconTextGap(10);
+        jButtonCancelOptions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelOptionsActionPerformed(evt);
+            }
+        });
+
+        jButtonLogoffLogon.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonLogoffLogon.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonLogoffLogon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010972].png"))); // NOI18N
+        jButtonLogoffLogon.setText(" Login/Logoff(F8)");
+        jButtonLogoffLogon.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonLogoffLogon.setDefaultCapable(false);
+        jButtonLogoffLogon.setDisabledIcon(null);
+        jButtonLogoffLogon.setDisabledSelectedIcon(null);
+        jButtonLogoffLogon.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonLogoffLogon.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonLogoffLogon.setIconTextGap(10);
+        jButtonLogoffLogon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogoffLogonActionPerformed(evt);
+            }
+        });
+
+        jButtonRegisterUser.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonRegisterUser.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonRegisterUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[009697].png"))); // NOI18N
+        jButtonRegisterUser.setText("Usuários");
+        jButtonRegisterUser.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonRegisterUser.setDefaultCapable(false);
+        jButtonRegisterUser.setDisabledIcon(null);
+        jButtonRegisterUser.setDisabledSelectedIcon(null);
+        jButtonRegisterUser.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonRegisterUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonRegisterUser.setIconTextGap(10);
+        jButtonRegisterUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterUserActionPerformed(evt);
+            }
+        });
+
+        jButtonCloseSale4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonCloseSale4.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonCloseSale4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010987].png"))); // NOI18N
+        jButtonCloseSale4.setText("Categorias");
+        jButtonCloseSale4.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonCloseSale4.setDefaultCapable(false);
+        jButtonCloseSale4.setDisabledIcon(null);
+        jButtonCloseSale4.setDisabledSelectedIcon(null);
+        jButtonCloseSale4.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonCloseSale4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonCloseSale4.setIconTextGap(10);
+        jButtonCloseSale4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseSale4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelFuncoesLayout = new javax.swing.GroupLayout(jPanelFuncoes);
+        jPanelFuncoes.setLayout(jPanelFuncoesLayout);
+        jPanelFuncoesLayout.setHorizontalGroup(
+            jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFuncoesLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonRegisterProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(jButtonConsultarProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(jButtonCloseSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonCancelOptions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelFuncoesLayout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButtonRegisterUser, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonLogoffLogon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFuncoesLayout.createSequentialGroup()
+                            .addGap(2, 2, 2)
+                            .addComponent(jButtonCloseSale4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFuncoesLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jButtonControlReserve, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        jPanelFuncoesLayout.setVerticalGroup(
+            jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFuncoesLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonLogoffLogon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCloseSale, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCancelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRegisterUser, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCloseSale4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanelFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonRegisterProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonControlReserve, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel_left.add(jPanelFuncoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 205, 501, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/reports/Logo UPmarket_Header2.png"))); // NOI18N
+        jPanel_left.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 535, 111, 46));
+
+        javax.swing.GroupLayout panelBackgroundLayout = new javax.swing.GroupLayout(panelBackground);
+        panelBackground.setLayout(panelBackgroundLayout);
+        panelBackgroundLayout.setHorizontalGroup(
+            panelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackgroundLayout.createSequentialGroup()
+                .addComponent(jPanelFooter, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
+                .addGap(2, 2, 2))
+            .addGroup(panelBackgroundLayout.createSequentialGroup()
+                .addComponent(jPanel_right, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(jPanel_left, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelBackgroundLayout.setVerticalGroup(
+            panelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackgroundLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(panelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBackgroundLayout.createSequentialGroup()
+                        .addComponent(jPanel_left, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE))
+                    .addComponent(jPanel_right, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelFooter, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
+        );
+
+        jMenuArquivo.setText("Arquivo");
+
+        jMenuItemClient.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemClient.setText("Cadastro de Cliente");
+        jMenuItemClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemClientActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemClient);
+
+        jMenuItemCadastrarProdutos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        jMenuItemCadastrarProdutos.setText("Cadastrar Produtos");
+        jMenuItemCadastrarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarProdutosActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemCadastrarProdutos);
+
+        jMenuItemRegisterCard.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemRegisterCard.setText("Cadastrar Cartão");
+        jMenuItemRegisterCard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegisterCardActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemRegisterCard);
+
+        jMenuBar1.add(jMenuArquivo);
+
+        jMenuControl.setText("Controle");
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem2.setText("Controle de Estoque");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenuControl.add(jMenuItem2);
+
+        jMenuItemAllSales.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemAllSales.setText("Consultar Vendas");
+        jMenuItemAllSales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAllSalesActionPerformed(evt);
+            }
+        });
+        jMenuControl.add(jMenuItemAllSales);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem4.setText("Consultar Produtos Vendidos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuControl.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem5.setText("Contas a Receber");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenuControl.add(jMenuItem5);
+
+        jMenuBar1.add(jMenuControl);
+
+        jMenuAction.setText("Ações");
+
+        jMenuItemCodeRapid.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItemCodeRapid.setText("Funçao Código Rápido");
+        jMenuItemCodeRapid.setEnabled(false);
+        jMenuItemCodeRapid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCodeRapidActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemCodeRapid);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItem3.setText("Função Venda Fracionada");
+        jMenuItem3.setEnabled(false);
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItem3);
+
+        jMenuItemFecharVenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItemFecharVenda.setText("Fechar Venda");
+        jMenuItemFecharVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFecharVendaActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemFecharVenda);
+
+        jMenuItemConsultarProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        jMenuItemConsultarProduto.setText("Consultar Produto");
+        jMenuItemConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultarProdutoActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemConsultarProduto);
+
+        jMenuItemCancelamentoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        jMenuItemCancelamentoItem.setText("Cancelamento Item");
+        jMenuItemCancelamentoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCancelamentoItemActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemCancelamentoItem);
+
+        jMenuItemListProductCodeRapid.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        jMenuItemListProductCodeRapid.setText("Lista de Produtos sem Código de Barra");
+        jMenuItemListProductCodeRapid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemListProductCodeRapidActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemListProductCodeRapid);
+
+        jMenuItemQuantidadeItens.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+        jMenuItemQuantidadeItens.setText("Quantidade Itens");
+        jMenuItemQuantidadeItens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemQuantidadeItensActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemQuantidadeItens);
+
+        jMenuItemAumentarQuantidade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_UP, 0));
+        jMenuItemAumentarQuantidade.setText("Aumentar Quantidade");
+        jMenuItemAumentarQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAumentarQuantidadeActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemAumentarQuantidade);
+
+        jMenuItemDiminuirQuantidade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DOWN, 0));
+        jMenuItemDiminuirQuantidade.setText("Diminuir Quantidade");
+        jMenuItemDiminuirQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDiminuirQuantidadeActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemDiminuirQuantidade);
+
+        jMenuItemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemSair.setText("Sair");
+        jMenuItemSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSairActionPerformed(evt);
+            }
+        });
+        jMenuAction.add(jMenuItemSair);
+
+        jMenuBar1.add(jMenuAction);
+
+        jMenuCashier.setText("Caixa");
+        jMenuCashier.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenuCashierMenuSelected(evt);
+            }
+        });
+
+        jMenuItemOpenCashier.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemOpenCashier.setText("Abrir Caixa");
+        jMenuItemOpenCashier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOpenCashierActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItemOpenCashier);
+
+        jMenuItemInsertValueCashier.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemInsertValueCashier.setText("Inserção Caixa");
+        jMenuItemInsertValueCashier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInsertValueCashierActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItemInsertValueCashier);
+
+        jMenuItemRemoveValueCashier.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemRemoveValueCashier.setText("Sangria Caixa");
+        jMenuItemRemoveValueCashier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRemoveValueCashierActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItemRemoveValueCashier);
+
+        jMenuItemCloseCashier.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemCloseCashier.setText("Fechar Caixa");
+        jMenuItemCloseCashier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCloseCashierActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItemCloseCashier);
+
+        jMenuItemHistoryClosures.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemHistoryClosures.setText("Histórico de Fechamentos");
+        jMenuItemHistoryClosures.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHistoryClosuresActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItemHistoryClosures);
+
+        //jMenuItem1.setVisible(false);
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Abrir Gaveta");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuCashier.add(jMenuItem1);
+
+        jMenuBar1.add(jMenuCashier);
+
+        jMenu1.setText("Configurações");
+
+        jCheckBoxMenuItemNormalPrice.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.CTRL_MASK));
+        buttonGroupTABPrice.add(jCheckBoxMenuItemNormalPrice);
+        jCheckBoxMenuItemNormalPrice.setSelected(true);
+        jCheckBoxMenuItemNormalPrice.setText("Preço Normal");
+        jCheckBoxMenuItemNormalPrice.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxMenuItemNormalPriceItemStateChanged(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItemNormalPrice);
+
+        jCheckBoxMenuItemPriceTAB1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.CTRL_MASK));
+        buttonGroupTABPrice.add(jCheckBoxMenuItemPriceTAB1);
+        jCheckBoxMenuItemPriceTAB1.setText("Preço TAB1");
+        jCheckBoxMenuItemPriceTAB1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxMenuItemPriceTAB1ItemStateChanged(evt);
+            }
+        });
+        jCheckBoxMenuItemPriceTAB1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemPriceTAB1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItemPriceTAB1);
+
+        jCheckBoxMenuItemPriceTAB2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
+        buttonGroupTABPrice.add(jCheckBoxMenuItemPriceTAB2);
+        jCheckBoxMenuItemPriceTAB2.setText("Preço TAB2");
+        jCheckBoxMenuItemPriceTAB2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxMenuItemPriceTAB2ItemStateChanged(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItemPriceTAB2);
+
+        jRadioButtonMenuItemPrintService.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        jRadioButtonMenuItemPrintService.setText("Serviço de Impressão");
+        jRadioButtonMenuItemPrintService.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonMenuItemPrintServiceItemStateChanged(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItemPrintService);
+
+        jRadioButtonMenuItemCoolingRate.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jRadioButtonMenuItemCoolingRate.setText("Serviço de Refrigeração");
+        jRadioButtonMenuItemCoolingRate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonMenuItemCoolingRateItemStateChanged(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItemCoolingRate);
+
+        jRadioButtonMenuItemRateCigarretePayCard.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        jRadioButtonMenuItemRateCigarretePayCard.setText("Taxa Pagamento com Cartão(Cigarros)");
+        jRadioButtonMenuItemRateCigarretePayCard.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButtonMenuItemRateCigarretePayCardItemStateChanged(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItemRateCigarretePayCard);
+
+        jMenuItemConfigureHeaderFooterCoupon.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemConfigureHeaderFooterCoupon.setText("Configurar Cabeçalho/Rodapé Cupom");
+        jMenuItemConfigureHeaderFooterCoupon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConfigureHeaderFooterCouponActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemConfigureHeaderFooterCoupon);
+
+        jMenuItemLoadImageLogo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemLoadImageLogo.setText("Configurar Imagem Logo");
+        jMenuItemLoadImageLogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLoadImageLogoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemLoadImageLogo);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Gerenciamento");
+
+        jMenuItemReports.setText("Relátorios");
+        jMenuItemReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemReportsActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemReports);
+
+        jMenuItemCostOperate.setText("Custo Operacional");
+        jMenuItemCostOperate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCostOperateActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemCostOperate);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Ajuda");
+
+        jMenuItemHideMenuBar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
+        jMenuItemHideMenuBar.setText("Ocultar Barra de Menu");
+        jMenuItemHideMenuBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHideMenuBarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItemHideMenuBar);
+
+        jMenuItemAbout.setText("Sobre");
+        jMenuItemAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAboutActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItemAbout);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        setBounds(0, 0, 1099, 772);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemFecharVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFecharVendaActionPerformed
+        fnCloseSale();
+    }//GEN-LAST:event_jMenuItemFecharVendaActionPerformed
+
+    private void jMenuItemConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultarProdutoActionPerformed
+        Dimension tamanhoDialogMain = getSize();
+        Dimension tamanhoDialog1 = jDialogSearchProduct.getPreferredSize();
+        Point loc = getLocation();
+        jDialogSearchProduct.setLocation(
+                (tamanhoDialogMain.width - tamanhoDialog1.width) / 2 + loc.x,
+                (tamanhoDialogMain.height - tamanhoDialog1.height) / 2 + loc.y);
+        jDialogSearchProduct.setModal(true);
+        jDialogSearchProduct.pack();
+        jDialogSearchProduct.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConsultarProdutoActionPerformed
+
+    private void jMenuItemQuantidadeItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuantidadeItensActionPerformed
+        jTextQuantidade.requestFocus(true);
+    }//GEN-LAST:event_jMenuItemQuantidadeItensActionPerformed
+
+    private void jMenuItemAumentarQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAumentarQuantidadeActionPerformed
+        if (!isCodeRapid) {
+
+            quantityItem = Double.parseDouble((jTextQuantidade.getText().isEmpty()) ? "0.000" : jTextQuantidade.getText().replace(",", "."));
+            quantityItem++;
+            jTextQuantidade.setText(cd_3.format(quantityItem).replace(".", ","));
+        }
+    }//GEN-LAST:event_jMenuItemAumentarQuantidadeActionPerformed
+
+    private void jMenuItemDiminuirQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDiminuirQuantidadeActionPerformed
+        if (!isCodeRapid) {
+            if ((jTextQuantidade.getText().isEmpty()) || (Double.parseDouble(jTextQuantidade.getText().replace(",", ".")) < 1)) {
+
+                jTextQuantidade.setText("1,000");
+            } else {
+                if (!jTextQuantidade.getText().equals("1,000")) {
+                    if (!isCodeRapid) {
+
+                        quantityItem = Double.parseDouble((jTextQuantidade.getText().isEmpty()) ? "0.000" : jTextQuantidade.getText().replace(",", "."));
+                        quantityItem--;
+                        jTextQuantidade.setText(cd_3.format(quantityItem).replace(".", ","));
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItemDiminuirQuantidadeActionPerformed
+
+    private void jMenuItemCancelamentoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCancelamentoItemActionPerformed
+
+        fnCancel();
+
+    }//GEN-LAST:event_jMenuItemCancelamentoItemActionPerformed
+
+    private void jMenuItemOpenCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpenCashierActionPerformed
+        if (idCashier == null) {
+            if (!BeanLogin.isIsCashierAccess()) {
+                JOptionPane.showMessageDialog(this, "Usuário '"
+                        + BeanLogin.getUser()
+                        + "' não possui autorização para esta função.\n\t    [ Abertura de caixa; Atalho: Alt+O ]",
+                        "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                new JDialogOpenCashier_4_1(this, true).setVisible(true);
+                idCashier = ClassCashier.isOpened(jLabelTerminalNumber.getText());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "O caixa já foi aberto neste turno.", "Mensagem.", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemOpenCashierActionPerformed
+
+    private void jMenuItemCloseCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCloseCashierActionPerformed
+        System.err.println("CODE CASHIER:::" + idCashier);
+        if (idCashier != null) {
+            if (codeCoupon == null) {
+
+                if (!BeanLogin.isIsCashierAccess()) {
+                    JOptionPane.showMessageDialog(this, "Usuário '"
+                            + BeanLogin.getUser()
+                            + "' não possui autorização para esta função.\n\t    [ Fechamento de caixa; Atalho: Alt+C ]",
+                            "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    new JDialogCloseCashier_4_2(this, true).setVisible(true);
+                }
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "O turno não pode ser fechado com um cupom aberto.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+        } else {
+
+            int opcao = JOptionPane.showConfirmDialog(this, "Turno não iniciado. \n Inicie o turno para realizar esta operação. \n Deseja iniciar a operação de abertura de turno agora?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+            if (opcao == 0) {
+
+                new JDialogOpenCashier_4_1(this, true).setVisible(true);
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItemCloseCashierActionPerformed
+
+    private void jMenuItemRemoveValueCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoveValueCashierActionPerformed
+        if (idCashier != null) {
+            if (!BeanLogin.isIsCashierAccess()) {
+                JOptionPane.showMessageDialog(this, "Usuário '"
+                        + BeanLogin.getUser()
+                        + "' não possui autorização para esta função.\n\t    [ Sangria de caixa; Atalho: Alt+R ]",
+                        "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                new JDialogRetiradaCaixa_4_5(this, true).setVisible(true);
+            }
+
+        } else {
+
+            int opcao = JOptionPane.showConfirmDialog(this, "Turno não iniciado. \n Inicie o turno para realizar esta operação. \n Deseja iniciar a operação de abertura de turno agora?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+            if (opcao == 0) {
+
+                if (!BeanLogin.isIsCashierAccess()) {
+                    JOptionPane.showMessageDialog(this, "Usuário '"
+                            + BeanLogin.getUser()
+                            + "' não possui autorização para esta função.\n\t    [ Abertura de caixa; Atalho: Alt+O ]",
+                            "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    new JDialogOpenCashier_4_1(this, true).setVisible(true);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItemRemoveValueCashierActionPerformed
+
+    private void jMenuItemInsertValueCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInsertValueCashierActionPerformed
+        if (idCashier != null) {
+            if (!BeanLogin.isIsCashierAccess()) {
+                JOptionPane.showMessageDialog(this, "Usuário '"
+                        + BeanLogin.getUser()
+                        + "' não possui autorização para esta função.\n\t    [ Inserção caixa; Atalho: Alt+I ]",
+                        "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                new JDialogInsercaoCaixa_4_4(this, true).setVisible(true);
+            }
+
+        } else {
+
+            int opcao = JOptionPane.showConfirmDialog(this, "Turno não iniciado. \n Inicie o turno para realizar esta operação. \n Deseja iniciar a operação de abertura de turno agora?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+            if (opcao == 0) {
+
+                if (!BeanLogin.isIsCashierAccess()) {
+                    JOptionPane.showMessageDialog(this, "Usuário '"
+                            + BeanLogin.getUser()
+                            + "' não possui autorização para esta função.\n\t    [ Abertura de caixa; Atalho: Alt+O ]",
+                            "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    new JDialogOpenCashier_4_1(this, true).setVisible(true);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItemInsertValueCashierActionPerformed
+
+    private void jTextProductCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextProductCodeActionPerformed
+        
+        if (!jTextProductCode.getText().isEmpty()) {
+            if (idCashier != null) {
+                functionSale();
+            } else {
+                int opcao = JOptionPane.showConfirmDialog(this, "Turno não iniciado. \n Inicie o turno para realizar esta operação. \n Deseja iniciar a operação de abertura de turno agora?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+                if (opcao == 0) {
+
+                    new JDialogOpenCashier_4_1(this, true).setVisible(true);
+
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextProductCodeActionPerformed
+
+    private void jButtonRegisterProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterProductActionPerformed
+        if (!BeanLogin.isIsRegisterProductsAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+            jTextProductCode.requestFocus(true);
+        } else {
+            new JDialogProduct_2_0(this, true).setVisible(true);
+            jTextProductCode.requestFocus(true);
+        }
+    }//GEN-LAST:event_jButtonRegisterProductActionPerformed
+
+    private void jButtonConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarProdutoActionPerformed
+        Dimension tamanhoDialogMain = getSize();
+        Dimension tamanhoDialog1 = jDialogSearchProduct.getPreferredSize();
+        Point loc = getLocation();
+        jDialogSearchProduct.setLocation(
+                (tamanhoDialogMain.width - tamanhoDialog1.width) / 2 + loc.x,
+                (tamanhoDialogMain.height - tamanhoDialog1.height) / 2 + loc.y);
+        jDialogSearchProduct.setModal(true);
+        jDialogSearchProduct.pack();
+        jDialogSearchProduct.setVisible(true);
+        jTextProductCode.requestFocus(true);
+    }//GEN-LAST:event_jButtonConsultarProdutoActionPerformed
+
+    private void jButtonCloseSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseSaleActionPerformed
+        
+        fnCloseSale();
+        
+    }//GEN-LAST:event_jButtonCloseSaleActionPerformed
+
+    private void jButtonCloseSale4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseSale4ActionPerformed
+        if (!BeanLogin.isIsRegisterCategoryAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogCategory(this, true).setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonCloseSale4ActionPerformed
+
+    private void jButtonControlReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonControlReserveActionPerformed
+        //new JDialogTester(this, true).setVisible(true);
+        if (oldCodeCoupon != null) {
+            fnPrintLastCoupon();
+            jTextProductCode.requestFocus(true);
+        }
+    }//GEN-LAST:event_jButtonControlReserveActionPerformed
+
+    private void jButtonCancelOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelOptionsActionPerformed
+
+        fnCancel();
+
+    }//GEN-LAST:event_jButtonCancelOptionsActionPerformed
+
+    private void jTextQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextQuantidadeActionPerformed
+
+        if (!isCodeRapid) {
+
+            jTextProductCode.requestFocus(true);
+
+        } else {
+
+            if (fnValidQtd()) {
+                functionSaleStandartProduct(jTextProductCode.getText());
+            } else {
+                jTextQuantidade.setText("0,00");
+                jTextQuantidade.requestFocus(true);
+            }
+        }
+    }//GEN-LAST:event_jTextQuantidadeActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+      
+        //valueCoolingRate = ClassProduct.coolingRate();//Carrega taxa de refrigeração na variavel: valueCoolingRate
+        //functionControlExpiring();//verifica lotes a vencer
+       // ClassConfig.setIsFrameAdmin(false);
+  
+        try {
+            jLabelTerminalNumber.setText(ClassValidTerminal.valid_terminal());
+        } catch (IOException ex) {
+            //newXML.generateLog(ex.toString());
+            System.err.println("ERROR::" + ex);
+
+            Logger.getLogger(JFrameSale_1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        idCashier = ClassCashier.isOpened(jLabelTerminalNumber.getText());//verifica se o caixa esta aberto neste terminal e se verdadeiro carrega o id do caixa
+        System.err.println("CODE CASHIER:::" + idCashier);
+        fnOpenWindow();
+        fnLoadConfig();
+        fnLoadXMLTextCoupon();        
+        refresh.start();
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jMenuItemCadastrarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarProdutosActionPerformed
+        if (!BeanLogin.isIsRegisterProductsAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogProduct_2_0(this, true).setVisible(true);
+            jTextProductCode.requestFocus(true);
+        }
+    }//GEN-LAST:event_jMenuItemCadastrarProdutosActionPerformed
+
+    private void jButtonLogoffLogonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoffLogonActionPerformed
+
+        new JDialogLogin(this, true).setVisible(true);
+        fnOpenWindow();
+
+    }//GEN-LAST:event_jButtonLogoffLogonActionPerformed
+
+    private void jButtonRegisterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterUserActionPerformed
+        if (!BeanLogin.isIsRegisterUserAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogUser(this, true).setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonRegisterUserActionPerformed
+
+    private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
+        int option;
+        option = JOptionPane.showConfirmDialog(this, "Deseja realmente sair?", "Alerta!", JOptionPane.YES_NO_OPTION);
+        if (option == 0) {
+
+            System.exit(0);
+
+        }
+    }//GEN-LAST:event_jMenuItemSairActionPerformed
+
+    private void jMenuItemCodeRapidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCodeRapidActionPerformed
+        if (idCashier != null) {
+            if (isCodeRapid) {
+
+                isCodeRapid = false;
+                jTextProductCode.setText("");
+                jTextQuantidade.setText("1,000");
+                jLabeCodeStatusCodeRapid.setText("OFF");
+                jTextProductCode.requestFocus(true);
+
+            } else {
+
+                isCodeRapid = true;
+                jLabeCodeStatusCodeRapid.setText("ON");
+                jTextProductCode.setText("0000000000001");
+                jTextQuantidade.requestFocus(true);
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItemCodeRapidActionPerformed
+
+    private void jTextQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextQuantidadeKeyReleased
+        if (isCodeRapid) {
+
+            if (!jTextQuantidade.getText().isEmpty()) {
+
+                JTextFieldTools.formatJTextNumber(jTextQuantidade);
+
+            }
+
+        } else if (isFractional) {
+
+            JTextFieldTools.formatJTextNumberFractional(jTextQuantidade);
+
+        } else {
+
+            if ((evt.getKeyCode() != KeyEvent.VK_UP) && (evt.getKeyCode() != KeyEvent.VK_DOWN) && (evt.getKeyCode() != KeyEvent.VK_F8) && (evt.getKeyCode() != KeyEvent.VK_ENTER)) {
+
+                JTextFieldTools.validarValor(jTextQuantidade);
+
+            }
+        }
+    }//GEN-LAST:event_jTextQuantidadeKeyReleased
+
+    private void jCheckBoxMenuItemPriceTAB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemPriceTAB1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxMenuItemPriceTAB1ActionPerformed
+
+    private void jCheckBoxMenuItemNormalPriceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemNormalPriceItemStateChanged
+        jTextValorUnitario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Valor unitário R$", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(102, 102, 102))); // NOI18N
+    }//GEN-LAST:event_jCheckBoxMenuItemNormalPriceItemStateChanged
+
+    private void jCheckBoxMenuItemPriceTAB1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemPriceTAB1ItemStateChanged
+        jTextValorUnitario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Valor unitário R$[Tab1]", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(102, 102, 102))); // NOI18N
+    }//GEN-LAST:event_jCheckBoxMenuItemPriceTAB1ItemStateChanged
+
+    private void jCheckBoxMenuItemPriceTAB2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemPriceTAB2ItemStateChanged
+        jTextValorUnitario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Valor unitário R$[Tab2]", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(102, 102, 102))); // NOI18N
+    }//GEN-LAST:event_jCheckBoxMenuItemPriceTAB2ItemStateChanged
+
+    private void jTextFieldBarCodeSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBarCodeSearchActionPerformed
+        if (ClassSale.searchProduct(jTextFieldBarCodeSearch.getText(), false, 0, jCheckBoxMenuItemPriceTAB1.isSelected(), jCheckBoxMenuItemPriceTAB2.isSelected()) == 0) {
+
+            jTextFieldDescriptionSearch.setText(Sale.getProductName());
+            jTextFieldValueProductSearch.setText(v.format(Sale.getProductPrice()).replace(".", ","));
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Produto não Cadastrado");
+            jTextFieldBarCodeSearch.setText("");
+        }
+    }//GEN-LAST:event_jTextFieldBarCodeSearchActionPerformed
+
+    private void jTextFieldDescriptionSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDescriptionSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDescriptionSearchActionPerformed
+
+    private void jTextFieldValueProductSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldValueProductSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldValueProductSearchActionPerformed
+
+    private void jTextFieldBarCodeSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBarCodeSearchKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            jDialogSearchProduct.dispose();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            jTextFieldBarCodeSearch.setText("");
+        }
+    }//GEN-LAST:event_jTextFieldBarCodeSearchKeyPressed
+
+    private void jDialogSearchProductWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogSearchProductWindowActivated
+        jTextFieldBarCodeSearch.requestFocus(true);
+        //código para sair da JDialog com ESC
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+
+            @Override
+            public void eventDispatched(final AWTEvent event) {
+                if (event.getID() == KeyEvent.KEY_PRESSED) {
+                    final KeyEvent evt = (KeyEvent) event;
+
+                    if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+                        jDialogSearchProduct.dispose();
+
+                    }
+                }
+
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
+    }//GEN-LAST:event_jDialogSearchProductWindowActivated
+
+    private void jTextFieldBarCodeSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldBarCodeSearchMouseClicked
+        jTextFieldBarCodeSearch.setText("");
+    }//GEN-LAST:event_jTextFieldBarCodeSearchMouseClicked
+
+    private void jDialogSearchProductWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogSearchProductWindowClosed
+        jTextProductCode.requestFocus(true);
+        jTextFieldBarCodeSearch.setText("");
+        jTextFieldDescriptionSearch.setText("");
+        jTextFieldValueProductSearch.setText("");
+    }//GEN-LAST:event_jDialogSearchProductWindowClosed
+
+    private void jTextValorUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextValorUnitarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextValorUnitarioActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        if (BeanLogin.isIsCashierAccess()) {
+            JPanel jPanel = new JPanel();
+            JLabel jLabel = new JLabel("\n");
+            JPasswordField passwordField = new JPasswordField(15);
+            //passwordField.setEchoChar('*');
+            passwordField.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            passwordField.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Entre com o código de acesso:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+            jPanel.add(passwordField);
+
+            passwordField.requestFocus(true);
+
+            JOptionPane.showConfirmDialog(this, jPanel, "Acesso Restrito.", JOptionPane.PLAIN_MESSAGE);
+            System.err.println(passwordField.getText());
+            if (ClassUser.validatorCode(passwordField.getText())) {
+                PrintCoupon pc = new PrintCoupon();
+                pc.openDrawer();
+
+            } else if (!passwordField.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "Código inválido!");
+
+            }
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Acesso negado!", "Função Restrita.", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuCashierMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuCashierMenuSelected
+
+    }//GEN-LAST:event_jMenuCashierMenuSelected
+
+    private void jMenuItemRegisterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegisterCardActionPerformed
+        new JDialogRegisterCards(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemRegisterCardActionPerformed
+
+    private void jMenuItemReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportsActionPerformed
+        if (!BeanLogin.isIsReportAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogReports(this, true).setVisible(true);
+            jTextProductCode.requestFocus(true);
+        }
+    }//GEN-LAST:event_jMenuItemReportsActionPerformed
+
+    private void jMenuItemCostOperateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCostOperateActionPerformed
+        if (!BeanLogin.isIsCoastOperationAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogCostOperate(this, true).setVisible(true);
+            jTextProductCode.requestFocus(true);
+        }
+    }//GEN-LAST:event_jMenuItemCostOperateActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        fuction_control_reserve();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jTextQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextQuantidadeFocusLost
+        fnValidQtd();
+    }//GEN-LAST:event_jTextQuantidadeFocusLost
+
+    private void jDialogListProductsCodeRapidWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogListProductsCodeRapidWindowOpened
+
+    }//GEN-LAST:event_jDialogListProductsCodeRapidWindowOpened
+
+    private void jMenuItemListProductCodeRapidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListProductCodeRapidActionPerformed
+        Dimension tamanhoDialogMain = getSize();
+        Dimension tamanhoDialog1 = jDialogListProductsCodeRapid.getPreferredSize();
+        Point loc = getLocation();
+        jDialogListProductsCodeRapid.setLocation(
+                (tamanhoDialogMain.width - tamanhoDialog1.width) / 2 + loc.x,
+                (tamanhoDialogMain.height - tamanhoDialog1.height) / 2 + loc.y);
+        jDialogListProductsCodeRapid.setModal(true);
+        jDialogListProductsCodeRapid.pack();
+        jDialogListProductsCodeRapid.setVisible(true);
+    }//GEN-LAST:event_jMenuItemListProductCodeRapidActionPerformed
+
+    private void jList1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList1KeyPressed
+
+        if ((evt.getKeyCode() == KeyEvent.VK_UP)) {
+            if ((jList1.getSelectedIndex() >= 1)) {
+
+                jTextField1.setText(jList1.getModel().getElementAt(jList1.getSelectedIndex() - 1).toString().substring(0, jList1.getModel().getElementAt(jList1.getSelectedIndex() - 1).toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList1.getModel().getElementAt(jList1.getSelectedIndex()).toString().substring(0, jList1.getModel().getElementAt(jList1.getSelectedIndex()).toString().indexOf("-")).trim());
+            }
+
+        } else if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+
+            if ((jList1.getSelectedIndex()) == (jList1.getModel().getSize() - 1)) {
+
+                jTextField1.setText(jList1.getSelectedValue().toString().substring(0, jList1.getSelectedValue().toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList1.getModel().getElementAt(jList1.getSelectedIndex() + 1).toString().substring(0, jList1.getModel().getElementAt(jList1.getSelectedIndex() + 1).toString().indexOf("-")).trim());
+
+            }
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            jTextField1.setText(jList1.getSelectedValue().toString().substring(0, jList1.getSelectedValue().toString().indexOf("-")).trim());
+            jDialogListProductsCodeRapid.dispose();
+            jTextProductCode.setText(jTextField1.getText());
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+            jDialogListProductsCodeRapid.dispose();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+            jList2.requestFocus(true);
+            if ((jList1.getSelectedIndex()) == (jList1.getModel().getSize() - 1)) {
+                int dif = jList1.getModel().getSize() - jList2.getModel().getSize();
+                System.err.println("Dif List1::::" + dif);
+                jList2.setSelectedIndex(jList1.getSelectedIndex() - dif);
+            } else {
+                jList2.setSelectedIndex(jList1.getSelectedIndex());
+            }
+
+            jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+            jList1.clearSelection();
+        }
+    }//GEN-LAST:event_jList1KeyPressed
+
+    private void jList2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList2KeyPressed
+
+        if ((evt.getKeyCode() == KeyEvent.VK_UP)) {
+
+            if ((jList2.getSelectedIndex()) == (jList2.getModel().getSize() - 1)) {
+
+                jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+
+            } else if ((jList2.getSelectedIndex() >= 1)) {
+
+                jTextField1.setText(jList2.getModel().getElementAt(jList2.getSelectedIndex() - 1).toString().substring(0, jList2.getModel().getElementAt(jList2.getSelectedIndex() - 1).toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList2.getModel().getElementAt(jList2.getSelectedIndex()).toString().substring(0, jList2.getModel().getElementAt(jList2.getSelectedIndex()).toString().indexOf("-")).trim());
+            }
+
+        } else if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+
+            if ((jList2.getSelectedIndex()) == (jList2.getModel().getSize() - 1)) {
+
+                jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList2.getModel().getElementAt(jList2.getSelectedIndex() + 1).toString().substring(0, jList2.getModel().getElementAt(jList2.getSelectedIndex() + 1).toString().indexOf("-")).trim());
+
+            }
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+            jDialogListProductsCodeRapid.dispose();
+            jTextProductCode.setText(jTextField1.getText());
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+            jDialogListProductsCodeRapid.dispose();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (jList3.getModel().getSize() > 0) {
+                jList3.requestFocus(true);
+                if ((jList2.getSelectedIndex()) == (jList2.getModel().getSize() - 1)) {
+                    int dif = jList2.getModel().getSize() - jList3.getModel().getSize();
+                    System.err.println("Dif List2::::" + dif);
+                    jList3.setSelectedIndex(jList2.getSelectedIndex() - dif);
+                } else {
+                    jList3.setSelectedIndex(jList2.getSelectedIndex());
+                }
+
+                jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+                jList2.clearSelection();
+            }
+        } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+            jList1.requestFocus(true);
+            jList1.setSelectedIndex(jList2.getSelectedIndex());
+            jTextField1.setText(jList1.getSelectedValue().toString().substring(0, jList1.getSelectedValue().toString().indexOf("-")).trim());
+            jList2.clearSelection();
+
+        }
+
+    }//GEN-LAST:event_jList2KeyPressed
+
+    private void jList3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList3KeyPressed
+
+        if ((evt.getKeyCode() == KeyEvent.VK_UP)) {
+
+            if ((jList3.getSelectedIndex()) == (jList3.getModel().getSize() - 1)) {
+
+                jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+
+            } else if ((jList3.getSelectedIndex() >= 1)) {
+
+                jTextField1.setText(jList3.getModel().getElementAt(jList3.getSelectedIndex() - 1).toString().substring(0, jList3.getModel().getElementAt(jList3.getSelectedIndex() - 1).toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList3.getModel().getElementAt(jList3.getSelectedIndex()).toString().substring(0, jList3.getModel().getElementAt(jList3.getSelectedIndex()).toString().indexOf("-")).trim());
+            }
+
+        } else if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+
+            if ((jList3.getSelectedIndex()) == (jList3.getModel().getSize() - 1)) {
+
+                jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+
+            } else {
+
+                jTextField1.setText(jList3.getModel().getElementAt(jList3.getSelectedIndex() + 1).toString().substring(0, jList3.getModel().getElementAt(jList3.getSelectedIndex() + 1).toString().indexOf("-")).trim());
+
+            }
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+            jDialogListProductsCodeRapid.dispose();
+            jTextProductCode.setText(jTextField1.getText());
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+            jDialogListProductsCodeRapid.dispose();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+            jList2.requestFocus(true);
+            jList2.setSelectedIndex(jList3.getSelectedIndex());
+            jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+            jList3.clearSelection();
+        }
+    }//GEN-LAST:event_jList3KeyPressed
+
+    private void jDialogListProductsCodeRapidWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogListProductsCodeRapidWindowClosed
+
+        jList1.clearSelection();
+        jList2.clearSelection();
+        jList3.clearSelection();
+    }//GEN-LAST:event_jDialogListProductsCodeRapidWindowClosed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        if (evt.getClickCount() == 2) {
+
+            if (!jList1.isSelectionEmpty()) {
+                jTextField1.setText(jList1.getSelectedValue().toString().substring(0, jList1.getSelectedValue().toString().indexOf("-")).trim());
+                jList2.clearSelection();
+                jList3.clearSelection();
+                jDialogListProductsCodeRapid.dispose();
+                jTextProductCode.setText(jTextField1.getText());
+            }
+
+        } else if (!jList1.isSelectionEmpty() && evt.getClickCount() == 1) {
+            jTextField1.setText(jList1.getSelectedValue().toString().substring(0, jList1.getSelectedValue().toString().indexOf("-")).trim());
+            jList2.clearSelection();
+            jList3.clearSelection();
+            //jTextField1.requestFocus(true);
+        }
+    }//GEN-LAST:event_jList1MouseClicked
+
+    private void jList2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList2MouseClicked
+        if (evt.getClickCount() == 2) {
+
+            if (!jList2.isSelectionEmpty()) {
+                jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+                jList1.clearSelection();
+                jList3.clearSelection();
+                jDialogListProductsCodeRapid.dispose();
+                jTextProductCode.setText(jTextField1.getText());
+            }
+
+        } else if (!jList2.isSelectionEmpty() && evt.getClickCount() == 1) {
+            jTextField1.setText(jList2.getSelectedValue().toString().substring(0, jList2.getSelectedValue().toString().indexOf("-")).trim());
+            jList1.clearSelection();
+            jList3.clearSelection();
+            //jTextField1.requestFocus(true);
+        }
+    }//GEN-LAST:event_jList2MouseClicked
+
+    private void jList3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MouseClicked
+        if (evt.getClickCount() == 2) {
+
+            if (!jList3.isSelectionEmpty()) {
+                jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+                jList2.clearSelection();
+                jList1.clearSelection();
+                jDialogListProductsCodeRapid.dispose();
+                jTextProductCode.setText(jTextField1.getText());
+            }
+
+        } else if (!jList3.isSelectionEmpty() && evt.getClickCount() == 1) {
+            jTextField1.setText(jList3.getSelectedValue().toString().substring(0, jList3.getSelectedValue().toString().indexOf("-")).trim());
+            jList2.clearSelection();
+            jList1.clearSelection();
+            //jTextField1.requestFocus(true);
+        }
+    }//GEN-LAST:event_jList3MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        jDialogListProductsCodeRapid.dispose();
+        jTextProductCode.setText(jTextField1.getText());
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+
+            if (!jList1.isSelectionEmpty()) {
+                jList1.requestFocus(true);
+            } else if (!jList2.isSelectionEmpty()) {
+                jList2.requestFocus(true);
+            } else if (!jList3.isSelectionEmpty()) {
+                jList3.requestFocus(true);
+            }
+
+        } else if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+
+            jDialogListProductsCodeRapid.dispose();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jList1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jList1FocusLost
+        jList1.clearSelection();
+
+    }//GEN-LAST:event_jList1FocusLost
+
+    private void jList2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jList2FocusLost
+        jList2.clearSelection();
+
+    }//GEN-LAST:event_jList2FocusLost
+
+    private void jList3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jList3FocusLost
+        jList3.clearSelection();
+    }//GEN-LAST:event_jList3FocusLost
+
+    private void jDialogListProductsCodeRapidWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogListProductsCodeRapidWindowActivated
+        fnListProductCodeRapid();
+        //código para sair da JDialog com ESC
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+
+            @Override
+            public void eventDispatched(final AWTEvent event) {
+                if (event.getID() == KeyEvent.KEY_PRESSED) {
+                    final KeyEvent evt = (KeyEvent) event;
+
+                    if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+                        jDialogListProductsCodeRapid.dispose();
+
+                    }
+                }
+
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
+    }//GEN-LAST:event_jDialogListProductsCodeRapidWindowActivated
+
+    private void jTextProductCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextProductCodeKeyReleased
+        //JTextFieldTools.validarBarCode(jTextProductCode);
+    }//GEN-LAST:event_jTextProductCodeKeyReleased
+
+    private void jMenuItemHistoryClosuresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoryClosuresActionPerformed
+        if (!BeanLogin.isIsCashierAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '"
+                    + BeanLogin.getUser()
+                    + "' não possui autorização para esta função.\n\t[ Inserção caixa; Atalho: Alt+I ]",
+                    "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogCashierHistory_4_6(this, true).setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItemHistoryClosuresActionPerformed
+
+    private void jMenuItemAllSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAllSalesActionPerformed
+        fuction_all_sales();
+    }//GEN-LAST:event_jMenuItemAllSalesActionPerformed
+
+    private void jRadioButtonMenuItemPrintServiceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemPrintServiceItemStateChanged
+
+        boolean isSelected = jRadioButtonMenuItemPrintService.isSelected();
+        isPrintService = isSelected;
+        String str_status = (isSelected ? "ON" : "OFF");
+        jLabelStatusPrintService.setText(str_status);
+        List<String> status = new ArrayList<>();
+        status.add("isPrintService");
+        status.add(String.valueOf(isSelected));
+        System.err.println("Status Print Service::" + status.get(status.indexOf("isPrintService") + 1));
+        String file = "/config.xml";
+        File path = new File(System.getProperty("user.dir") + file);
+        XML_Config.saveConfig(path.getPath(), status);
+        BeanConfig beanConfig = new BeanConfig();
+
+    }//GEN-LAST:event_jRadioButtonMenuItemPrintServiceItemStateChanged
+
+    private void jRadioButtonMenuItemCoolingRateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemCoolingRateItemStateChanged
+
+        if (!BeanLogin.isIsConfigRates()) {
+            JOptionPane.showMessageDialog(this, "Usuário '"
+                    + BeanLogin.getUser()
+                    + "' não possui autorização para esta função.\n\t[ Connfiguração de Taxa Refrigeração; Atalho: Ctrl+E ]",
+                    "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            boolean isSelected = jRadioButtonMenuItemCoolingRate.isSelected();
+            isCoolingRate = isSelected;
+            String str_status = (isSelected ? "ON" : "OFF");
+            jLabeCoolingRatelStatusService.setText(str_status);
+            List<String> status = new ArrayList<>();
+            status.add("isCoolRate");
+            status.add(String.valueOf(isSelected));
+            System.err.println("Status Cooling Rate::" + status.get(status.indexOf("isCoolRate") + 1));
+            String file = "/config.xml";
+            File path = new File(System.getProperty("user.dir") + file);
+            XML_Config.saveConfig(path.getPath(), status);
+            BeanConfig beanConfig = new BeanConfig();
+        }
+
+    }//GEN-LAST:event_jRadioButtonMenuItemCoolingRateItemStateChanged
+
+    private void jRadioButtonMenuItemRateCigarretePayCardItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemRateCigarretePayCardItemStateChanged
+
+        if (!BeanLogin.isIsConfigRates()) {
+            JOptionPane.showMessageDialog(this, "Usuário '"
+                    + BeanLogin.getUser()
+                    + "' não possui autorização para esta função.\n\t    [ Connfiguração de Taxa pagamento cartão; Atalho: Ctrl+Y ]",
+                    "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+            boolean isSelected = jRadioButtonMenuItemRateCigarretePayCard.isSelected();
+            List<String> status = new ArrayList<>();
+            status.add("isAddCigarreteRate");
+            status.add(String.valueOf(isSelected));
+            System.err.println("Status Cigarrete Pay Card Rate::" + status.get(status.indexOf("isAddCigarreteRate") + 1));
+            String file = "/config.xml";
+            File path = new File(System.getProperty("user.dir") + file);
+            XML_Config.saveConfig(path.getPath(), status);
+            BeanConfig beanConfig = new BeanConfig();
+
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItemRateCigarretePayCardItemStateChanged
+
+    private void jTextQuantidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextQuantidadeFocusGained
+
+        if (isCodeRapid) {
+            jTextQuantidade.setSelectionStart(0);
+            jTextQuantidade.setSelectionEnd(jTextQuantidade.getText().length());
+        } else {
+            jTextQuantidade.setSelectionStart(0);
+            jTextQuantidade.setSelectionEnd(jTextQuantidade.getText().length());
+        }
+    }//GEN-LAST:event_jTextQuantidadeFocusGained
+
+    private void jTextFieldLineTextCouponKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldLineTextCouponKeyReleased
+        if (jTextFieldLineTextCoupon.getText().length() == 49) {
+
+            jTextFieldLineTextCoupon.setText(jTextFieldLineTextCoupon.getText().substring(0, jTextFieldLineTextCoupon.getText().length() - 1));
+        }
+        int caracter = 48 - jTextFieldLineTextCoupon.getText().length();
+        jTextFieldLineTextCoupon.setBorder(javax.swing.BorderFactory.createTitledBorder("Caracteres restantes:" + caracter));
+    }//GEN-LAST:event_jTextFieldLineTextCouponKeyReleased
+
+    private void jTextFieldLineTextCouponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLineTextCouponActionPerformed
+        if (flag) {
+            if (isHeader) {
+                headerCoupon.set(positionList, jTextFieldLineTextCoupon.getText());
+                fnLoadTextCoupon(false);
+                flag = false;
+                jTextFieldLineTextCoupon.setText("");
+            } else {
+                footerCoupon.set(positionList, jTextFieldLineTextCoupon.getText().trim());
+                fnLoadTextCoupon(false);
+                flag = false;
+                jTextFieldLineTextCoupon.setText("");
+            }
+        } else {
+            fnLoadTextCoupon(true);
+        }
+    }//GEN-LAST:event_jTextFieldLineTextCouponActionPerformed
+
+    private void jMenuItemConfigureHeaderFooterCouponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConfigureHeaderFooterCouponActionPerformed
+
+        headerCoupon.clear();
+        footerCoupon.clear();
+        fnLoadXMLTextCoupon();
+
+        Dimension tamanhoDialogMain = getSize();
+        Dimension tamanhoDialog1 = jDialogConfigHeaderCoupon.getPreferredSize();
+        Point loc = getLocation();
+        jDialogConfigHeaderCoupon.setLocation(
+                (tamanhoDialogMain.width - tamanhoDialog1.width) / 2 + loc.x,
+                (tamanhoDialogMain.height - tamanhoDialog1.height) / 2 + loc.y);
+        jDialogConfigHeaderCoupon.setModal(true);
+        jDialogConfigHeaderCoupon.pack();
+        jDialogConfigHeaderCoupon.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConfigureHeaderFooterCouponActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jDialogConfigHeaderCoupon.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (isHeader) {
+            if (!headerCoupon.isEmpty()) {
+                int position = headerCoupon.size() - 1;
+                headerCoupon.remove(position);
+                fnLoadTextCoupon(false);
+            }
+        } else {
+            if (!footerCoupon.isEmpty()) {
+                int position = footerCoupon.size() - 1;
+                footerCoupon.remove(position);
+                fnLoadTextCoupon(false);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (isHeader) {
+            headerCoupon.clear();
+            fnLoadTextCoupon(false);
+        } else {
+            footerCoupon.clear();
+            fnLoadTextCoupon(false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        if (isHeader) {
+
+            List<String> status = new ArrayList<>();
+            status.add("headerCoupon");
+            status.add(headerCoupon.toString().replace(", ", ";").replace("[", "").replace("]", ""));
+            String file = "/config.xml";
+            File path = new File(System.getProperty("user.dir") + file);
+            XML_Config.saveConfig(path.getPath(), status);
+            JOptionPane.showMessageDialog(jDialogConfigHeaderCoupon, "Cabeçalho gravado com sucesso.", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+
+            List<String> status = new ArrayList<>();
+            status.add("footerCoupon");
+            status.add(footerCoupon.toString().trim().replace(", ", ";").replace("[", "").replace("]", "").trim());
+            String file = "/config.xml";
+            File path = new File(System.getProperty("user.dir") + file);
+            XML_Config.saveConfig(path.getPath(), status);
+            JOptionPane.showMessageDialog(jDialogConfigHeaderCoupon, "Mensagem de rodapé gravada com sucesso.", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        fnLoadXMLTextCoupon();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButtonPrintHeaderCouponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintHeaderCouponActionPerformed
+        fnPrintTextCoupon((isHeader) ? (headerCoupon) : (footerCoupon));
+    }//GEN-LAST:event_jButtonPrintHeaderCouponActionPerformed
+
+    private void jTextFieldLineTextCouponKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldLineTextCouponKeyPressed
+        if (jTextFieldLineTextCoupon.getText().length() == 49) {
+
+            jTextFieldLineTextCoupon.setText(jTextFieldLineTextCoupon.getText().substring(0, jTextFieldLineTextCoupon.getText().length() - 1));
+        }
+        int caracter = 48 - jTextFieldLineTextCoupon.getText().length();
+        jTextFieldLineTextCoupon.setBorder(javax.swing.BorderFactory.createTitledBorder("Caracteres restantes:" + caracter));
+    }//GEN-LAST:event_jTextFieldLineTextCouponKeyPressed
+
+    private void jDialogConfigHeaderCouponWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogConfigHeaderCouponWindowOpened
+
+    }//GEN-LAST:event_jDialogConfigHeaderCouponWindowOpened
+
+    private void jDialogConfigHeaderCouponWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogConfigHeaderCouponWindowActivated
+
+        //código para sair da JDialog com ESC
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+
+            @Override
+            public void eventDispatched(final AWTEvent event) {
+                if (event.getID() == KeyEvent.KEY_PRESSED) {
+                    final KeyEvent evt = (KeyEvent) event;
+
+                    if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+                        jDialogConfigHeaderCoupon.dispose();
+
+                    }
+                }
+
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
+    }//GEN-LAST:event_jDialogConfigHeaderCouponWindowActivated
+
+    private void jDialogConfigHeaderCouponWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogConfigHeaderCouponWindowDeactivated
+
+        headerCoupon.clear();
+        footerCoupon.clear();
+
+    }//GEN-LAST:event_jDialogConfigHeaderCouponWindowDeactivated
+
+    private void jListHeaderCouponMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListHeaderCouponMouseClicked
+        if (isHeader) {
+            if (jListHeaderCoupon.getModel().getSize() > 0) {
+                jTextFieldLineTextCoupon.setText(jListHeaderCoupon.getSelectedValue().toString().trim());
+                flag = true;
+                positionList = jListHeaderCoupon.getSelectedIndex();
+            }
+        }
+    }//GEN-LAST:event_jListHeaderCouponMouseClicked
+
+    private void jRadioButtonHeaderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonHeaderItemStateChanged
+        isHeader = jRadioButtonHeader.isSelected();
+    }//GEN-LAST:event_jRadioButtonHeaderItemStateChanged
+
+    private void jRadioButtonFooterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonFooterItemStateChanged
+        isHeader = !jRadioButtonFooter.isSelected();
+        System.err.println("IsHeader" + isHeader);
+    }//GEN-LAST:event_jRadioButtonFooterItemStateChanged
+
+    private void jListFooterCouponMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListFooterCouponMouseClicked
+        if (!isHeader) {
+            if (jListFooterCoupon.getModel().getSize() > 0) {
+                jTextFieldLineTextCoupon.setText(jListFooterCoupon.getSelectedValue().toString().trim());
+                flag = true;
+                positionList = jListFooterCoupon.getSelectedIndex();
+            }
+        }
+    }//GEN-LAST:event_jListFooterCouponMouseClicked
+
+    private void jMenuItemLoadImageLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoadImageLogoActionPerformed
+        JOptionPane.showMessageDialog(this, "Escolha uma imagem com os tamanhos: " + jPanelLogio.getSize().height + "X" + jPanelLogio.getSize().width + ", nos formatos .PNG ou .JPG");
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int res = fc.showOpenDialog(this);
+        if (res == 0) {
+            java.io.File diretorio = fc.getSelectedFile();
+            JOptionPane.showMessageDialog(this, (new StringBuilder()).append("Voce escolheu o diretório: ").append(diretorio).toString());
+            List<String> status = new ArrayList<>();
+            status.add("logo");
+            status.add(diretorio.toString());
+            String file = "/config.xml";
+            File path = new File(System.getProperty("user.dir") + file);
+            XML_Config.saveConfig(path.getPath(), status);
+            BeanConfig beanConfig = new BeanConfig();
+            System.err.println("Path IMG::" + BeanConfig.getLogo());
+            jLabel2.setIcon(new javax.swing.ImageIcon(BeanConfig.getLogo()));
+        } else {
+            JOptionPane.showMessageDialog(this, "Voce nao selecionou nenhum diretorio.");
+        }
+
+    }//GEN-LAST:event_jMenuItemLoadImageLogoActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+    }//GEN-LAST:event_formWindowActivated
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if (idCashier != null) {
+            if (isFractional) {
+
+                isFractional = false;
+                jTextProductCode.setText("");
+                jTextQuantidade.setText("1,000");
+                jLabeCodeFractional.setText("OFF");
+                jTextProductCode.requestFocus(true);
+
+            } else {
+
+                jTextProductCode.setText((isCodeRapid ? "" : jTextProductCode.getText()));
+                isCodeRapid = false;
+                isFractional = true;
+                jLabeCodeStatusCodeRapid.setText("OFF");
+                jLabeCodeFractional.setText("ON");
+                jTextQuantidade.requestFocus(true);
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jTableItensMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableItensMouseClicked
+
+        if (jTableItens.getRowCount() > 0) {
+            if (!BeanLogin.isIsAccessRestrict()) {
+                String code_main = JTextFieldTools.enterCodeAcsses(this);
+                if (ClassUser.validatorCode(code_main)) {
+
+                    int numberIten = Integer.parseInt(jTableItens.getValueAt(jTableItens.getSelectedRow(), 0).toString());
+                    String barCode = ClassSale.consultItenSale(codeCoupon, numberIten);
+                    BeanCodeSale.setBarCode(barCode);
+                    BeanCodeSale.setNumIten(numberIten);
+                    BeanCodeSale.setQtdIten(Double.parseDouble(jTableItens.getValueAt(jTableItens.getSelectedRow(), 3).toString()));
+                    BeanCodeSale.setIsCancelItenDirect(true);
+                    new JDialogCancelItem(this, true).setVisible(true);
+                    BeanCodeSale.setIsCancelItenDirect(false);
+                    ClassSale.totalSale(codeCoupon);
+                    functionFillTableSale(codeCoupon);
+                    fnRefreshValuesCoupon(codeCoupon);
+                    jTextProductCode.requestFocus(true);
+
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Codigo inválido!", "UPMarket diz:", JOptionPane.ERROR_MESSAGE);
+                    new Sons().tocarErro();
+                    jTextProductCode.requestFocus(true);
+                }
+
+            } else {
+
+                int numberIten = Integer.parseInt(jTableItens.getValueAt(jTableItens.getSelectedRow(), 0).toString());
+                String barCode = ClassSale.consultItenSale(codeCoupon, numberIten);
+                BeanCodeSale.setBarCode(barCode);
+                BeanCodeSale.setNumIten(numberIten);
+                BeanCodeSale.setQtdIten(Double.parseDouble(jTableItens.getValueAt(jTableItens.getSelectedRow(), 3).toString()));
+                BeanCodeSale.setIsCancelItenDirect(true);
+                new JDialogCancelItem(this, true).setVisible(true);
+                BeanCodeSale.setIsCancelItenDirect(false);
+                ClassSale.totalSale(codeCoupon);
+                functionFillTableSale(codeCoupon);
+                fnRefreshValuesCoupon(codeCoupon);
+                jTextProductCode.requestFocus(true);
+            }
+        }
+    }//GEN-LAST:event_jTableItensMouseClicked
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+
+        fuction_control_product_sale();
+
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItemHideMenuBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHideMenuBarActionPerformed
+        visibleMenuBar = !visibleMenuBar;
+        jMenuBar1.setVisible(visibleMenuBar);
+    }//GEN-LAST:event_jMenuItemHideMenuBarActionPerformed
+
+    private void jMenuItemClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientActionPerformed
+       new JDialogClient(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemClientActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if (!BeanLogin.isIsAccessRestrict()) {
+            JOptionPane.showMessageDialog(this, "Usuário '"
+                    + BeanLogin.getUser()
+                    + "' não possui autorização para esta função.\n",
+                    "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            new JDialogAccountClient(this, true).setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+       jTextProductCode.requestFocus(true);
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemAboutActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            System.err.println("ERROR::" + ex);
+            //newXML.generateLog(ex.toString());
+            java.util.logging.Logger.getLogger(JFrameSale_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JFrameSale_1().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupTABPrice;
+    private javax.swing.ButtonGroup buttonGroupTextCoupon;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonCancelOptions;
+    private javax.swing.JButton jButtonCloseSale;
+    private javax.swing.JButton jButtonCloseSale4;
+    private javax.swing.JButton jButtonConsultarProduto;
+    private javax.swing.JButton jButtonControlReserve;
+    private javax.swing.JButton jButtonLogoffLogon;
+    private javax.swing.JButton jButtonPrintHeaderCoupon;
+    private javax.swing.JButton jButtonRegisterProduct;
+    private javax.swing.JButton jButtonRegisterUser;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNormalPrice;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPriceTAB1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPriceTAB2;
+    private javax.swing.JDialog jDialogConfigHeaderCoupon;
+    private javax.swing.JDialog jDialogListProductsCodeRapid;
+    private javax.swing.JDialog jDialogSearchProduct;
+    public static javax.swing.JLabel jLabeCodeFractional;
+    public static javax.swing.JLabel jLabeCodeStatusCodeRapid;
+    public static javax.swing.JLabel jLabeCoolingRatelStatusService;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelCodeRapid;
+    private javax.swing.JLabel jLabelCodeRapid1;
+    private javax.swing.JLabel jLabelCoolingRate;
+    public static javax.swing.JLabel jLabelDateandHour;
+    public static javax.swing.JLabel jLabelDescricaoItem;
+    public static javax.swing.JLabel jLabelFooterMessage;
+    private javax.swing.JLabel jLabelIconUser;
+    private javax.swing.JLabel jLabelPrintService;
+    public static javax.swing.JLabel jLabelStatusPrintService;
+    private javax.swing.JLabel jLabelTerminal;
+    public static javax.swing.JLabel jLabelTerminalNumber;
+    private javax.swing.JLabel jLabelTurn;
+    public static javax.swing.JLabel jLabelTurnNumber;
+    public static javax.swing.JLabel jLabelUser;
+    public static javax.swing.JLabel jLabelUserNameFooter;
+    public static javax.swing.JList jList1;
+    public static javax.swing.JList jList2;
+    public static javax.swing.JList jList3;
+    public static javax.swing.JList jListFooterCoupon;
+    public static javax.swing.JList jListHeaderCoupon;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenuAction;
+    private javax.swing.JMenu jMenuArquivo;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuCashier;
+    private javax.swing.JMenu jMenuControl;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItemAbout;
+    private javax.swing.JMenuItem jMenuItemAllSales;
+    private javax.swing.JMenuItem jMenuItemAumentarQuantidade;
+    private javax.swing.JMenuItem jMenuItemCadastrarProdutos;
+    private javax.swing.JMenuItem jMenuItemCancelamentoItem;
+    private javax.swing.JMenuItem jMenuItemClient;
+    private javax.swing.JMenuItem jMenuItemCloseCashier;
+    private javax.swing.JMenuItem jMenuItemCodeRapid;
+    private javax.swing.JMenuItem jMenuItemConfigureHeaderFooterCoupon;
+    private javax.swing.JMenuItem jMenuItemConsultarProduto;
+    private javax.swing.JMenuItem jMenuItemCostOperate;
+    private javax.swing.JMenuItem jMenuItemDiminuirQuantidade;
+    private javax.swing.JMenuItem jMenuItemFecharVenda;
+    private javax.swing.JMenuItem jMenuItemHideMenuBar;
+    private javax.swing.JMenuItem jMenuItemHistoryClosures;
+    private javax.swing.JMenuItem jMenuItemInsertValueCashier;
+    private javax.swing.JMenuItem jMenuItemListProductCodeRapid;
+    private javax.swing.JMenuItem jMenuItemLoadImageLogo;
+    private javax.swing.JMenuItem jMenuItemOpenCashier;
+    private javax.swing.JMenuItem jMenuItemQuantidadeItens;
+    private javax.swing.JMenuItem jMenuItemRegisterCard;
+    private javax.swing.JMenuItem jMenuItemRemoveValueCashier;
+    private javax.swing.JMenuItem jMenuItemReports;
+    private javax.swing.JMenuItem jMenuItemSair;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelFooter;
+    private javax.swing.JPanel jPanelFuncoes;
+    private javax.swing.JPanel jPanelLogio;
+    private javax.swing.JPanel jPanelTabela;
+    private javax.swing.JPanel jPanel_left;
+    private javax.swing.JPanel jPanel_right;
+    private javax.swing.JRadioButton jRadioButtonFooter;
+    private javax.swing.JRadioButton jRadioButtonHeader;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemCoolingRate;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemPrintService;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemRateCigarretePayCard;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    public static javax.swing.JTable jTableItens;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldBarCodeSearch;
+    private javax.swing.JTextField jTextFieldDescriptionSearch;
+    private javax.swing.JTextField jTextFieldLineTextCoupon;
+    private javax.swing.JTextField jTextFieldValueProductSearch;
+    public static javax.swing.JTextField jTextItens;
+    public static javax.swing.JTextField jTextProductCode;
+    public static javax.swing.JTextField jTextQuantidade;
+    public static javax.swing.JTextField jTextTotalItens;
+    public static javax.swing.JTextField jTextValorTotalOperacao;
+    public static javax.swing.JTextField jTextValorUnitario;
+    private javax.swing.JPanel panelBackground;
+    private javax.swing.JPanel panelFooter;
+    // End of variables declaration//GEN-END:variables
+
+    public void activeDesactiveItens(boolean status) {
+
+        if (status) {
+            jLabelFooterMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/footer_disponivel.png"))); // NOI18N
+            jLabelUserNameFooter.setText(BeanLogin.getUser());
+        } else {
+            jLabelFooterMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/footer_indisponivel.png"))); // NOI18N  
+            jLabelUserNameFooter.setText("Dont Loged");
+        }
+        jTextProductCode.setEnabled(status);
+        jButtonConsultarProduto.setEnabled(status);
+        jButtonRegisterProduct.setEnabled(status);
+        jButtonCloseSale.setEnabled(status);
+        jButtonCloseSale4.setEnabled(status);
+        jButtonRegisterUser.setEnabled(status);
+        jButtonControlReserve.setEnabled(status);
+        jButtonCancelOptions.setEnabled(status);
+        jTextQuantidade.setEnabled(status);
+        jTextTotalItens.setEnabled(status);
+        jTextValorUnitario.setEnabled(status);
+        jTextItens.setEnabled(status);
+        jTextValorTotalOperacao.setEnabled(status);
+        jMenuAction.setEnabled(status);
+
+    }
+
+    private void functionSaleStandartProduct(String arg) {
+        if (isCodeRapid) {
+
+            if (ClassSale.searchProduct(arg, false, 0, jCheckBoxMenuItemPriceTAB1.isSelected(), jCheckBoxMenuItemPriceTAB2.isSelected()) == 0) {
+
+                functionNewCoupon();
+                ClassSale.newProductCoupon(codeCoupon, Double.parseDouble(jTextQuantidade.getText().replace(",", ".")), arg, Sale.getProductCost(), Double.parseDouble(jTextProductCode.getText().replace(",", ".")), number_item);
+
+                //INICIO DAS CONFIGURACOES E IMPRESSAO DE ITEM NO CUPOM
+                if (isPrintService) {
+                    printLineCoupon(false, jTextProductCode.getText(), Sale.getProductPrice(), jTextQuantidade.getText(), Sale.getUnityMeasure(), Sale.getProductAbbreviature(), number_item);
+                }
+                //FIM DAS CONFIGURACOES E IMPRESSAO DE ITEM NO CUPOM
+
+                ClassSale.totalSale(codeCoupon);
+                isCodeRapid = false;
+                jLabeCodeStatusCodeRapid.setText("OFF");
+                jTextQuantidade.setText("1,000");
+
+                functionFillTableSale(codeCoupon);
+
+                jTextItens.setText(String.valueOf(jTableItens.getRowCount()));
+                jTextValorTotalOperacao.setText(v.format(Sale.getPriceTotal()));
+                jTextTotalItens.setText(String.valueOf(Sale.getQuantityTotal()));
+                jTextProductCode.setText("");
+                jTextValorUnitario.setText(v.format(Sale.getProductPrice()));
+                Sale.setPriceTotal(Double.parseDouble(jTextValorTotalOperacao.getText().replace(",", ".")));
+                jLabelDescricaoItem.setText(Sale.getProductName());
+                jTextQuantidade.setText("1,000");
+                number_item++;
+
+                //PARA DESCER O SCROLLPANE AUTOMATICAMENTE
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JScrollBar bar = jScrollPane2.getVerticalScrollBar();
+                        bar.setValue(bar.getMaximum());
+                    }
+                });
+            }
+
+        }
+    }
+
+    private void functionNewCoupon() {
+
+        ClassPrintCoupon pc = new ClassPrintCoupon();
+
+        if (isNewCoupon) {
+            do {
+                //se nao existir cupom aberto gera um novo
+                codeCoupon = ClassCodRandon.codeGeneratorCoupon();
+                System.err.println("Gerando codigo....");
+                System.err.println("Codigo::" + codeCoupon);
+                if (codeCoupon != null) {
+
+                    if (isPrintService) {
+                        if (isGenerateCodeCoupon) {
+                            pc.printHeaderCoupon(false, codeCoupon, null, idCashier, headerCoupon);
+                        }
+                    }
+                }
+                isNewCoupon = false;
+                System.err.println("Cupom aberto.");
+                System.err.println("GERADO CUPOM COD N°>>>" + codeCoupon);
+                BeanCodeSale.setCodeSale(codeCoupon);
+                lastCodeCoupon = codeCoupon;
+                //se gerar um cod cupom repetido repete a operaçao    
+            } while (!ClassSale.newSale(codeCoupon, idCashier, jLabelTerminalNumber.getText(), jLabelUserNameFooter.getText()));
+        }
+    }
+
+    private void functionSale() {
+
+        int consultProd = ClassSale.searchProduct(jTextProductCode.getText(), isCoolingRate, valueCoolingRate, jCheckBoxMenuItemPriceTAB1.isSelected(), jCheckBoxMenuItemPriceTAB2.isSelected());
+        //EXECUTA PROCURA DO PRODUTO 
+        if (consultProd == 0) {
+            //SE ENCONTRAR O PRODUTO ABRE O CUPOM
+            functionNewCoupon();
+
+            // if (Double.parseDouble(jTextQuantidade.getText().replace(',', '.')) % 1 != 0) {
+            //   jTextQuantidade.setText("1,000");
+            // }
+            ClassSale.newProductCoupon(codeCoupon, Double.parseDouble(jTextQuantidade.getText().replace(",", ".")), jTextProductCode.getText(), Sale.getProductCost(), Sale.getProductPrice(), number_item);
+            //INICIO DAS CONFIGURACOES E IMPRESSAO DE ITEM NO CUPOM
+            if (isPrintService) {
+                printLineCoupon(false, jTextProductCode.getText(), Sale.getProductPrice(), jTextQuantidade.getText().replace(",", "."), Sale.getUnityMeasure(), Sale.getProductAbbreviature(), number_item);
+            }
+            //FIM DAS CONFIGURACOES E IMPRESSAO DE ITEM NO CUPOM
+
+            number_item++;
+            jTextQuantidade.setText("1,000");
+
+            functionFillTableSale(codeCoupon);
+            fnRefreshValuesCoupon(codeCoupon);
+
+            //EXECUTA PROCURA DO PRODUTO COM CODIGO DE BALANÇA 
+        } else if ((7 < jTextProductCode.getText().length()) && (ClassSale.searchProductBalance(jTextProductCode.getText().substring(0, 7)) == 0)) {
+
+            //SE ENCONTRAR O PRODUTO E O CUPOM ESTIVER FECHADO ABRE O CUPOM
+            functionNewCoupon();
+
+            System.err.println("Caiu no balancecode");
+            String str = jTextProductCode.getText().substring(0, 7);
+            System.err.println("COD BARRA::" + str);
+
+            jTextQuantidade.setText(cd_3.format(Sale.getQuantity()).replace(".", ","));
+            if (isPrintService) {
+                printLineCoupon(true, jTextProductCode.getText(), Sale.getProductPrice(), jTextQuantidade.getText(), Sale.getUnityMeasure(), Sale.getProductAbbreviature(), number_item);
+            }
+            ClassSale.newProductCoupon(codeCoupon, Sale.getQuantity(), str, Sale.getProductCost(), Sale.getProductPrice(), number_item);
+
+            ClassSale.totalSale(codeCoupon);
+
+            functionFillTableSale(codeCoupon);
+            number_item++;
+            jTextItens.setText(String.valueOf(jTableItens.getRowCount()));
+            jTextValorTotalOperacao.setText(v.format(Sale.getPriceTotal()));
+            jTextTotalItens.setText(String.valueOf(Sale.getQuantityTotal()));
+            jTextProductCode.setText("");
+            jTextValorUnitario.setText(v.format(Sale.getProductPrice()));
+            Sale.setPriceTotal(Double.parseDouble(jTextValorTotalOperacao.getText().replace(",", ".")));
+            jLabelDescricaoItem.setText(Sale.getProductName());
+
+        } else if ((7 < jTextProductCode.getText().length()) && (ClassSale.searchProductBalance(jTextProductCode.getText().substring(0, 7)) == -1)) {
+
+            JOptionPane.showMessageDialog(this, "Produto bloqueado para venda");
+            jTextProductCode.setText("");
+
+        } else if (consultProd == -1) {
+
+            JOptionPane.showMessageDialog(this, "Produto bloqueado para venda");
+            jTextProductCode.setText("");
+
+        } else {
+
+            jTextProductCode.setText("Produto nao cadastrado");
+            JOptionPane.showMessageDialog(this, "Produto nao cadastrado");
+            jTextProductCode.setText("");
+
+        }
+        //PARA DESCER O SCROLLPANE AUTOMATICAMENTE
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JScrollBar bar = jScrollPane2.getVerticalScrollBar();
+                bar.setValue(bar.getMaximum());
+            }
+        });
+
+    }
+
+    private void functionControlExpiring() {
+        JCheckBox checkbox = new JCheckBox("Não exibir esta mensagem novamente.");
+        int arg_message = ClassInventory.verifyExpiringLot();
+        if (arg_message > 0) {
+            String message = "Existem " + arg_message + " lote(s) com vencimento dentro do prazo de alerta.\nDeseja abrir a janela de controle de lotes?";
+            Object[] params = {message, checkbox};
+
+            int opcao;
+            if (arg_message > 0 && ClassInventory.isAlertExpiring()) {
+
+                opcao = JOptionPane.showConfirmDialog(this, params, "Informação.", JOptionPane.YES_NO_OPTION);
+
+            } else {
+
+                opcao = 1;
+            }
+            boolean dontShow = checkbox.isSelected();
+            if (dontShow) {
+                ClassInventory.setAlertExpiring();
+            }
+            if (opcao == 0) {
+
+                if (BeanLogin.isIsControlReserveAccess()) {
+
+                    new JDialogControlProductExpiring(this, true).setVisible(true);
+
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Você não tem acesso a esta função.", "Acesso Negado!", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            }
+        }
+    }
+
+    private void fuction_control_reserve() {
+        
+        if (!BeanLogin.isIsControlReserveAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogControlProductsReserve(this, true).setVisible(true);
+        }
+    }
+
+    private void fuction_control_product_sale() {
+        
+        if (!BeanLogin.isIsAccessRestrict()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogGroupedProductSales(this, true).setVisible(true);
+        }
+    }
+
+    private void fuction_all_sales() {
+
+        if (!BeanLogin.isIsControlReserveAccess()) {
+            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            new JDialogAllSales(this, true).setVisible(true);
+        }
+    }
+
+    private void fnCloseSale() {
+
+        if (codeCoupon != null) {
+
+            new JDialogCloseSaleNew(this, true).setVisible(true);
+                      
+
+            if (isNewCoupon) {
+
+                number_item = 1;
+
+                functionFillTableSale(null);
+
+                jTextItens.setText("0");
+                jTextTotalItens.setText("0");
+                jTextValorTotalOperacao.setText("0,00");
+                jTextValorUnitario.setText("0,00");
+                jTextProductCode.requestFocus(true);
+                jLabelDescricaoItem.setText("");
+
+            }
+            
+            jTextProductCode.requestFocus(true);
+            
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Cupom não aberto.");
+            jTextProductCode.requestFocus(true);
+        }
+    }
+
+    @SuppressWarnings({"unchecked", "unchecked", "unchecked", "unchecked"})
+    private void fnListProductCodeRapid() {
+        jList1.clearSelection();
+        jList2.clearSelection();
+        jList3.clearSelection();
+        jList1.requestFocus(true);
+        jList1.setSelectedIndex(1);
+
+        List<List<String>> arrayList = new ArrayList<>(viewProductsRapidCode());
+
+        ((DefaultListModel) (jList1.getModel()))
+                .removeAllElements();
+        ((DefaultListModel) (jList2.getModel()))
+                .removeAllElements();
+        ((DefaultListModel) (jList3.getModel()))
+                .removeAllElements();
+
+        for (int y = 0; y < 3; y++) {
+
+            for (int i = 0; i < arrayList.get(y).size(); i++) {
+
+                if (y == 0) {
+                    ((DefaultListModel) (jList1.getModel())).addElement((arrayList.get(y)).get(i));
+
+                } else if (y == 1) {
+                    ((DefaultListModel) (jList2.getModel())).addElement((arrayList.get(y)).get(i));
+
+                } else if (y == 2) {
+                    ((DefaultListModel) (jList3.getModel())).addElement((arrayList.get(y)).get(i));
+
+                }
+            }
+        }
+        jList1.requestFocus(true);
+        jList1.setSelectedIndex(0);
+    }
+
+    public void fnOpenWindow() {
+
+        if (idCashier == null) {
+
+            jLabelFooterMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/footer_indisponivel.png"))); // NOI18N
+
+            //jLabelTurnNumber.setText(ClassCashier.turnTerminal(jLabelTerminalNumber.getText()));
+            jTextProductCode.setEnabled(false);
+            jLabelUserNameFooter.setText("Dont Loged");
+
+            int opcao = JOptionPane.showConfirmDialog(this, "Turno não iniciado.\n Deseja iniciar a operação de abertura de turno agora?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+            if (opcao == 0) {
+
+                if (!BeanLogin.isIsCashierAccess()) {
+                    JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    new JDialogOpenCashier_4_1(this, true).setVisible(true);
+                    idCashier = ClassCashier.isOpened(jLabelTerminalNumber.getText());
+                }
+
+            }
+        } else {
+
+            jLabelUserNameFooter.setText(BeanLogin.getUser());
+            jLabelTurnNumber.setText(ClassCashier.turnTerminal(jLabelTerminalNumber.getText()));
+
+        }
+    }
+
+    private void fnPrintLastCoupon() {
+
+        JDialogCloseSale.reprintCoupon(oldCodeCoupon);
+
+    }
+
+    private void fnLoadConfig() {
+
+        BeanConfig bc = new BeanConfig();
+        boolean isSelected;
+
+        jRadioButtonMenuItemPrintService.setSelected(BeanConfig.isIsPrintService());
+        jRadioButtonMenuItemCoolingRate.setSelected(BeanConfig.isIsCoolRate());
+        jRadioButtonMenuItemRateCigarretePayCard.setSelected(BeanConfig.isIsAddCigarreteRate());
+
+        isSelected = jRadioButtonMenuItemPrintService.isSelected();
+        isPrintService = isSelected;
+        String str_status = (isSelected ? "ON" : "OFF");
+        jLabelStatusPrintService.setText(str_status);
+
+        isSelected = jRadioButtonMenuItemCoolingRate.isSelected();
+        isCoolingRate = isSelected;
+        str_status = (isSelected ? "ON" : "OFF");
+        jLabeCoolingRatelStatusService.setText(str_status);
+
+    }
+
+    public static String fnFormatTextHeader(String text) {
+
+        double size_total_text = text.length();
+        double diff_size = 48 - size_total_text;
+        String text_formated = "";
+        double left_tab;
+        double right_tab;
+        String tab = " ";
+
+        if (diff_size % 2 != 0) {
+
+            left_tab = Math.floor(diff_size / 2);
+            right_tab = Math.ceil(diff_size / 2);
+
+            for (int i = 0; i < left_tab; i++) {
+
+                text_formated = text_formated.concat(tab);
+            }
+            text_formated = text_formated.concat(text);
+
+            for (int i = 0; i < right_tab; i++) {
+
+                text_formated = text_formated.concat(tab);
+
+            }
+
+        } else {
+
+            left_tab = (diff_size / 2);
+
+            for (int i = 0; i < left_tab; i++) {
+
+                text_formated = text_formated.concat(tab);
+            }
+            text_formated = text_formated.concat(text);
+
+            for (int i = 0; i < left_tab; i++) {
+
+                text_formated = text_formated.concat(tab);
+
+            }
+
+        }
+
+        return text_formated;
+    }
+
+    private static void fnPrintTextCoupon(List<String> headerCoupon) {
+
+        PrintCoupon pc = new PrintCoupon();
+        for (String headerCoupon1 : headerCoupon) {
+            pc.print((isHeader) ? fnFormatTextHeader(headerCoupon1) : (headerCoupon1 + "\n\r"));
+        }
+
+        pc.print("\n\r");
+        pc.print("\n\r");
+        pc.print("\n\r");
+        pc.print("\n\r");
+        pc.print("\n\t");
+        pc.print("\n\n");
+        pc.print("\n\n");
+
+        pc.print("" + (char) 27 + (char) 109 + "\n");
+
+    }
+
+    public static void fnLoadXMLTextCoupon() {
+
+        BeanConfig beanConfig = new BeanConfig();
+        headerCoupon.clear();
+        footerCoupon.clear();
+        String text = new String();
+        String[] header_xml;
+        String[] footer_xml;
+
+        header_xml = BeanConfig.getHeaderCoupon().split(";");
+        footer_xml = BeanConfig.getFooterCoupon().split(";");
+
+        for (String header_xml1 : header_xml) {
+
+            headerCoupon.add(header_xml1);
+        }
+
+        for (String footer_xml1 : footer_xml) {
+
+            footerCoupon.add(footer_xml1);
+        }
+
+        ((DefaultListModel) (jListHeaderCoupon.getModel()))
+                .removeAllElements();
+
+        for (String headerCoupon1 : headerCoupon) {
+            ((DefaultListModel) (jListHeaderCoupon.getModel())).addElement(fnFormatTextHeader(headerCoupon1));
+
+        }
+
+        ((DefaultListModel) (jListFooterCoupon.getModel()))
+                .removeAllElements();
+
+        for (String footerCoupon1 : footerCoupon) {
+            ((DefaultListModel) (jListFooterCoupon.getModel())).addElement((footerCoupon1));
+
+        }
+    }
+
+    private void fnLoadTextCoupon(boolean isLoadText) {
+
+        String text = new String();
+
+        if (isHeader) {
+
+            if (isLoadText) {
+
+                if (jTextFieldLineTextCoupon.getText().isEmpty()) {
+
+                    headerCoupon.add("\n");
+
+                } else {
+
+                    headerCoupon.add(jTextFieldLineTextCoupon.getText());
+
+                }
+
+                jTextFieldLineTextCoupon.setText("");
+
+            }
+
+            ((DefaultListModel) (jListHeaderCoupon.getModel()))
+                    .removeAllElements();
+
+            for (String headerCoupon1 : headerCoupon) {
+
+                ((DefaultListModel) (jListHeaderCoupon.getModel())).addElement(fnFormatTextHeader(headerCoupon1));
+
+            }
+        } else {
+
+            if (isLoadText) {
+
+                if (jTextFieldLineTextCoupon.getText().isEmpty()) {
+
+                    footerCoupon.add("\n");
+
+                } else {
+
+                    footerCoupon.add(jTextFieldLineTextCoupon.getText());
+
+                }
+
+                jTextFieldLineTextCoupon.setText("");
+
+            }
+
+            ((DefaultListModel) (jListFooterCoupon.getModel()))
+                    .removeAllElements();
+
+            for (String footerCoupon1 : footerCoupon) {
+                ((DefaultListModel) (jListFooterCoupon.getModel())).addElement(footerCoupon1);
+
+            }
+        }
+    }
+
+    private void functionFillTableSale(String codeCoupon) {
+        try {
+            myModelJtableSale = new MyModelJtableSale(codeCoupon);
+            if (myModelJtableSale.rs.last()) {
+                jTableItens.setModel(myModelJtableSale);
+            } else {
+                jTableItens.setModel(new DefaultTableModel());
+            }
+        } catch (SQLException | java.lang.ArrayIndexOutOfBoundsException ex) {
+
+            System.err.println("ERRO:::" + ex);
+        }
+    }
+
+    private void fnRefreshValuesCoupon(String arg) {
+
+        ClassSale.totalSale(arg);
+        jTextItens.setText(String.valueOf(jTableItens.getRowCount()));
+        jTextValorTotalOperacao.setText(v.format(Sale.getPriceTotal()));
+        jTextTotalItens.setText(String.valueOf(Sale.getQuantityTotal()));
+        jTextProductCode.setText("");
+        jTextValorUnitario.setText(v.format(Sale.getProductPrice()));
+        Sale.setPriceTotal(Double.parseDouble(jTextValorTotalOperacao.getText().replace(",", ".")));
+        PaymentCoupon.setTotalCoupon(Double.parseDouble(jTextValorTotalOperacao.getText().replace(",", ".")));
+        jLabelDescricaoItem.setText(Sale.getProductName());
+        jTextQuantidade.setText("1,000");
+
+        if (jTableItens.getModel().getRowCount() == 0) {
+            jTextValorUnitario.setText("0,00");
+            jLabelDescricaoItem.setText("");
+        }
+
+    }
+
+    private void fnCancel() {
+
+        if (!BeanLogin.isIsAccessRestrict()) {
+
+            String code_main = JTextFieldTools.enterCodeAcsses(this);
+
+            if (ClassUser.validatorCode(code_main)) {
+
+                new JDialogOptionsCancelCouponIten(this, true).setVisible(true);
+                ClassSale.totalSale(codeCoupon);
+                functionFillTableSale(codeCoupon);
+                fnRefreshValuesCoupon(codeCoupon);
+                jTextProductCode.requestFocus(true);
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "Codigo inválido!", "UPMarket diz:", JOptionPane.ERROR_MESSAGE);
+                new Sons().tocarErro();
+                jTextProductCode.requestFocus(true);
+            }
+        } else {
+
+            new JDialogOptionsCancelCouponIten(this, true).setVisible(true);
+            ClassSale.totalSale(codeCoupon);
+            functionFillTableSale(codeCoupon);
+            fnRefreshValuesCoupon(codeCoupon);
+            jTextProductCode.requestFocus(true);
+
+        }
+
+    }
+
+    private boolean fnValidQtd() {
+
+        double value = Double.parseDouble((jTextQuantidade.getText().isEmpty())
+                ? ("1.000")
+                : (jTextQuantidade.getText().length() < 7)
+                ? (jTextQuantidade.getText().replace(",", "."))
+                : ("1.000"));
+
+        if (value > 160) {
+
+            jTextQuantidade.setText("1,000");
+            jTextQuantidade.requestFocus(true);
+            return false;
+
+        } else {
+
+            jTextQuantidade.setText(cd_3.format(value).replace(".", ","));
+            return true;
+        }
+
+    }
+
+    class MyCellRenderer extends DefaultTableCellRenderer {
+
+        public MyCellRenderer() {
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
+                int row, int column) {
+            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+
+            Color bg;
+
+            if (!selected) {
+                bg = ((row % 2 == 0)
+                        ? alternateColor
+                        : whiteColor);
+            } else {
+                bg = selectedColor;
+            }
+
+            if (jTableItens.getRowCount() > 0) {
+
+                jTableItens.getColumnModel().getColumn(0).setPreferredWidth(2);
+                jTableItens.getColumnModel().getColumn(1).setPreferredWidth(200);// define a largura da coluna
+                jTableItens.getColumnModel().getColumn(2).setPreferredWidth(10);
+                jTableItens.getColumnModel().getColumn(3).setPreferredWidth(30);
+                jTableItens.getColumnModel().getColumn(4).setPreferredWidth(30);// define a largura da coluna
+                jTableItens.getColumnModel().getColumn(5).setPreferredWidth(40);// define a largura da coluna
+
+            }
+
+            //jTableItens.setShowHorizontalLines(false);
+            //jTableItens.setShowVerticalLines(false);
+            setBackground(bg);
+            setForeground(selected
+                    ? Color.black
+                    : new java.awt.Color(102, 102, 102));
+            setHorizontalAlignment(SwingConstants.CENTER);
+
+            /*
+             *  if (value instanceof ImageIcon) {
+             * setIcon((ImageIcon) value);
+             * setText(""); 
+             * } else
+             * setIcon(null);
+             */
+            return this;
+        }
+    }
+
+    public class MyCellRendererList extends JLabel implements ListCellRenderer/*, Serializable */ {
+
+        public MyCellRendererList() {
+
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+            setText(value.toString());
+            if (0 == index % 2) {
+                if (!isSelected) {
+                    setBackground(alternateColor);
+                    setForeground(Color.BLACK);
+                } else {
+                    setBackground(Color.YELLOW);
+                    setForeground(Color.BLACK);
+                }
+
+            } else {
+
+                if (!isSelected) {
+                    setBackground(whiteColor);
+                    setForeground(Color.BLACK);
+                } else {
+                    setBackground(Color.YELLOW);
+                    setForeground(Color.BLACK);
+                }
+
+            }
+            setEnabled(list.isEnabled());
+            setFont(new java.awt.Font("Tahoma", 0, 12));
+            setOpaque(true);
+            return this;
+        }
+    }
+
+}

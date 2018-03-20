@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="153" pageHeight="65" columnWidth="153" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" scriptletClass=""734567890123"" uuid="9bb17784-98e5-48e3-8538-c1690788df69">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     tbl_code_main.`idtbl_code_main` AS tbl_code_main_idtbl_code_main,
+     tbl_code_main.`code_main` AS tbl_code_main_code_main,
+     tbl_code_main.`serie_card` AS tbl_code_main_serie_card,
+     tbl_code_main.`isActive` AS tbl_code_main_isActive,
+     tbl_code_main.`active_code` AS tbl_code_main_active_code
+FROM
+     `tbl_code_main` tbl_code_main]]>
+	</queryString>
+	<detail>
+		<band height="63" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="153" height="50" uuid="60be3a48-7a79-488d-b9de-1eab66e70d62"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA["700000000001"]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

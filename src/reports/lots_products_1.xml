@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lots>
+<vol id="R6233729R-1">
+<id_lot>R6233729R</id_lot>
+<num_lot>L3096A2007</num_lot>
+<bar_code>7891149201006</bar_code>
+<description>CERVEJA LATAO SKOL 473ML</description>
+<date_reg>06/11/2007</date_reg>
+<date_prod>06/11/2007</date_prod>
+<date_exp>06/11/2008</date_exp>
+<qtd_insert>15.000</qtd_insert>
+<unity>UN</unity>
+<qtd_vol>7.5</qtd_vol>
+<packs>1-2</packs>
+</vol>
+<vol id="R6233729R-2">
+<id_lot>R6233729R</id_lot>
+<num_lot>L3096A2007</num_lot>
+<bar_code>7891149201006</bar_code>
+<description>CERVEJA LATAO SKOL 473ML</description>
+<date_reg>06/11/2007</date_reg>
+<date_prod>06/11/2007</date_prod>
+<date_exp>06/11/2008</date_exp>
+<qtd_insert>15.000</qtd_insert>
+<unity>UN</unity>
+<qtd_vol>7.5</qtd_vol>
+<packs>2-2</packs>
+</vol>
+</lots>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="579" leftMargin="8" rightMargin="8" topMargin="8" bottomMargin="3" uuid="143a6c73-2f81-4211-8148-e0813e8723a3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="54"/>
+	<parameter name="PAR_ID_VENDOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["F02259K"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     v.`idtbl_vendor` AS tbl_vendor_idtbl_vendor,
+     v.`ven_name` AS tbl_vendor_ven_name,
+     v.`ven_cnpj` AS tbl_vendor_ven_cnpj,
+     v.`ven_state_inscription` AS tbl_vendor_ven_state_inscription,
+     v.`ven_uf` AS tbl_vendor_ven_uf,
+     v.`ven_phone` AS tbl_vendor_ven_phone,
+     v.`ven_celular` AS tbl_vendor_ven_celular,
+     v.`ven_contact` AS tbl_vendor_ven_contact,
+     v.`ven_city` AS tbl_vendor_ven_city,
+     v.`ven_address` AS tbl_vendor_ven_address,
+     v.`ven_email` AS tbl_vendor_ven_email,
+     p.`prod_bar_code_product` AS tbl_vendor_bar_code_product,
+     p.`prod_description_product` AS tbl_vendor_description_product,
+     p.`prod_price_mean_purchase_product` AS preco_medio_compra,
+     p.`prod_price_purchase_product` AS preco_compra,
+     p.`prod_reserve_actual_product` AS estoque_atual 
+FROM tbl_product_vendor t LEFT JOIN tbl_product p ON t.`prod_bar_code_product` =  p.`prod_bar_code_product` RIGHT JOIN tbl_vendor v ON v.`idtbl_vendor` = t.`idtbl_vendor` WHERE  v.`idtbl_vendor`  = $P{PAR_ID_VENDOR}]]>
+	</queryString>
+	<field name="tbl_vendor_idtbl_vendor" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_name" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_cnpj" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_state_inscription" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_uf" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_phone" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_celular" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_contact" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_city" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_address" class="java.lang.String"/>
+	<field name="tbl_vendor_ven_email" class="java.lang.String"/>
+	<field name="tbl_vendor_bar_code_product" class="java.lang.String"/>
+	<field name="tbl_vendor_description_product" class="java.lang.String"/>
+	<field name="preco_medio_compra" class="java.lang.Double"/>
+	<field name="preco_compra" class="java.lang.Double"/>
+	<field name="estoque_atual" class="java.lang.Double"/>
+	<title>
+		<band height="27">
+			<staticText>
+				<reportElement x="0" y="0" width="579" height="27" uuid="cf0133a3-9c49-4442-8330-451c2ec154ac"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registro Identificação Fornecedor]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="216">
+			<textField>
+				<reportElement x="85" y="0" width="493" height="20" uuid="e940820c-6134-47d5-9c15-54bc2283773e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="85" height="20" uuid="247bf115-94f6-4b28-85af-da47a21086ad"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="20" width="493" height="20" uuid="4a9d7109-f791-4322-9649-63cbe22deb4b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="85" height="20" uuid="da90c181-818a-44ce-b8f0-6e5b626d4166"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="40" width="402" height="20" uuid="e11ff703-feff-4f0b-a8f8-65472d00e977"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_city}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="85" height="20" uuid="55883a67-474e-4bf1-8194-cc93c098305f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cidade:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="80" width="131" height="20" uuid="e5f1e321-0291-469f-b0cb-6fbf49d6c63b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="85" height="20" uuid="fddc117c-741b-416c-a083-18a9e9744a88"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fone:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="100" width="493" height="20" uuid="3e007fc4-8564-4c54-8c10-3cd1107d9888"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="85" height="20" uuid="8c3d391b-048f-47a0-82b7-30e894cd88cc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="60" width="193" height="20" uuid="25dadb22-ec42-4799-bbf5-11e73d8e95cd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_cnpj}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="209" y="60" width="46" height="20" uuid="00c84114-dc5a-4cbe-a0fc-db9262d1061e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNPJ:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="546" y="40" width="32" height="20" uuid="043492a3-a20b-44e0-9f5c-23727b4a7b5d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="60" width="114" height="20" uuid="59bc4150-6c81-4d34-84e2-11b6af875978"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_state_inscription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="85" height="20" uuid="1c6d7c61-0e55-4aff-98c2-b09142c38eed"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IE:  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="178" width="579" height="19" uuid="727e6d59-4692-4412-839e-3661ea35526f"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="0" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produtos Fornecidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="198" width="117" height="15" backcolor="#CCCCCC" uuid="1d7eeb06-d26a-4830-b7c0-f16458295338"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Barra:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="116" y="198" width="199" height="15" backcolor="#CCCCCC" uuid="cedc7e96-5e08-4086-b95f-5ae000fd0f37"/>
+				<box topPadding="1" bottomPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="169" y="120" width="260" height="37" uuid="5d7d39d8-def4-4146-b38b-4075aa67fe47"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{tbl_vendor_idtbl_vendor}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="216" y="80" width="39" height="20" uuid="1e4b6222-106c-49fb-8cce-966ff4062aa3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cel.:  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="314" y="198" width="116" height="15" backcolor="#CCCCCC" uuid="aadec661-7264-4aa1-b3f0-4b469a486d38"/>
+				<box topPadding="1" bottomPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço Médio Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="429" y="198" width="77" height="15" backcolor="#CCCCCC" uuid="51e56596-19ca-499d-baa5-b78b80a252a7"/>
+				<box topPadding="1" bottomPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="505" y="198" width="74" height="15" backcolor="#CCCCCC" uuid="11f7456f-45e9-4e12-b539-49cb41d21f38"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estoque Atual]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="80" width="323" height="20" uuid="ce460e08-4e24-4240-8d82-6b172ee8d4af"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_ven_celular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="487" y="40" width="59" height="20" uuid="dbf459a3-98cd-4054-a71b-d55449bbb90f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UF:  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="157" width="85" height="17" uuid="719d1d45-a7e5-474d-b050-2430ebd42e10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código:  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="231" y="157" width="84" height="17" uuid="f043f461-f049-4468-8ee5-1d38c875971a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_idtbl_vendor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="117" y="0" width="198" height="22" uuid="54889bbd-2bab-410e-901a-c9c9d4c57f4a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbl_vendor_description_product}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="0" width="117" height="22" uuid="995d5bb6-5c9a-4f82-bbea-1de7fa3ce9fa"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[( $F{tbl_vendor_bar_code_product}.length() < 13 ? "00000"+$F{tbl_vendor_bar_code_product} : $F{tbl_vendor_bar_code_product} )]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="315" y="0" width="115" height="22" uuid="28af14ff-14f5-4369-882a-f36731622a83"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{preco_medio_compra}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="430" y="0" width="76" height="22" uuid="19ebaf69-8c65-4f16-8bea-a0324a9c2a0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{preco_compra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="505" y="0" width="73" height="22" uuid="8c5699fc-6609-410a-b624-6af1edd944e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estoque_atual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="70" y="1" width="39" height="12" uuid="5d3aec17-c434-46fa-aeba-70389449c1c0"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="458" y="0" width="118" height="12" uuid="98a6d1e3-28d1-45e3-9e69-59a7d2158a5f"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="1" width="68" height="12" uuid="c56bcbb4-b354-49d0-92c3-f18f7adae3d6"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="25" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="16"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="New Dataset 1" uuid="a40cdc89-68aa-46a8-8ea4-78cbe905c4fc">
+		<parameter name="PAR" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT DATE_FORMAT(c.`date_hour_coupon`,'%m/%Y') AS month_year,
+       p.`prod_bar_code_product`,
+       p.`idtbl_unity_measure`,
+       p.`idtbl_category_product`,
+       p.`prod_type_production_product`,
+       p.`prod_description_product`,
+       p.`prod_reserve_actual_product`,
+       p.`prod_reserve_minimum_product`,
+       p.`prod_reserve_maximum_product`,
+       p.`prod_price_purchase_product`,
+       p.`prod_percentage_profit_product`,
+       p.`prod_price_sale_actual_product`,
+       p.`prod_price_tab1_product`,
+       p.`prod_price_tab2_product`,
+       p.`prod_price_mean_purchase_product`,
+       p.`prod_date_creation`,
+       p.`prod_date_last_modification`,
+       p.`prod_isActive`,
+       p.`prod_observation`,
+       p.`prod_control_reserve`,
+       c.`idtbl_coupon`,
+       c.`date_hour_coupon`,
+       c.`isCanceled`,
+       pc.`idtbl_coupon`,
+       pc.`prod_bar_code_product`,
+       SUM(pc.`product_quantity` * pc.`product_price`)AS value_total_mean_sale,
+       AVG(pc.`product_price`) AS price_mean_sale,
+       SUM(pc.`product_quantity`) AS quantity_sale
+
+       FROM tbl_coupon c LEFT JOIN tbl_product_coupon pc ON c.`idtbl_coupon` = pc.`idtbl_coupon`
+                         RIGHT JOIN tbl_product p ON pc.`prod_bar_code_product` = p.`prod_bar_code_product`
+                         WHERE p.`prod_bar_code_product` = $P{PAR} AND DATEDIFF(c.`date_hour_coupon`,CURRENT_DATE()) >=-731 GROUP BY DATE_FORMAT(c.`date_hour_coupon`,'%m/%Y') ORDER BY c.`date_hour_coupon`;]]>
+		</queryString>
+		<field name="month_year" class="java.lang.String"/>
+		<field name="prod_bar_code_product" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="idtbl_unity_measure" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="idtbl_category_product" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_type_production_product" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_description_product" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_reserve_actual_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_reserve_minimum_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_reserve_maximum_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_price_purchase_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_percentage_profit_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_price_sale_actual_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_price_tab1_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_price_tab2_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_price_mean_purchase_product" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_date_creation" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_date_last_modification" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_isActive" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_observation" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prod_control_reserve" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="idtbl_coupon" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="date_hour_coupon" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="isCanceled" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="value_total_mean_sale" class="java.lang.Double"/>
+		<field name="price_mean_sale" class="java.lang.Double"/>
+		<field name="quantity_sale" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="PAR_COD" class="java.lang.String">
+		<defaultValueExpression><![CDATA["7891125063116"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+       p.`prod_bar_code_product`,
+       p.`idtbl_unity_measure`,
+       p.`idtbl_category_product`,
+       p.`prod_type_production_product`,
+       p.`prod_description_product`,
+       p.`prod_reserve_actual_product`,
+       p.`prod_reserve_minimum_product`,
+       p.`prod_reserve_maximum_product`,
+       p.`prod_price_purchase_product`,
+       p.`prod_percentage_profit_product`,
+       p.`prod_price_sale_actual_product`,
+       p.`prod_price_tab1_product`,
+       p.`prod_price_tab2_product`,
+       p.`prod_price_mean_purchase_product`,
+       p.`prod_date_creation`,
+       p.`prod_date_last_modification`,
+       p.`prod_isActive`,
+       p.`prod_observation`,
+       p.`prod_control_reserve`,
+       c.`idtbl_category_product`,
+       c.`description_category`
+
+       FROM tbl_product p INNER JOIN tbl_category_product c ON  p.`idtbl_category_product` =  c.`idtbl_category_product` WHERE p.`prod_bar_code_product`  = $P{PAR_COD};]]>
+	</queryString>
+	<field name="prod_bar_code_product" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idtbl_unity_measure" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idtbl_category_product" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_type_production_product" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_description_product" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_reserve_actual_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_reserve_minimum_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_reserve_maximum_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_price_purchase_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_percentage_profit_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_price_sale_actual_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_price_tab1_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_price_tab2_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_price_mean_purchase_product" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_date_creation" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_date_last_modification" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_isActive" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_observation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_control_reserve" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description_category" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="564" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="564" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ficha Técnica do Produto]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="4" width="95" height="30" uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba"/>
+				<imageExpression><![CDATA[getClass().getResourceAsStream("Logo UPmarket_Header2.png")]]></imageExpression>
+			</image>
+			<componentElement>
+				<reportElement x="0" y="4" width="200" height="30" uuid="149a58d8-c9d6-40a7-8703-0a68ee82a0e1"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{prod_bar_code_product}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="353" y="1" width="121" height="20" forecolor="#666666" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="1" width="91" height="20" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="298" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="0" width="357" height="20" uuid="d09f3113-8e7b-4519-815b-2f6edcfc02f0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_description_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="0" width="199" height="20" uuid="f213b4b3-3719-4177-adfd-f7809b49d510"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Descrição do Produto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="40" width="356" height="20" uuid="c8556349-4828-4889-832e-b0becb943a01"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idtbl_unity_measure}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="40" width="201" height="20" uuid="410c4c11-ee09-4c18-b949-aaff8b365e0b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Un. d/ Medida:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="210" y="100" width="357" height="20" uuid="764022a6-37e4-4a68-a27d-025a4589d5da"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_price_sale_actual_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="200" height="20" uuid="a664698b-3075-4213-b392-fcf73aa37a78"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Preço d/ Venda:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="210" y="80" width="357" height="20" uuid="aec00a79-7798-44d3-95ab-b3b29b3e5be5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_price_purchase_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="200" height="20" uuid="82f6c86f-1603-48ba-a83a-73b5a3257725"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Preço Médio Compra:]]></text>
+			</staticText>
+			<textField pattern="###0.000;###0.000-">
+				<reportElement x="210" y="120" width="357" height="20" uuid="652ed598-040a-4ec5-b892-40e8969ff0e8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_reserve_actual_product}]]></textFieldExpression>
+				<patternExpression><![CDATA[]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="200" height="20" uuid="8d1a47ce-f930-4207-bd10-724ec13e6425"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade em Estoque:]]></text>
+			</staticText>
+			<textField pattern="#,##0.000;#,##0.000-">
+				<reportElement x="210" y="140" width="357" height="20" uuid="d10e4e94-dafc-4405-a443-87d335f1b70f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_reserve_minimum_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="200" height="20" uuid="30733b99-c0f7-4c04-9914-51da96c7e1c1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estoque Minímo:]]></text>
+			</staticText>
+			<textField pattern="#,##0.000;#,##0.000-">
+				<reportElement x="210" y="160" width="357" height="20" uuid="7d8c4561-0afb-4cce-9258-41ca8f264ad7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_reserve_maximum_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="160" width="200" height="20" uuid="d7a21b52-61c9-4f5d-b26e-b841465359b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estoque Máximo:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="210" y="180" width="355" height="20" uuid="85b28019-b0c8-49ba-a50c-c542439d87fb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_date_creation}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="180" width="200" height="20" uuid="1c0f05fb-1be9-4cba-bcbc-19faea1796c3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data de Criação do Cadastro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="240" width="355" height="20" uuid="367d0257-8353-4109-a1e5-e2e1b1a62e6d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{prod_control_reserve} ? "SIM" : "NÃO" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="220" width="200" height="20" uuid="a805df15-9c12-4f7c-9da0-d7f064c3d34c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Status do Cadastro:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="210" y="200" width="355" height="20" uuid="f0d26d5e-5f05-465e-9d52-839db90a4cb4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_date_last_modification}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="240" width="200" height="20" uuid="0530a274-dae6-43af-98e0-6bf7d66451d6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Controle de Estoque Automático:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="220" width="354" height="20" uuid="081dafb2-2157-4c0d-b097-ad37ad915251"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{prod_isActive}.equals(true) ? "ATIVO" : "INATIVO" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="200" width="200" height="20" uuid="2ab26bfb-0844-47af-90b4-ef46ce19102f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data da Última Modificação do Cadastro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="200" height="20" uuid="244d8978-3b66-4690-ab01-bf5a05513953"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tipo d/ Produção:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="60" width="357" height="20" uuid="cb1d4dd1-98f7-480e-8871-40535e6d5c98"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{prod_type_production_product}.equals(true) ? "Própia" : "Terceiros" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="20" width="356" height="20" uuid="6843b4b9-d502-4ffc-ad69-932a86dbc57f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idtbl_category_product}+" - "+$F{description_category}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="200" height="20" uuid="a40304e1-a3d7-44e0-8e5c-9e0957b7d817"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Categoria do produto:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="322">
+			<lineChart>
+				<chart>
+					<reportElement x="-1" y="0" width="565" height="311" uuid="1f1bb2e5-0f4e-4722-9c40-111e6525f1ec"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Vendas mensais nos últinos dois anos do produto: "+$F{prod_description_product}]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="New Dataset 1" uuid="3019a4c1-3e26-4799-8ccd-2e30a2037bf7">
+							<datasetParameter name="PAR">
+								<datasetParameterExpression><![CDATA[$P{PAR_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Mês/Ano"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{month_year}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantity_sale}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot>
+						<seriesColor seriesOrder="0" color="#0099FF"/>
+					</plot>
+					<categoryAxisFormat>
+						<axisFormat tickLabelMask="#,###0.00"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask="#,###0.00"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

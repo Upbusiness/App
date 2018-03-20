@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="15" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ARG" class="java.lang.String">
+		<defaultValueExpression><![CDATA["01/2016"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  DATE_FORMAT(t.`date_cost`,'%m/%Y') AS month_year, SUM(t.`value_cost`) AS total_cost, tc.`description_type_cost_operate` FROM tbl_cost_operate t INNER JOIN tbl_type_cost_operate tc ON t.`idtbl_type_cost_operate` = tc.`idtbl_type_cost_operate` WHERE DATE_FORMAT(t.`date_cost`,'%m/%Y') = $P{PAR_ARG} GROUP BY t.`idtbl_type_cost_operate`;]]>
+	</queryString>
+	<field name="month_year" class="java.lang.String"/>
+	<field name="total_cost" class="java.lang.Double"/>
+	<field name="description_type_cost_operate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TOTAL_COST" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_cost}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Custo Operacional]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="4" width="95" height="30" uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba"/>
+				<imageExpression><![CDATA["reports/Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="353" y="1" width="121" height="20" forecolor="#666666" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="474" y="1" width="100" height="20" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Dialog" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month_year}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="281" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORIA DO CUSTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="0" width="295" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="cd3fc667-c08b-412a-9887-3a4786118b78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[VALOR DOS CUSTOS OPERACIONAIS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="280" height="15" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description_type_cost_operate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="280" y="0" width="295" height="15" uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_cost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="249">
+			<line>
+				<reportElement x="348" y="0" width="137" height="1" forecolor="#333333" uuid="a2abc513-7cbc-4ef2-a8c9-c302fbb16735"/>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="377" y="0" width="104" height="15" forecolor="#333333" uuid="dbdc6423-43f2-4a64-b9ca-43ca196305c8"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_COST}]]></textFieldExpression>
+			</textField>
+			<pie3DChart>
+				<chart>
+					<reportElement x="19" y="15" width="536" height="231" uuid="28c781cd-4e16-464a-8e20-f73876d24105"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{description_type_cost_operate}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total_cost}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+			<staticText>
+				<reportElement x="353" y="0" width="26" height="15" forecolor="#333333" uuid="7984430b-c8de-4ac4-9cfc-ede81648ad2e"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="5" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ARG" class="java.lang.String">
+		<defaultValueExpression><![CDATA["p.`prod_isActive` = 1"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.`prod_bar_code_product` AS bar_code,
+       p.`prod_description_product` AS description,
+       p.`idtbl_unity_measure` AS unity_measure,
+       c.`description_category` AS category,
+       p.`prod_price_purchase_product` AS cost,
+      (p.`prod_price_purchase_product` * p.`prod_reserve_actual_product`) AS cost_total,
+      (p.`prod_price_sale_actual_product` * p.`prod_reserve_actual_product`) AS price_total,
+       p.`prod_reserve_actual_product` AS reserve_actual,
+       p.`prod_reserve_maximum_product` AS reserve_max ,
+       p.`prod_reserve_minimum_product` AS reserve_min,
+       p.`prod_price_sale_actual_product` AS price,
+      (p.`prod_reserve_maximum_product` - p.`prod_reserve_actual_product`)AS saldo
+       FROM tbl_product p INNER JOIN tbl_category_product c ON p.`idtbl_category_product` = c.`idtbl_category_product` WHERE $P!{PAR_ARG};]]>
+	</queryString>
+	<field name="cost" class="java.lang.Double"/>
+	<field name="cost_total" class="java.lang.Double"/>
+	<field name="price_total" class="java.lang.Double"/>
+	<field name="reserve_actual" class="java.lang.Double"/>
+	<field name="reserve_max" class="java.lang.Double"/>
+	<field name="reserve_min" class="java.lang.Double"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="saldo" class="java.lang.Double"/>
+	<field name="bar_code" class="java.lang.Long"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="unity_measure" class="java.lang.String"/>
+	<field name="category" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#FFFFFF" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Inventário Inicial Produtos]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="4" width="95" height="30" uuid="b2b1f75a-5c6f-4bd5-84e9-282306c721ba"/>
+				<imageExpression><![CDATA["reports/Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="0" width="220" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Código Barra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="260" y="0" width="49" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="e07f35b0-6fb3-4e9a-b12f-3f93f1c68b0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ Custo R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="308" y="0" width="21" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="95e07dd0-d6d3-46b0-8654-394b5bbf4a22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[UN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="328" y="0" width="53" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="cd3fc667-c08b-412a-9887-3a4786118b78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Atual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="379" y="0" width="51" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="9b0aa2b6-7fa2-4b81-88d9-b28fb1a3dc1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Min.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="478" y="0" width="97" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="4f669919-8de1-4fcf-8021-577bb8677575"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Real]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="428" y="0" width="51" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="68d72889-c0a0-4307-92bc-b91fb344b166"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estq. Máx.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="209" y="0" width="51" height="15" forecolor="#333333" backcolor="#CCCCCC" uuid="7559392c-476d-4d09-a89c-d22d170aacfc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Venda R$]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="209" height="15" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bar_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="209" y="15" width="366" height="30" uuid="06896822-620e-4757-a4ba-e017ecd06258"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="309" y="0" width="19" height="15" uuid="13ce6584-53ca-4daf-8370-07325fb173a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unity_measure}]]></textFieldExpression>
+			</textField>
+			<textField pattern="####0.000">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="328" y="0" width="53" height="15" uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_actual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="####0.000">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="379" y="0" width="50" height="15" uuid="2f110130-3860-47ea-a98d-8c932bfee241"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_min}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="478" y="0" width="97" height="15" uuid="3dca865d-34ab-4b00-9e70-ae226148cd4c"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+			<componentElement>
+				<reportElement x="0" y="15" width="209" height="33" uuid="f685a729-f1dd-4133-b813-81d9e6680dc3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{bar_code}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<rectangle>
+				<reportElement x="261" y="0" width="46" height="15" uuid="a617f418-4f9b-4f96-9ad0-a0da7e20b7ef"/>
+			</rectangle>
+			<textField>
+				<reportElement style="zebra" mode="Opaque" x="209" y="0" width="51" height="15" uuid="a29c7a34-1720-448a-a8ac-818e0db811aa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField pattern="####0.000">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="428" y="0" width="49" height="15" uuid="988d3b66-8ce1-40cc-b1e5-9c59e39fca79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_max}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

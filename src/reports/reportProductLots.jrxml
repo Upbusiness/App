@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="15" bottomMargin="10" uuid="0bd21154-2109-477f-b3b5-c7f113054f41">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ARG" class="java.lang.String">
+		<defaultValueExpression><![CDATA["7894900261905"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT t.`idtbl_reserve_in`,
+ t.`prod_bar_code_product`,
+ t.`inv_date_register`,
+ t.`inv_quantity_insert`,
+ t.`inv_remainder_reserve`,
+ t.`inv_value_cost`,
+ t.`inv_lot`,
+ t.`inv_date_production`,
+ t.`inv_date_expiring`,
+ t.`inv_month_for_expiring`,
+ p.`prod_description_product`,
+ t.`inv_value_used`,
+ t.`inv_inUse`,
+ p.`idtbl_unity_measure`,
+((UNIX_TIMESTAMP(t.`inv_date_expiring`) - UNIX_TIMESTAMP(CURRENT_DATE()))/60)/24/60 AS days_for_use,
+ t.`inv_isClosed`
+ FROM tbl_reserve_in t INNER JOIN tbl_product p ON t.`prod_bar_code_product` = p.`prod_bar_code_product` WHERE t.`prod_bar_code_product` = $P{PAR_ARG} ORDER BY t.`inv_date_expiring`;]]>
+	</queryString>
+	<field name="idtbl_reserve_in" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_bar_code_product" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_date_register" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_quantity_insert" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_remainder_reserve" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_value_cost" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_lot" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_date_production" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_date_expiring" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_month_for_expiring" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prod_description_product" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_value_used" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_inUse" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idtbl_unity_measure" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="days_for_use" class="java.math.BigDecimal"/>
+	<field name="inv_isClosed" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="39" forecolor="#999999" uuid="70f6869e-27dc-4a7b-a260-f45a2a6632d9"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="100" y="0" width="354" height="39" forecolor="#666666" uuid="aca3cd31-3054-4f48-b182-80bf77626c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Lotes Lançados Produto]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="1" y="1" width="137" height="33" uuid="1bc50cad-dea3-416c-be92-7987778d47b0"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
+			<image>
+				<reportElement x="463" y="4" width="96" height="30" uuid="d8329f48-b77c-4f9b-b80d-588b8955848b"/>
+				<imageExpression><![CDATA["C:\\Users\\Rafael Recalcatti\\Desktop\\UPMarket1.1\\src\\reports\\Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="453" y="1" width="122" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="f6966d06-617a-420d-92ac-ce06f8203860"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data do Relatório: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="zebra" mode="Opaque" x="453" y="16" width="122" height="15" forecolor="#666666" uuid="67876db6-4a2d-4e1f-82a8-707f3e87f9ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="138" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="ec24f57c-791e-4869-ae01-754dae551720"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Código Barra]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="16" width="137" height="15" forecolor="#666666" uuid="02b4fc19-1e2b-4eaa-98d6-041d6f53da51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_bar_code_product}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="137" y="1" width="317" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="1ea982bf-b528-43bd-816d-65b77388799f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Descrição Produto]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="137" y="16" width="317" height="15" forecolor="#666666" uuid="06896822-620e-4757-a4ba-e017ecd06258"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_description_product}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="91" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="e07f35b0-6fb3-4e9a-b12f-3f93f1c68b0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Lote Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="90" y="0" width="71" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="95e07dd0-d6d3-46b0-8654-394b5bbf4a22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data Registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="0" width="70" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="cd3fc667-c08b-412a-9887-3a4786118b78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data Produção]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="0" width="70" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="9b0aa2b6-7fa2-4b81-88d9-b28fb1a3dc1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="298" y="0" width="61" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="68d72889-c0a0-4307-92bc-b91fb344b166"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Lançada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="358" y="0" width="61" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="cb57586f-fc41-4a61-8a7d-510a62c44b4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Usada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="418" y="0" width="46" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="42061cf5-9fe2-489d-a5ff-a9a2daa8337f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Em Uso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="463" y="0" width="46" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="4f669919-8de1-4fcf-8021-577bb8677575"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fechado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zebra" mode="Opaque" x="508" y="0" width="67" height="15" forecolor="#666666" backcolor="#CCCCCC" uuid="ccb17460-d88d-4a48-882a-4a323a2f8300"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Dias até Vencer]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="1" y="0" width="91" height="15" uuid="08351468-b5b4-4f49-93f0-267336ec3da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_lot}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="90" y="0" width="71" height="15" uuid="13ce6584-53ca-4daf-8370-07325fb173a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_date_register}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="160" y="0" width="70" height="15" uuid="ef0a5d32-794a-4d0b-97fb-95eb7660edf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_date_production}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="230" y="0" width="70" height="15" uuid="2f110130-3860-47ea-a98d-8c932bfee241"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_date_expiring}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="298" y="0" width="61" height="15" uuid="988d3b66-8ce1-40cc-b1e5-9c59e39fca79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_quantity_insert}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="358" y="0" width="61" height="15" uuid="86206bdd-04b3-4f4a-a2d6-53bc34c21c96"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_value_used}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="418" y="0" width="46" height="15" uuid="7f76e2ec-a55d-46d2-8f0b-da4d4a786d40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{inv_inUse} ? "SIM" : "NÃO" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" mode="Opaque" x="463" y="0" width="46" height="15" uuid="3c92d2b6-28d7-48b8-a534-97fbf688752c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{inv_isClosed} ? "SIM" : "NÃO" )]]></textFieldExpression>
+			</textField>
+			<textField pattern="####">
+				<reportElement style="zebra" mode="Opaque" x="508" y="0" width="67" height="15" uuid="46c55d5a-cc45-4a95-a973-88c550bd465f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_for_use}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="48" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="474" y="0" width="101" height="14" uuid="2565b101-b34d-49fd-a581-141541d3ab25"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="0" width="40" height="15" uuid="6f16d8c1-cfe4-4f35-8164-dd6fdb173cfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="15" uuid="fe5ac782-7b84-41b4-b5a2-53e8c6a51857"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

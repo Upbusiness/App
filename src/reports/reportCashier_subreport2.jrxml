@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportCashier_subreport2" language="groovy" pageWidth="565" pageHeight="802" columnWidth="565" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9e962fb5-6666-4ff4-9291-338551d3a1ed">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_ID_2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C6135192N"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT t.`idtbl_opening_cashier`, t.`idtbl_cashier`, t.`date_opening`, t.`value_used`, t.`type_opening`, t.`turn_opening_cashier`, t.`terminal_opening_cashier`, t.`description_opening` FROM tbl_opening_cashier t WHERE t.`idtbl_cashier` = $P{PAR_ID_2};]]>
+	</queryString>
+	<field name="idtbl_opening_cashier" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idtbl_cashier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_opening" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="value_used" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="type_opening" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="turn_opening_cashier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="terminal_opening_cashier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description_opening" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="date_opening">
+		<groupExpression><![CDATA[$F{date_opening}]]></groupExpression>
+	</group>
+	<group name="value_used">
+		<groupExpression><![CDATA[$F{value_used}]]></groupExpression>
+	</group>
+	<group name="type_opening">
+		<groupExpression><![CDATA[$F{type_opening}]]></groupExpression>
+	</group>
+	<group name="description_opening">
+		<groupExpression><![CDATA[$F{description_opening}]]></groupExpression>
+	</group>
+	<pageHeader>
+		<band height="22">
+			<staticText>
+				<reportElement x="0" y="0" width="565" height="20" forecolor="#000000" uuid="677e6616-2d71-44c9-abd5-64e640ba19b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Movimentações do Caixa]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="d08ccfb3-fb35-44ff-b7fa-2e14f4cdba21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data d/ Operação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="110" y="0" width="109" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="7ca61801-bf29-4cf2-82a1-b9ba78c65a04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora d/ Operação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="219" y="0" width="81" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="5042d78e-88dd-45f7-b41e-661932b5ef48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Usado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="0" width="111" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="ef57b5f1-4e77-4212-9496-eb4d139b8294"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Operação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="410" y="0" width="155" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="5ec2da1c-90e4-4b0c-a2f0-9b2fc234a4b0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição da Operação]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="565" height="19" uuid="0bf08f74-4ad1-4c33-a911-3bd0f46b5961"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="110" height="20" uuid="1ff6c47b-a217-4e4f-b1b0-9f233302acd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_opening}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement x="110" y="0" width="109" height="20" uuid="bab90c15-9faf-4260-800a-bc7554e94d44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_opening}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="219" y="0" width="81" height="20" uuid="8c42068d-5142-4565-80f3-599312e7073d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_used}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="110" height="20" uuid="1317a061-82d5-42d3-893f-223b71c5cf6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{type_opening} ? "Retirada":"Inserção")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="155" height="20" uuid="d316e10d-a464-4580-8a4f-258e64859d12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description_opening}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

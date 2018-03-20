@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="120" pageHeight="65" columnWidth="120" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5f23af66-d249-41fb-a703-5ae72fea7096">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     tbl_code_main.`idtbl_code_main` AS tbl_code_main_idtbl_code_main,
+     tbl_code_main.`code_main` AS tbl_code_main_code_main,
+     tbl_code_main.`serie_card` AS tbl_code_main_serie_card,
+     tbl_code_main.`isActive` AS tbl_code_main_isActive,
+     tbl_code_main.`active_code` AS tbl_code_main_active_code
+FROM
+     `tbl_code_main` tbl_code_main]]>
+	</queryString>
+	<field name="tbl_code_main_idtbl_code_main" class="java.lang.Long"/>
+	<field name="tbl_code_main_code_main" class="java.lang.String"/>
+	<field name="tbl_code_main_serie_card" class="java.lang.Long"/>
+	<field name="tbl_code_main_isActive" class="java.lang.Boolean"/>
+	<field name="tbl_code_main_active_code" class="java.lang.String"/>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="1" width="120" height="50" uuid="ac4cae71-8a14-4182-b9ad-0ddbf84fc0a7"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA["000000000003"]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

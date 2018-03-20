@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="20" uuid="6de9afb1-40bd-4137-a26c-ddc31d9d58d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zebra" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() % 2 == 0)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PAR_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C2156434F"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_TEMINAL_CASHIER" class="java.lang.String">
+		<defaultValueExpression><![CDATA["01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT t.`description_type_payment_coupon` AS type_pay,
+   SUM(t.`value_type_payment_coupon` - t.`discount_type_pay`) AS value_total_pay ,
+   COUNT(t.`value_type_payment_coupon`) AS quantity_total_pay,
+   SUM(t.`discount_type_pay`) AS discount_type_pay
+  FROM tbl_coupon p INNER JOIN tbl_type_payment_coupon t ON p.`idtbl_coupon` = t.`idtbl_coupon` WHERE date_hour_coupon >= (SELECT hour_opening_cashier FROM tbl_cashier WHERE idtbl_cashier = $P{PAR_ID})  AND date_hour_coupon <= (SELECT hour_close_cashier FROM tbl_cashier WHERE idtbl_cashier = $P{PAR_ID}) AND terminal_coupon = $P{PAR_TEMINAL_CASHIER} AND p.`isCanceled` = 0 GROUP BY t.`description_type_payment_coupon`;]]>
+	</queryString>
+	<field name="type_pay" class="java.lang.String"/>
+	<field name="value_total_pay" class="java.lang.Double"/>
+	<field name="quantity_total_pay" class="java.lang.Long"/>
+	<field name="discount_type_pay" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="565" height="53" forecolor="#999999" uuid="65a7f244-7c16-477e-bf61-7b1cf9177b0e"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<componentElement>
+				<reportElement x="0" y="4" width="252" height="49" uuid="ef18bf72-df07-4a79-ace1-1da98714ff98"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$P{PAR_ID}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="10" width="565" height="30" forecolor="#666666" uuid="b9c88bca-ff91-4117-916e-5adfa3f26d5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Dialog" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Detalhamento de Fechamento de Caixa]]></text>
+			</staticText>
+			<image>
+				<reportElement x="453" y="10" width="95" height="30" uuid="a61b0232-2cca-4568-9991-c2f7cff673df"/>
+				<imageExpression><![CDATA["reports/Logo UPmarket_Header2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="80" width="252" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="cb6882ef-98a2-4a7c-aebe-4cb5010ff310"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="251" y="80" width="88" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="8e2839f4-d9f8-499a-b20d-6aa5bae565d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="339" y="80" width="101" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="7227dc50-8aaf-42da-89ff-3f4e4e473a9f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="439" y="80" width="126" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="28931b16-b4c2-4cbe-8e3a-0b778d6bf665"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Descontos]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="565" height="80" uuid="b607eba6-0377-4613-af87-84b15e3b5162"/>
+				<subreportParameter name="PAR_TERMINAL">
+					<subreportParameterExpression><![CDATA[$P{PAR_TEMINAL_CASHIER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_ID">
+					<subreportParameterExpression><![CDATA[$P{PAR_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/reportCashier_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement style="zebra" mode="Opaque" x="0" y="0" width="252" height="20" uuid="1e8bcfde-8407-4a5d-91f7-cec48a83e3bb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_pay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="zebra" mode="Opaque" x="251" y="0" width="88" height="20" uuid="72666e72-27fd-4bed-bdda-41c14910f900"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value_total_pay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zebra" mode="Opaque" x="339" y="0" width="101" height="20" uuid="35d276c0-ae8e-43a6-8380-03c67f77bc71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity_total_pay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="zebra" mode="Opaque" x="439" y="0" width="126" height="20" uuid="468f2ba6-151e-42e0-b170-dd2ab788f103"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discount_type_pay}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="464" y="1" width="101" height="14" uuid="82ee92dd-816e-49a2-80df-cae85c744116"/>
+				<textElement>
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="61" y="0" width="40" height="15" uuid="a97f6c4a-03bd-4062-a22b-e3d83c1e85cf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="60" height="15" uuid="ac31faeb-36ca-4785-aa3a-c872b07afa96"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Dialog" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="565" height="42" uuid="671efeb1-b4e7-4822-abaa-189df5212633"/>
+				<subreportParameter name="PAR_ID_2">
+					<subreportParameterExpression><![CDATA[$P{PAR_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/reportCashier_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
