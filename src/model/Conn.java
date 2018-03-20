@@ -21,7 +21,7 @@ public class Conn {
     public static String usuario = "root";
     public static String senha = "102230254535";
     private static final NewXML newXML = new NewXML();
-
+    
     public static Connection connect() {
 
         try {
