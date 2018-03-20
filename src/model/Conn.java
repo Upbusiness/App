@@ -25,7 +25,8 @@ public class Conn {
     public static Connection connect() {
 
         try {
-            if (connection == null) {
+            if (connection == null) { 
+                
                 Class.forName("org.gjt.mm.mysql.Driver");
                 
                 connection = DriverManager.getConnection(JDialogStarting.config.getIp(), usuario, senha);
