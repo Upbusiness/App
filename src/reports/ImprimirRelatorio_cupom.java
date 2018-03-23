@@ -7,6 +7,7 @@ package reports;
 
 //~--- non-JDK imports --------------------------------------------------------
 //~--- JDK imports ------------------------------------------------------------
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -79,6 +80,7 @@ public class ImprimirRelatorio_cupom {
             InputStream in = this.getClass().getResourceAsStream(a);
 
             String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
+            
             // chama fillReport
             JasperPrint jp = JasperFillManager.fillReport(in, parametros, conn);
 

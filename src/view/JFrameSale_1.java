@@ -1545,7 +1545,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
         jMenu2.setText("Gerenciamento");
 
-        jMenuItemReports.setText("Relátorios");
+        jMenuItemReports.setText("Relatórios");
         jMenuItemReports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemReportsActionPerformed(evt);

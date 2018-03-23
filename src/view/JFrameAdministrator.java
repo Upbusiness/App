@@ -291,7 +291,7 @@ public class JFrameAdministrator extends javax.swing.JFrame {
         jButtonReports.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonReports.setForeground(new java.awt.Color(102, 102, 102));
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/grafics.png"))); // NOI18N
-        jButtonReports.setText("Relátorios");
+        jButtonReports.setText("Relatórios");
         jButtonReports.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
         jButtonReports.setDefaultCapable(false);
         jButtonReports.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -386,7 +386,7 @@ public class JFrameAdministrator extends javax.swing.JFrame {
         treeNode2.add(treeNode3);
         treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Contas");
         treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Relátorios");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Relatórios");
         treeNode2.add(treeNode3);
         treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Vendas");
         treeNode2.add(treeNode3);
@@ -651,7 +651,7 @@ public class JFrameAdministrator extends javax.swing.JFrame {
                         new JDialogGroupedProductSales(null, true).setVisible(true);
                         break;
 
-                    case "[Arquivo, Gerenciamento, Relátorios]":
+                    case "[Arquivo, Gerenciamento, Relatórios]":
                         new JDialogReports(this, true).setVisible(true);
                         break;
 

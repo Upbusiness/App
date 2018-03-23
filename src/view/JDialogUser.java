@@ -117,7 +117,7 @@ public class JDialogUser extends javax.swing.JDialog {
 
         jPanelAccess.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jCheckBoxReports.setText("Acesso a Relátorios");
+        jCheckBoxReports.setText("Acesso a Relatórios");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${beanUser.isReportAccess}"), jCheckBoxReports, org.jdesktop.beansbinding.BeanProperty.create("selected"));
         bindingGroup.addBinding(binding);
