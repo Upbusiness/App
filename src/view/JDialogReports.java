@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.util.Date;
 import model.ClassProduct;
@@ -353,17 +354,19 @@ public class JDialogReports extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabelReport2MouseClicked
 
     private void jLabelReport3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReport3MouseClicked
-        
+
         try {
+
             Method something
                     = this.getClass().getDeclaredMethod("functionReport3", new Class[0]);
 
             ClassLoadingMethods.loading(something, this); // Aqui enviamos o metodo doIt !  
+
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("ERROR::" + ex);
             //newXML.generateLog(ex.toString());
         }
-        
+
     }//GEN-LAST:event_jLabelReport3MouseClicked
 
     private void jLabelReport4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReport4MouseClicked
@@ -380,6 +383,7 @@ public class JDialogReports extends javax.swing.JDialog {
 
     private void jLabelReport5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReport5MouseClicked
         try {
+                  
             Method something
                     = this.getClass().getDeclaredMethod("functionReport5", new Class[0]);
 
@@ -392,6 +396,7 @@ public class JDialogReports extends javax.swing.JDialog {
 
     private void jLabelReport6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReport6MouseClicked
         try {
+                     
             Method something
                     = this.getClass().getDeclaredMethod("functionReport6", new Class[0]);
 
@@ -403,14 +408,14 @@ public class JDialogReports extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabelReport6MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      
+
         jComboReport2.setSelectedItem(DateActual.setDate(new Date(), "Y"));
-         jComboReport3.setSelectedItem(DateActual.setDate(new Date(), "Y"));
-          jComboReport4.setSelectedItem(DateActual.setDate(new Date(), "Y"));
-           jComboReport5.setSelectedItem(DateActual.setDate(new Date(), "Y"));
-             jComboReport6.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
-              jComboReport7.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
-              jComboReport8.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
+        jComboReport3.setSelectedItem(DateActual.setDate(new Date(), "Y"));
+        jComboReport4.setSelectedItem(DateActual.setDate(new Date(), "Y"));
+        jComboReport5.setSelectedItem(DateActual.setDate(new Date(), "Y"));
+        jComboReport6.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
+        jComboReport7.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
+        jComboReport8.setSelectedItem(DateActual.setDate(new Date(), "MM/Y"));
     }//GEN-LAST:event_formWindowOpened
 
     private void jLabelReport7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReport7MouseClicked
@@ -540,7 +545,7 @@ public class JDialogReports extends javax.swing.JDialog {
 
     public void functionReport4() {
         try {
-
+            
             Object[] parArg = {jComboReport4.getSelectedItem()};
             Object[] parID = {"PAR_YEAR"};
             ImprimirRelatorio_cupom ip = new ImprimirRelatorio_cupom();
@@ -579,7 +584,7 @@ public class JDialogReports extends javax.swing.JDialog {
             //newXML.generateLog(ex.toString());
         }
     }
-    
+
     public void functionReport8() {
         try {
 

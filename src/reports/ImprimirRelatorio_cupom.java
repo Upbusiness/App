@@ -7,6 +7,7 @@ package reports;
 
 //~--- non-JDK imports --------------------------------------------------------
 //~--- JDK imports ------------------------------------------------------------
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -24,6 +25,7 @@ import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.PrinterName;
+import javax.swing.JOptionPane;
 import model.ConnRel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -32,6 +34,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.view.JasperViewer;
+import view.ClassLoadingMethods;
 //import xml.NewXML;
 
 /**
@@ -79,8 +82,7 @@ public class ImprimirRelatorio_cupom {
             // mecessário caso gere um JAR para distribuir
             InputStream in = this.getClass().getResourceAsStream(a);
 
-            String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
-            
+            //String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
             // chama fillReport
             JasperPrint jp = JasperFillManager.fillReport(in, parametros, conn);
 
@@ -93,11 +95,27 @@ public class ImprimirRelatorio_cupom {
                 }
                 //exportReport(jp);
             } else {
-                //JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                try {
+                    new Thread() {
+
+                        @Override
+                        public void run() {
+                            JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                        }
+                    }.start();
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
-        } catch (JRException ex) {
+        } catch (HeadlessException | JRException ex) {
             System.err.println("ERROR::" + ex);
             ////newXML.generateLog(ex.toString());
+
+        } catch (Exception ex) {
+            System.err.println("ERROR::" + ex);
+            ////newXML.generateLog(ex.toString());
+
         } finally {
             try {
                 if (!conn.isClosed()) {

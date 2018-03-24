@@ -23,6 +23,7 @@ import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.PrinterName;
+import javax.swing.JOptionPane;
 import model.ConnRel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -68,9 +69,11 @@ public class ImprimirRelatorio_2 {
             // mecessário caso gere um JAR para distribuir
             InputStream in = this.getClass().getResourceAsStream(a);
 
-            String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
+            //String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
             // chama fillReport
             JasperPrint jp = JasperFillManager.fillReport(in, parametros, conn);
+            
+            //JasperViewer.viewReport(jp, false);
 
             if (!jp.getPages().isEmpty()) {
                 // exibe o relatório com viewReport
@@ -80,7 +83,18 @@ public class ImprimirRelatorio_2 {
                     imprimir(jp);
                 }
             } else {
-                //JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                 try {
+                    new Thread() {
+
+                        @Override
+                        public void run() {
+                            JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                        }
+                    }.start();
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         } catch (JRException ex) {
             System.err.println("ERROR::" + ex);
