@@ -41,7 +41,7 @@ public class ImprimirRelatorio_2 {
 
     private static Connection conn;
     private static final NewXML newXML = new NewXML();
-    
+
     public void visualizarRelatorio(Object[] valPar, Object[] par, String relatorioName, boolean isView) {
         try {
             conn = ConnRel.getConnection();
@@ -72,9 +72,8 @@ public class ImprimirRelatorio_2 {
             //String arquivoJasper = System.getProperty("user.dir") + "/src/reports/" + a;
             // chama fillReport
             JasperPrint jp = JasperFillManager.fillReport(in, parametros, conn);
-            
-            //JasperViewer.viewReport(jp, false);
 
+            //JasperViewer.viewReport(jp, false);
             if (!jp.getPages().isEmpty()) {
                 // exibe o relatório com viewReport
                 if (isView) {
@@ -83,17 +82,19 @@ public class ImprimirRelatorio_2 {
                     imprimir(jp);
                 }
             } else {
-                 try {
-                    new Thread() {
+                if (Thread.currentThread().isAlive()) {
+                    try {
+                        new Thread() {
 
-                        @Override
-                        public void run() {
-                            JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
-                        }
-                    }.start();
+                            @Override
+                            public void run() {
+                                JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                            }
+                        }.start();
 
-                } catch (Exception e) {
-                    System.out.println(e);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
             }
         } catch (JRException ex) {

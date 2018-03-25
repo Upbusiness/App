@@ -95,17 +95,19 @@ public class ImprimirRelatorio_cupom {
                 }
                 //exportReport(jp);
             } else {
-                try {
-                    new Thread() {
+                if (Thread.currentThread().isAlive()) {
+                    try {
+                        new Thread() {
 
-                        @Override
-                        public void run() {
-                            JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
-                        }
-                    }.start();
+                            @Override
+                            public void run() {
+                                JOptionPane.showMessageDialog(null, "Não há dados a serem exibidos.");
+                            }
+                        }.start();
 
-                } catch (Exception e) {
-                    System.out.println(e);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
             }
         } catch (HeadlessException | JRException ex) {
