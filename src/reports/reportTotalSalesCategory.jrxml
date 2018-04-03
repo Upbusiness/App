@@ -13,8 +13,17 @@
 		<defaultValueExpression><![CDATA["2015"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT SUM(pc.`product_quantity` ) AS total_sales_category, cp.`description_category` AS description, SUM(pc.`product_quantity` * pc.`product_price` ) AS value_total_sales_category FROM tbl_product p INNER JOIN tbl_product_coupon pc ON p.`prod_bar_code_product` = pc.`prod_bar_code_product`
- INNER JOIN tbl_coupon c ON pc.`idtbl_coupon` = c.`idtbl_coupon` INNER JOIN tbl_category_product cp ON p.`idtbl_category_product` = cp.`idtbl_category_product`WHERE DATE_FORMAT(c.`date_hour_coupon`, '%Y') = $P{PAR_YEAR} GROUP BY p.`idtbl_category_product` ORDER BY cp.`description_category`;]]>
+		<![CDATA[  SELECT ROUND(SUM(pc.product_quantity ),2) AS total_sales_category, cp.description_category AS description, 
+SUM(ROUND(pc.product_quantity, 2) * ROUND(pc.product_price, 2)) AS value_total_sales_category 
+FROM tbl_product p 
+INNER JOIN tbl_product_coupon pc 
+ON pc.prod_bar_code_product = p.prod_bar_code_product 
+ INNER JOIN tbl_coupon c 
+ ON c.idtbl_coupon = pc.idtbl_coupon 
+ INNER JOIN tbl_category_product cp  
+ON cp.idtbl_category_product = p.idtbl_category_product  
+ WHERE DATE_FORMAT(c.date_hour_coupon, '%Y') = $P{PAR_YEAR} 
+ GROUP BY p.idtbl_category_product ORDER BY cp.description_category;]]>
 	</queryString>
 	<field name="total_sales_category" class="java.math.BigDecimal"/>
 	<field name="description" class="java.lang.String"/>

@@ -106,13 +106,15 @@ public class ClassSerialHD {
     public static void main(String[] args) {
         try {
 
-            FileWriter arquivo = new FileWriter("F:\\serialHD.txt");            
+           /* FileWriter arquivo = new FileWriter("F:\\serialHD.txt");            
             PrintWriter gravarArq = new PrintWriter(arquivo);
+            
 
             gravarArq.printf(getHDSerial());
          
 
             arquivo.close();
+               */
            
            
             System.out.println("Serial HD: " + getHDSerial());

@@ -5,11 +5,13 @@
  */
 package view;
 
+
 import action.BeanConsulta;
 import action.BeanLogin;
 import action.PaymentCoupon;
 import action.Sale;
 import java.applet.AudioClip;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -18,6 +20,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -27,6 +30,7 @@ import javax.swing.JOptionPane;
 import model.ClassCard;
 import model.ClassSale;
 import model.ClassUser;
+import static mondrian.olap.fun.vba.Vba.timer;
 import reports.ImprimirRelatorio_cupom;
 import util.JTextFieldTools;
 import static view.JDialogCloseSale.jTextValueTotalCoupon;
@@ -171,6 +175,11 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -505,6 +514,11 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
         jTextCash.setForeground(new java.awt.Color(102, 102, 102));
         jTextCash.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextCash.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagamento R$:", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jTextCash.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextCashFocusGained(evt);
+            }
+        });
         jTextCash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextCashActionPerformed(evt);
@@ -690,23 +704,23 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     }//GEN-LAST:event_jDialogCardsWindowActivated
 
     private void jDialogCardsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialogCardsWindowClosed
-        
-        
+
+
     }//GEN-LAST:event_jDialogCardsWindowClosed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (fechouVenda) {
 
-          try {
-             Method something
-             = this.getClass().getDeclaredMethod("functionPrintCupom", new Class[0]);
+            try {
+                Method something
+                        = this.getClass().getDeclaredMethod("functionPrintCupom", new Class[0]);
 
-             this.loading(something); // Aqui enviamos o metodo doIt !  
-             } catch (Exception e) {
-             System.err.println("ERRO LOADING:::" + e);
+                this.loading(something); // Aqui enviamos o metodo doIt !  
+            } catch (Exception e) {
+                System.err.println("ERRO LOADING:::" + e);
 
-             }
-            
+            }
+
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -722,21 +736,20 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
         valor_devido = PaymentCoupon.getTotalCoupon();
         jTextValueTotalCoupon.setText(v.format(valor_devido));
         jTextCash.setText("0,00");
         jTextSmallCash.setText("0,00");
         jTextValueDiscontCoupon.setText("0,00");
         jTextCash.requestFocus(true);
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItemPaymentCardCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPaymentCardCreditActionPerformed
         fnPagCartao();
         if (payRegistred) {
             funcaoMostraPag();
-            funcaoTotalPedido();    
+            funcaoTotalPedido();
         }
     }//GEN-LAST:event_jMenuItemPaymentCardCreditActionPerformed
 
@@ -746,7 +759,7 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
 
     private void jMenuIteExactCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIteExactCashActionPerformed
         double small_cash = Double.parseDouble(jTextSmallCash.getText().replace(",", "."));
-        jTextCash.setText(small_cash >= 0 ? jTextValueTotalCoupon.getText() : v.format(small_cash*-1));
+        jTextCash.setText(small_cash >= 0 ? jTextValueTotalCoupon.getText() : v.format(small_cash * -1));
         //BigDecimal calculo = calculaTroco(Double.parseDouble(valor_total.getText()), Double.parseDouble(dinheiro.getText()));
         //String res = new String();
         //res = String.valueOf(calculo);
@@ -835,15 +848,29 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton20ReaisActionPerformed
 
     private void jTextCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCashActionPerformed
+        //faz o calculo do troco
         if (!jTextCash.getText().equals("0,00")) {
-            funcaoRegistraPag(null);
-            funcaoTotalPedido();
-            funcaoMostraPag();
+            double cash = Double.parseDouble(jTextCash.getText().replace(",", "."));
+            double valueTotalCoupon = Double.parseDouble(jTextValueTotalCoupon.getText().replace(",", "."));
+            double res = cash - valueTotalCoupon;
+            String value = String.valueOf(res);
+            
+            if(res < 0){
+                jTextSmallCash.setForeground(Color.red);
+            }
+            else {
+                jTextSmallCash.setForeground(Color.gray);
+            }
+             
+            jTextSmallCash.setText(value);
+           // funcaoRegistraPag(null);
+          //  funcaoTotalPedido();
+           // funcaoMostraPag();
         }
     }//GEN-LAST:event_jTextCashActionPerformed
 
     private void jTextCashKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCashKeyReleased
-        JTextFieldTools.formatJTextNumber(jTextCash);
+        //JTextFieldTools.formatJTextNumber(jTextCash);
     }//GEN-LAST:event_jTextCashKeyReleased
 
     private void jTextValueTotalCouponMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextValueTotalCouponMouseClicked
@@ -890,6 +917,15 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
         fechouVenda = false;
         cod_tipo_pagamento = null;
     }//GEN-LAST:event_formWindowActivated
+
+    private void jTextCashFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextCashFocusGained
+        //Thread irá atualizar valor no campo troco
+       
+    }//GEN-LAST:event_jTextCashFocusGained
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        //
+    }//GEN-LAST:event_formFocusGained
 
     /**
      * @param args the command line arguments
@@ -969,13 +1005,15 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     public static javax.swing.JTextField jTextValueTotalCoupon;
     // End of variables declaration//GEN-END:variables
 
+   
+       
     private void funcaoTotalPedido() {
 
         ClassSale.paymentCoupon(codeCoupon);
         BigDecimal smallCash = PaymentCoupon.getSmallCash();
 
         jTextValueTotalCoupon.setText(v.format(PaymentCoupon.getTotalCoupon()));
-        
+
         jTextSmallCash.setText(v.format(smallCash.setScale(2, BigDecimal.ROUND_HALF_UP)));
         //jTextValueTotalDiscontCoupon.setText(v.format(PagamentoPedido.getDesconto_pagamento()));
 
@@ -1001,9 +1039,8 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
                     funcaoLimpaPag();
                 }
             } else {
-                
-                
-                valor_devido = smallCash.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
+
+                valor_devido = smallCash.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                 jButtonFinalizaCalculoPagameto.setEnabled(true);
                 jButtonFinalizaCalculoPagameto.requestFocus(true);
 
@@ -1013,7 +1050,7 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     }
 
     private void functionPrintCupom() {
-        
+
         ImprimirRelatorio_cupom imp = new ImprimirRelatorio_cupom();
 
         try {
@@ -1097,7 +1134,6 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
         double descontoPag = Double.parseDouble(jTextValueDiscontCoupon.getText().replace(",", "."));
 
         //payRegistred = ClassPedido.registra_pagamento_pedido(codeCoupon, tipo_pag, valor_devido, valorPag, descontoPag);
-
         System.out.println("REGISTROU PAG?" + (payRegistred ? "SIM" : "NÃO"));
 
         return payRegistred;
@@ -1105,7 +1141,6 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
 
     private void fnDesconto() {
 
-        
         if (BeanLogin.isIsCashierAccess()) {
 
             jTextValueDiscontCoupon.setText(JTextFieldTools.enterValue(this));
@@ -1151,11 +1186,11 @@ public class JDialogCloseSaleNew extends javax.swing.JDialog {
     }
 
     private void funcaoLimpaPag() {
-        
-         ((DefaultListModel) (jList2.getModel()))
+
+        ((DefaultListModel) (jList2.getModel()))
                 .removeAllElements();
         ClassSale.clearTypePayment(codeCoupon);
-        
+
         valor_devido = PaymentCoupon.getTotalCoupon();
         payRegistred = false;
         jTextValueTotalCoupon.setText(v.format(Sale.getPriceTotal()).replace(".", ","));

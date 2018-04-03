@@ -154,7 +154,8 @@ public class ClassSale {
 
     public static boolean newSale(String cod, String id_cashier, String terminal, String user) {
 
-        String sql = "INSERT INTO tbl_coupon VALUES(?,?,?,NOW(),NULL,0,0,?,0,0,0,0)";
+                
+        String sql = "INSERT INTO tbl_coupon VALUES(?,?,NOW(),NULL,0,0,?,0,0,0,0)";
         isGenerateCodeCoupon = false;
 
         try {
@@ -162,11 +163,11 @@ public class ClassSale {
             //JOptionPane.showMessageDialog(null, "Vededor:"+user);
             ps = Conn.connect().prepareStatement(sql);
             ps.setString(1, cod);
-            ps.setString(2, id_cashier);
-            ps.setString(3, user);
-            ps.setString(4, terminal);
-
-            if (ps.executeUpdate() == 1) {
+            ps.setString(2, user);
+            ps.setString(3, terminal);
+            //ps.setInt(7, Integer.parseInt(terminal));
+            
+           if (ps.executeUpdate() == 1) {
                 System.err.println("True");
                 return true;
 
@@ -182,6 +183,7 @@ public class ClassSale {
 
             return false;
         }
+        
     }
 
     public static boolean newProductCoupon(String codCoupon, double quantity, String barCode, double cost, double price, int number_iten) {
