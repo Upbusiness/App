@@ -1783,6 +1783,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextProductCodeActionPerformed
 
     private void jButtonRegisterProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterProductActionPerformed
+        
         if (ClassUser.validUser(Login.getIdLogin(), 6)) {
             JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
             jTextProductCode.requestFocus(true);
