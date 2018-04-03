@@ -8,6 +8,7 @@ package view;
 import action.BeanCodeSale;
 import action.BeanConfig;
 import action.BeanLogin;
+import action.Login;
 import action.PaymentCoupon;
 import action.Sale;
 import java.awt.AWTEvent;
@@ -1782,7 +1783,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextProductCodeActionPerformed
 
     private void jButtonRegisterProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterProductActionPerformed
-        if (!BeanLogin.isIsRegisterProductsAccess()) {
+        if (ClassUser.validUser(Login.getIdLogin(), 6)) {
             JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
             jTextProductCode.requestFocus(true);
         } else {
@@ -3274,8 +3275,8 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
             if (opcao == 0) {
 
-                if (!BeanLogin.isIsCashierAccess()) {
-                    JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+                if (ClassUser.validUser(Login.getIdLogin(), 1)) {
+                    JOptionPane.showMessageDialog(this, "Usuário '" + Login.getNameUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
 
                 } else {
                     new JDialogOpenCashier_4_1(this, true).setVisible(true);

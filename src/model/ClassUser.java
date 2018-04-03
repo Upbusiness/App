@@ -61,20 +61,20 @@ public class ClassUser {
 
     }
 
-    public static boolean validUser(int idLogin) {
+    public static boolean validUser(int idLogin, int typeAccess) {
 
         String sql = "SELECT "
-                + "t.`idtbl_user` "               
+                + "t.`idtbl_user`, t.`user_name` "               
                 +" FROM tbl_user t  WHERE  t.`user_name` = ? AND  t.`user_password` = ?;";
 
         try {
             ps = Conn.connect().prepareStatement(sql);
-            ps.setInt(1, idLogin);           
+            ps.setInt(1, idLogin);
+            ps.setInt(2, typeAccess);
             rs = ps.executeQuery();
             
             return rs.next();
-                              
-               
+                                             
                 //CallableStatement call_stmt = Conn.connect().prepareCall("{CALL SP_REGISTER_LOGIN(?, ?)}");
                 //call_stmt.setString(1, user_login);
                 //call_stmt.setString(2, password_login);
