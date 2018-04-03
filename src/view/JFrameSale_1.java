@@ -1096,9 +1096,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
         jButtonLogoffLogon.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonLogoffLogon.setForeground(new java.awt.Color(102, 102, 102));
-        jButtonLogoffLogon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010972].png"))); // NOI18N
-        jButtonLogoffLogon.setText(" Login/Logoff(F8)");
-        jButtonLogoffLogon.setToolTipText("Clique Para fechar  a venda (atalho F1) ");
+        jButtonLogoffLogon.setToolTipText("");
         jButtonLogoffLogon.setDefaultCapable(false);
         jButtonLogoffLogon.setDisabledIcon(null);
         jButtonLogoffLogon.setDisabledSelectedIcon(null);
@@ -1545,7 +1543,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
         jMenu2.setText("Gerenciamento");
 
-        jMenuItemReports.setText("Relatórios");
+        jMenuItemReports.setText("Relátorios");
         jMenuItemReports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemReportsActionPerformed(evt);
@@ -1887,8 +1885,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
     private void jButtonLogoffLogonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoffLogonActionPerformed
 
-        new JDialogLogin(this, true).setVisible(true);
-        fnOpenWindow();
+       
 
     }//GEN-LAST:event_jButtonLogoffLogonActionPerformed
 

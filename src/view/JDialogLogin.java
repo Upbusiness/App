@@ -11,6 +11,7 @@
 package view;
 
 import action.Bean;
+import action.Login;
 import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.IOException;
@@ -328,8 +329,8 @@ public class JDialogLogin extends javax.swing.JDialog {
         try {
             usuario = login_usuario.getText();
             senha = login_senha.getText();
-            controle = ClassUser.loginUser(usuario, senha);
-
+            Login.setIdLogin(ClassUser.loginUser(usuario, senha));
+            controle = Login.getIdLogin()>0;
             if (controle) {
                 jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010972].png"))); // NOI18N  
                 isLocked = false;

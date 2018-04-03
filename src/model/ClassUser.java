@@ -4,9 +4,7 @@
  */
 package model;
 
-import action.BeanLogin;
-import action.BeanUser;
-import java.sql.CallableStatement;
+import action.Login;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import xml.NewXML;
+
 
 /**
  *
@@ -24,66 +22,74 @@ import xml.NewXML;
 public class ClassUser {
 
     private static ResultSet rs;
-    private static PreparedStatement ps;
-    private static final NewXML newXML = new NewXML();
+    private static PreparedStatement ps;   
     private static Statement stmt;
 
-    public static boolean loginUser(String user_login, String password_login) {
+    public static int loginUser(String userLogin, String passwordLogin) {
 
-        String sql = "SELECT"
-                + " t.`idtbl_user`,"
-                + " t.`user_password`,"
-                + " t.`isReportAccess`,"
-                + " t.`isCoastOperationAccess`,"
-                + " t.`isCancelAccess`,"
-                + " t.`isCashierAccess`,"
-                + " t.`isSaleAccess`,"
-                + " t.`isRegisterProductsAccess`,"
-                + " t.`isControlReserveAccess`,"
-                + " t.`isRegisterCategoryAccess`,"
-                + " t.`isRegisterUserAccess`,"
-                + " t.`isConfigRates`,"
-                + " t.`isAccessRestrict`,"
-                + " t.`isRegisterCardAccess` FROM tbl_user t  WHERE  t.`idtbl_user` = ? AND  t.`user_password` = ?;";
+        String sql = "SELECT "
+                + "t.`idtbl_user` "               
+                +" FROM tbl_user t  WHERE  t.`user_name` = ? AND  t.`user_password` = ?;";
 
         try {
             ps = Conn.connect().prepareStatement(sql);
-            ps.setString(1, user_login);
-            ps.setString(2, password_login);
+            ps.setString(1, userLogin);
+            ps.setString(2, passwordLogin);
             rs = ps.executeQuery();
+            
             if (rs.next()) {
-                BeanLogin.setUser(rs.getString("idtbl_user"));
-                BeanLogin.setIsCoastOperationAccess(rs.getBoolean("isCoastOperationAccess"));
-                BeanLogin.setIsCashierAccess(rs.getBoolean("isCashierAccess"));
-                BeanLogin.setIsCancelAccess(rs.getBoolean("isCancelAccess"));
-                BeanLogin.setIsReportAccess(rs.getBoolean("isReportAccess"));
-                BeanLogin.setIsSaleAccess(rs.getBoolean("isSaleAccess"));
-                BeanLogin.setIsRegisterProductsAccess(rs.getBoolean("isRegisterProductsAccess"));
-                BeanLogin.setIsControlReserveAccess(rs.getBoolean("isControlReserveAccess"));
-                BeanLogin.setIsRegisterCategoryAccess(rs.getBoolean("isRegisterCategoryAccess"));
-                BeanLogin.setIsRegisterUserAccess(rs.getBoolean("isRegisterUserAccess"));
-                BeanLogin.setIsRegisterCardAccess(rs.getBoolean("isRegisterCardAccess"));
-                BeanLogin.setIsConfigRates(rs.getBoolean("isConfigRates"));
-                BeanLogin.setIsAccessRestrict(rs.getBoolean("isAccessRestrict"));
-
-                CallableStatement call_stmt = Conn.connect().prepareCall("{CALL SP_REGISTER_LOGIN(?, ?)}");
-                call_stmt.setString(1, user_login);
-                call_stmt.setString(2, password_login);
-                call_stmt.execute();
-
-                return true;
+                
+               return rs.getInt("idtbl_user");
+               
+                //CallableStatement call_stmt = Conn.connect().prepareCall("{CALL SP_REGISTER_LOGIN(?, ?)}");
+                //call_stmt.setString(1, user_login);
+                //call_stmt.setString(2, password_login);
+                //call_stmt.execute();
+             
+            }else{
+                
+                return 0;
+                
             }
         } catch (SQLException ex) {
-            //newXML.generateLog(ex.toString());
+           
             System.err.println("ERROR::" + ex);
+            Logger.getLogger(ClassCashier.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        return 0;
+
+    }
+
+    public static boolean validUser(int idLogin) {
+
+        String sql = "SELECT "
+                + "t.`idtbl_user` "               
+                +" FROM tbl_user t  WHERE  t.`user_name` = ? AND  t.`user_password` = ?;";
+
+        try {
+            ps = Conn.connect().prepareStatement(sql);
+            ps.setInt(1, idLogin);           
+            rs = ps.executeQuery();
+            
+            return rs.next();
+                              
+               
+                //CallableStatement call_stmt = Conn.connect().prepareCall("{CALL SP_REGISTER_LOGIN(?, ?)}");
+                //call_stmt.setString(1, user_login);
+                //call_stmt.setString(2, password_login);
+                //call_stmt.execute();
+    
+        } catch (SQLException ex) {
+           
+            System.err.println("ERROR::" + ex);
             Logger.getLogger(ClassCashier.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
 
-    }
-
+    }        
+    
     public static boolean validatorCode(String codigo) {
 
         try {
