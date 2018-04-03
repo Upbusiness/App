@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import view.JDialogStarting;
-import xml.NewXML;
+
 
 /**
  *
@@ -20,7 +20,7 @@ public class Conn {
     private static Connection connection;
     public static String usuario = "root";
     public static String senha = "102230254535";
-    private static final NewXML newXML = new NewXML();
+    
     
     public static Connection connect() {
 
@@ -70,7 +70,7 @@ public class Conn {
             connection.close();
             connection = null;
         } catch (SQLException ex) {
-            //newXML.generateLog(ex.toString());
+            
             System.err.println("ERROR::" + ex);
 
         }
@@ -82,7 +82,7 @@ public class Conn {
             connection.commit();
         } catch (SQLException e) {
             System.err.println("ERROR::" + e);
-            //newXML.generateLog(e.toString());
+            
 
         }
     }
