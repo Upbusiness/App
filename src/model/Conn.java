@@ -20,7 +20,7 @@ public class Conn {
     private static Connection connection;
     public static String usuario = "root";
     public static String senha = "102230254535";
-    
+    //teste jose
     
     public static Connection connect() {
 
