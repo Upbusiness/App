@@ -1653,15 +1653,16 @@ public class JFrameSale_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCancelamentoItemActionPerformed
 
     private void jMenuItemOpenCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpenCashierActionPerformed
+       
         if (idCashier == null) {
-            if (!BeanLogin.isIsCashierAccess()) {
-                JOptionPane.showMessageDialog(this, "Usuário '"
-                        + BeanLogin.getUser()
-                        + "' não possui autorização para esta função.\n\t    [ Abertura de caixa; Atalho: Alt+O ]",
-                        "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+            if (ClassUser.validUser(Login.getIdLogin(), 1)) {
                 new JDialogOpenCashier_4_1(this, true).setVisible(true);
                 idCashier = ClassCashier.isOpened(jLabelTerminalNumber.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário '"
+                        + Login.getNameUser()
+                        + "' não possui autorização para esta função.\n\t    [ Abertura de caixa; Atalho: Alt+O ]",
+                        "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "O caixa já foi aberto neste turno.", "Mensagem.", JOptionPane.INFORMATION_MESSAGE);
@@ -1673,14 +1674,13 @@ public class JFrameSale_1 extends javax.swing.JFrame {
         if (idCashier != null) {
             if (codeCoupon == null) {
 
-                if (!BeanLogin.isIsCashierAccess()) {
+                if (ClassUser.validUser(Login.getIdLogin(), 1)) {
+                    new JDialogCloseCashier_4_2(this, true).setVisible(true);
+                } else {
                     JOptionPane.showMessageDialog(this, "Usuário '"
-                            + BeanLogin.getUser()
+                            + Login.getNameUser()
                             + "' não possui autorização para esta função.\n\t    [ Fechamento de caixa; Atalho: Alt+C ]",
                             "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-
-                } else {
-                    new JDialogCloseCashier_4_2(this, true).setVisible(true);
                 }
 
             } else {
@@ -1703,14 +1703,14 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
     private void jMenuItemRemoveValueCashierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoveValueCashierActionPerformed
         if (idCashier != null) {
-            if (!BeanLogin.isIsCashierAccess()) {
+            if (!ClassUser.validUser(Login.getIdLogin(), 1)) {
+                new JDialogRetiradaCaixa_4_5(this, true).setVisible(true);
+            } else {
                 JOptionPane.showMessageDialog(this, "Usuário '"
-                        + BeanLogin.getUser()
+                        + Login.getNameUser()
                         + "' não possui autorização para esta função.\n\t    [ Sangria de caixa; Atalho: Alt+R ]",
                         "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
 
-            } else {
-                new JDialogRetiradaCaixa_4_5(this, true).setVisible(true);
             }
 
         } else {
@@ -1784,12 +1784,14 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
     private void jButtonRegisterProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterProductActionPerformed
         
-        if (ClassUser.validUser(Login.getIdLogin(), 6)) {
-            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-            jTextProductCode.requestFocus(true);
-        } else {
+        if (ClassUser.validUser(Login.getIdLogin(), 2)) {
             new JDialogProduct_2_0(this, true).setVisible(true);
             jTextProductCode.requestFocus(true);
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Usuário '" + Login.getNameUser()+ "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+            jTextProductCode.requestFocus(true);
+            
         }
     }//GEN-LAST:event_jButtonRegisterProductActionPerformed
 
@@ -1813,11 +1815,13 @@ public class JFrameSale_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCloseSaleActionPerformed
 
     private void jButtonCloseSale4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseSale4ActionPerformed
-        if (!BeanLogin.isIsRegisterCategoryAccess()) {
-            JOptionPane.showMessageDialog(this, "Usuário '" + BeanLogin.getUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-
-        } else {
+       
+        if (ClassUser.validUser(Login.getIdLogin(), 3)) {
             new JDialogCategory(this, true).setVisible(true);
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Usuário '" + Login.getNameUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+            
         }
     }//GEN-LAST:event_jButtonCloseSale4ActionPerformed
 
@@ -2037,7 +2041,7 @@ public class JFrameSale_1 extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
-        if (BeanLogin.isIsCashierAccess()) {
+        if (ClassUser.validUser(Login.getIdLogin(), 1)) {
             JPanel jPanel = new JPanel();
             JLabel jLabel = new JLabel("\n");
             JPasswordField passwordField = new JPasswordField(15);
@@ -2407,14 +2411,14 @@ public class JFrameSale_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextProductCodeKeyReleased
 
     private void jMenuItemHistoryClosuresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoryClosuresActionPerformed
-        if (!BeanLogin.isIsCashierAccess()) {
+        if (!ClassUser.validUser(Login.getIdLogin(), 1)) {
+            new JDialogCashierHistory_4_6(this, true).setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "Usuário '"
-                    + BeanLogin.getUser()
+                    + Login.getNameUser()
                     + "' não possui autorização para esta função.\n\t[ Inserção caixa; Atalho: Alt+I ]",
                     "Mensagem de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-
-        } else {
-            new JDialogCashierHistory_4_6(this, true).setVisible(true);
+            
         }
     }//GEN-LAST:event_jMenuItemHistoryClosuresActionPerformed
 
@@ -3277,17 +3281,17 @@ public class JFrameSale_1 extends javax.swing.JFrame {
             if (opcao == 0) {
 
                 if (ClassUser.validUser(Login.getIdLogin(), 1)) {
-                    JOptionPane.showMessageDialog(this, "Usuário '" + Login.getNameUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
-
-                } else {
                     new JDialogOpenCashier_4_1(this, true).setVisible(true);
                     idCashier = ClassCashier.isOpened(jLabelTerminalNumber.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuário '" + Login.getNameUser() + "' não possui autorização para esta função.", "Alerta de Segurança.", JOptionPane.INFORMATION_MESSAGE);
+                    
                 }
 
             }
         } else {
 
-            jLabelUserNameFooter.setText(BeanLogin.getUser());
+            jLabelUserNameFooter.setText(Login.getNameUser());
             jLabelTurnNumber.setText(ClassCashier.turnTerminal(jLabelTerminalNumber.getText()));
 
         }

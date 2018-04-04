@@ -25,10 +25,10 @@ public class ClassUser {
     private static PreparedStatement ps;   
     private static Statement stmt;
 
-    public static int loginUser(String userLogin, String passwordLogin) {
+    public static void loginUser(String userLogin, String passwordLogin) {
 
         String sql = "SELECT "
-                + "t.`idtbl_user` "               
+                + "t.`idtbl_user`, t.`user_name` "               
                 +" FROM tbl_user t  WHERE  t.`user_name` = ? AND  t.`user_password` = ?;";
 
         try {
@@ -39,33 +39,35 @@ public class ClassUser {
             
             if (rs.next()) {
                 
-               return rs.getInt("idtbl_user");
+               Login.setIdLogin(rs.getInt("idtbl_user"));
+               Login.setNameUser(rs.getString("user_name"));
                
                 //CallableStatement call_stmt = Conn.connect().prepareCall("{CALL SP_REGISTER_LOGIN(?, ?)}");
                 //call_stmt.setString(1, user_login);
                 //call_stmt.setString(2, password_login);
-                //call_stmt.execute();
-             
+                //call_stmt.execute();             
             }else{
                 
-                return 0;
+               Login.setIdLogin(0);
+               Login.setNameUser("Dont Loged");
                 
             }
         } catch (SQLException ex) {
            
+            Login.setIdLogin(0);
+            Login.setNameUser("Dont Loged");
             System.err.println("ERROR::" + ex);
             Logger.getLogger(ClassCashier.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return 0;
+    
 
     }
 
     public static boolean validUser(int idLogin, int typeAccess) {
 
-        String sql = "SELECT "
-                + "t.`idtbl_user`, t.`user_name` "               
-                +" FROM tbl_user t  WHERE  t.`user_name` = ? AND  t.`user_password` = ?;";
+        String sql = "SELECT * FROM tbl_access_to_user ac "
+                + "INNER JOIN tbl_user us ON ac.idtbl_user = us.idtbl_user "
+                + "WHERE us.idtbl_user = ? AND ac.idtbl_access = ?;";
 
         try {
             ps = Conn.connect().prepareStatement(sql);

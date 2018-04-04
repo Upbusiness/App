@@ -329,7 +329,7 @@ public class JDialogLogin extends javax.swing.JDialog {
         try {
             usuario = login_usuario.getText();
             senha = login_senha.getText();
-            Login.setIdLogin(ClassUser.loginUser(usuario, senha));
+            ClassUser.loginUser(usuario, senha);
             controle = Login.getIdLogin()>0;
             if (controle) {
                 jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/[010972].png"))); // NOI18N  
